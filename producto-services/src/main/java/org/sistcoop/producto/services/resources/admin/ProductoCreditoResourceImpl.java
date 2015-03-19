@@ -3,23 +3,37 @@ package org.sistcoop.producto.services.resources.admin;
 import java.util.List;
 
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 
 import org.sistcoop.producto.client.resource.ProductoCreditoResource;
+import org.sistcoop.producto.models.ProductoCreditoModel;
+import org.sistcoop.producto.models.ProductoCreditoProvider;
+import org.sistcoop.producto.models.ProductoModel;
+import org.sistcoop.producto.models.ProductoCuentaPersonalProvider;
+import org.sistcoop.producto.models.utils.ModelToRepresentation;
+import org.sistcoop.producto.models.utils.RepresentationToModel;
 import org.sistcoop.producto.representations.idm.ProductoCreditoRepresentation;
 
 @Stateless
 public class ProductoCreditoResourceImpl implements ProductoCreditoResource {
 
+	@Inject
+	private ProductoCreditoProvider productoCreditoProvider;
+	
+	@Inject
+	private RepresentationToModel representationToModel;
+	
 	@Override
-	public ProductoCreditoRepresentation findById(String id) {
-		// TODO Auto-generated method stub
-		return null;
+	public ProductoCreditoRepresentation findById(Integer id) {
+		ProductoCreditoModel model = productoCreditoProvider.getProductoById(id);
+		ProductoCreditoRepresentation rep = ModelToRepresentation.toRepresentation(model);
+		return rep;
 	}
 
 	@Override
-	public Response create(ProductoCreditoRepresentation tipoDocumentoRepresentation) {
-		// TODO Auto-generated method stub
+	public Response create(ProductoCreditoRepresentation productoCreditoRepresentation) {
+		ProductoCreditoModel model = representationToModel.createProductoCredito(productoCreditoRepresentation, productoCreditoProvider);
 		return null;
 	}
 

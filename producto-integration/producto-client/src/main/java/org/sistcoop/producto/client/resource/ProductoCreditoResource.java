@@ -3,6 +3,7 @@ package org.sistcoop.producto.client.resource;
 import java.util.List;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.ws.rs.Consumes;
@@ -29,12 +30,12 @@ public interface ProductoCreditoResource {
 	public ProductoCreditoRepresentation findById(
 			@PathParam("id") 
 			@NotNull 
-			@Size(min = 1, max = 20) String id);
+			@Min(1) Integer id);
 
 	@POST
 	public Response create(
 			@NotNull 
-			@Valid ProductoCreditoRepresentation tipoDocumentoRepresentation);
+			@Valid ProductoCreditoRepresentation productoCreditoRepresentation);
 
 	@PUT
 	@Path("/{id}")

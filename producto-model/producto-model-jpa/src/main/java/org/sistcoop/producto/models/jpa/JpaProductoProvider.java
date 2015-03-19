@@ -14,14 +14,14 @@ import javax.persistence.PersistenceContext;
 import org.sistcoop.producto.models.ProductoCreditoModel;
 import org.sistcoop.producto.models.ProductoCuentaPersonalModel;
 import org.sistcoop.producto.models.ProductoModel;
-import org.sistcoop.producto.models.ProductoProvider;
+import org.sistcoop.producto.models.ProductoCuentaPersonalProvider;
 import org.sistcoop.producto.models.enums.TipoPersona;
 
 @Named
 @Stateless
-@Local(ProductoProvider.class)
+@Local(ProductoCuentaPersonalProvider.class)
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
-public class JpaProductoProvider implements ProductoProvider {
+public class JpaProductoProvider implements ProductoCuentaPersonalProvider {
 
 	@PersistenceContext
 	protected EntityManager em;
