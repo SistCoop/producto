@@ -1,0 +1,5 @@
+dependencies {
+	compile project(':producto-integration:producto-client')
+	compile project(':producto-model:producto-model-api')
+	compile project(':producto-model:producto-model-jpa')	
+}

@@ -1,0 +1,3 @@
+dependencies {
+	compile project(':producto-model:producto-model-api')
+}

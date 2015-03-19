@@ -1,0 +1,5 @@
+dependencies {
+    compile project(':producto-integration:producto-client')
+	compile project(':producto-services')   	   
+}
+
