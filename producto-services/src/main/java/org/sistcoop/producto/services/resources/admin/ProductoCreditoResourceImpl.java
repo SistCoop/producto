@@ -9,10 +9,7 @@ import javax.ws.rs.core.Response;
 import org.sistcoop.producto.client.resource.ProductoCreditoResource;
 import org.sistcoop.producto.models.ProductoCreditoModel;
 import org.sistcoop.producto.models.ProductoCreditoProvider;
-import org.sistcoop.producto.models.ProductoModel;
-import org.sistcoop.producto.models.ProductoCuentaPersonalProvider;
 import org.sistcoop.producto.models.utils.ModelToRepresentation;
-import org.sistcoop.producto.models.utils.RepresentationToModel;
 import org.sistcoop.producto.representations.idm.ProductoCreditoRepresentation;
 
 @Stateless
@@ -20,10 +17,7 @@ public class ProductoCreditoResourceImpl implements ProductoCreditoResource {
 
 	@Inject
 	private ProductoCreditoProvider productoCreditoProvider;
-	
-	@Inject
-	private RepresentationToModel representationToModel;
-	
+
 	@Override
 	public ProductoCreditoRepresentation findById(Integer id) {
 		ProductoCreditoModel model = productoCreditoProvider.getProductoById(id);
@@ -33,7 +27,9 @@ public class ProductoCreditoResourceImpl implements ProductoCreditoResource {
 
 	@Override
 	public Response create(ProductoCreditoRepresentation productoCreditoRepresentation) {
-		//ProductoCreditoModel model = representationToModel.createProductoCredito(productoCreditoRepresentation, productoCreditoProvider);
+		// ProductoCreditoModel model =
+		// representationToModel.createProductoCredito(productoCreditoRepresentation,
+		// productoCreditoProvider);
 		return null;
 	}
 
