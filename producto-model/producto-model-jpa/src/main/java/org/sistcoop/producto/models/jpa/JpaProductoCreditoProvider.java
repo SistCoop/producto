@@ -12,15 +12,14 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.sistcoop.producto.models.ProductoCreditoModel;
-import org.sistcoop.producto.models.ProductoCuentaPersonalModel;
-import org.sistcoop.producto.models.ProductoCuentaPersonalProvider;
+import org.sistcoop.producto.models.ProductoCreditoProvider;
 import org.sistcoop.producto.models.enums.TipoPersona;
 
 @Named
 @Stateless
-@Local(ProductoCuentaPersonalProvider.class)
+@Local(ProductoCreditoProvider.class)
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
-public class JpaProductoProvider implements ProductoCuentaPersonalProvider {
+public class JpaProductoCreditoProvider implements ProductoCreditoProvider {
 
 	@PersistenceContext
 	protected EntityManager em;
@@ -32,7 +31,7 @@ public class JpaProductoProvider implements ProductoCuentaPersonalProvider {
 	}
 
 	@Override
-	public ProductoCuentaPersonalModel addProductoCredito(String denominacion,
+	public ProductoCreditoModel addProductoCredito(String denominacion,
 			TipoPersona tipoPersona, List<String> monedas,
 			BigDecimal montoMinimo, BigDecimal montoMaximo) {
 		// TODO Auto-generated method stub
@@ -40,19 +39,19 @@ public class JpaProductoProvider implements ProductoCuentaPersonalProvider {
 	}
 
 	@Override
-	public boolean desactivarProducto(ProductoCuentaPersonalModel productoModel) {
+	public boolean desactivarProducto(ProductoCreditoModel productoModel) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public ProductoCuentaPersonalModel getProductoById(Integer id) {
+	public ProductoCreditoModel getProductoById(Integer id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<ProductoCuentaPersonalModel> getProductos() {
+	public List<ProductoCreditoModel> getProductos() {
 		// TODO Auto-generated method stub
 		return null;
 	}

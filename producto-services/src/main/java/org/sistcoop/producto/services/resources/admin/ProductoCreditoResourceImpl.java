@@ -33,7 +33,7 @@ public class ProductoCreditoResourceImpl implements ProductoCreditoResource {
 
 	@Override
 	public Response create(ProductoCreditoRepresentation productoCreditoRepresentation) {
-		ProductoCreditoModel model = representationToModel.createProductoCredito(productoCreditoRepresentation, productoCreditoProvider);
+		//ProductoCreditoModel model = representationToModel.createProductoCredito(productoCreditoRepresentation, productoCreditoProvider);
 		return null;
 	}
 

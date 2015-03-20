@@ -47,7 +47,7 @@ public class ProductoProviderTest {
 		WebArchive war = ShrinkWrap.create(WebArchive.class, "test.war")
 		/** persona-model-api **/
 		.addClass(Provider.class)
-		.addClass(ProductoProvider.class)
+		.addClass(ProductoCreditoProvider.class)
 
 		.addPackage(ProductoModel.class.getPackage())
 		.addPackage(TipoPersona.class.getPackage())
