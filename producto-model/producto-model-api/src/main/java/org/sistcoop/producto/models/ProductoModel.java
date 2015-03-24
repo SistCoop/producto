@@ -24,10 +24,6 @@ public interface ProductoModel extends Model {
 
 	List<ProductoMonedaModel> getMonedas();
 
-	void setMonedas(List<ProductoMonedaModel> monedaModels);
-
 	List<ProductoTasaModel> getTasas();
-
-	void setTasas(List<ProductoTasaModel> productoTasaModels);
 
 }

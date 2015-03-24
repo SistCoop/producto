@@ -13,8 +13,7 @@ public interface ProductoCreditoProvider extends Provider {
 
 	ProductoCreditoModel addProductoCredito(
 			String denominacion, 
-			TipoPersona tipoPersona, 
-			List<String> monedas,
+			TipoPersona tipoPersona, 			
 			BigDecimal montoMinimo,
 			BigDecimal montoMaximo);
 	

@@ -1,6 +1,8 @@
 package org.sistcoop.producto.models.jpa;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 
@@ -9,6 +11,8 @@ import org.sistcoop.producto.models.ProductoMonedaModel;
 import org.sistcoop.producto.models.ProductoTasaModel;
 import org.sistcoop.producto.models.enums.TipoPersona;
 import org.sistcoop.producto.models.jpa.entities.ProductoCuentaPersonalEntity;
+import org.sistcoop.producto.models.jpa.entities.ProductoMonedaEntity;
+import org.sistcoop.producto.models.jpa.entities.ProductoTasaEntity;
 
 public class ProductoCuentaPersonalAdapter implements ProductoCuentaPersonalModel {
 
@@ -26,82 +30,78 @@ public class ProductoCuentaPersonalAdapter implements ProductoCuentaPersonalMode
 		return productoCuentaPersonalEntity;
 	}
 
+	public static ProductoCuentaPersonalEntity toProductoCuentaPersonalEntity(ProductoCuentaPersonalModel model, EntityManager em) {
+		if (model instanceof ProductoCuentaPersonalAdapter) {
+			return ((ProductoCuentaPersonalAdapter) model).getProductoCuentaPersonalEntityEntity();
+		}
+		return em.getReference(ProductoCuentaPersonalEntity.class, model.getId());
+	}
+
 	@Override
 	public Integer getId() {
-		// TODO Auto-generated method stub
-		return null;
+		return productoCuentaPersonalEntity.getId();
 	}
 
 	@Override
 	public String getCodigo() {
-		// TODO Auto-generated method stub
-		return null;
+		return productoCuentaPersonalEntity.getCodigo();
 	}
 
 	@Override
 	public String getDenominacion() {
-		// TODO Auto-generated method stub
-		return null;
+		return productoCuentaPersonalEntity.getDenominacion();
 	}
 
 	@Override
 	public void setDenominacion(String denominacion) {
-		// TODO Auto-generated method stub
-
+		productoCuentaPersonalEntity.setDenominacion(denominacion);
 	}
 
 	@Override
 	public TipoPersona getTipoPersona() {
-		// TODO Auto-generated method stub
-		return null;
+		return productoCuentaPersonalEntity.getTipoPersona();
 	}
 
 	@Override
 	public void setTipoPersona(TipoPersona tipoPersona) {
-		// TODO Auto-generated method stub
-
+		productoCuentaPersonalEntity.setTipoPersona(tipoPersona);
 	}
 
 	@Override
 	public boolean getEstado() {
-		// TODO Auto-generated method stub
-		return false;
+		return productoCuentaPersonalEntity.isEstado();
 	}
 
 	@Override
 	public void desactivar() {
-		// TODO Auto-generated method stub
-
+		productoCuentaPersonalEntity.setEstado(false);
 	}
 
 	@Override
 	public List<ProductoMonedaModel> getMonedas() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setMonedas(List<ProductoMonedaModel> monedaModels) {
-		// TODO Auto-generated method stub
-
+		Set<ProductoMonedaEntity> monedas = productoCuentaPersonalEntity.getMonedas();
+		List<ProductoMonedaModel> result = new ArrayList<ProductoMonedaModel>();
+		for (ProductoMonedaEntity productoMonedaEntity : monedas) {
+			ProductoMonedaModel productoMonedaModel = new ProductoMonedaAdapter(em, productoMonedaEntity);
+			result.add(productoMonedaModel);
+		}
+		return result;
 	}
 
 	@Override
 	public List<ProductoTasaModel> getTasas() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setTasas(List<ProductoTasaModel> productoTasaModels) {
-		// TODO Auto-generated method stub
-
+		Set<ProductoTasaEntity> tasas = productoCuentaPersonalEntity.getTasas();
+		List<ProductoTasaModel> result = new ArrayList<ProductoTasaModel>();
+		for (ProductoTasaEntity productoTasaEntity : tasas) {
+			ProductoTasaModel productoTasaModel = new ProductoTasaAdapter(em, productoTasaEntity);
+			result.add(productoTasaModel);
+		}
+		return result;
 	}
 
 	@Override
 	public void commit() {
-		// TODO Auto-generated method stub
-
+		em.merge(productoCuentaPersonalEntity);
 	}
 
 }

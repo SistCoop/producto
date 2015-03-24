@@ -9,9 +9,15 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.NamedQueries;
+import org.hibernate.annotations.NamedQuery;
+
 @Entity
 @Table(name = "PRODUCTO_CREDITO")
 @PrimaryKeyJoinColumn
+@NamedQueries({ 
+	@NamedQuery(name = ProductoCreditoEntity.findAll, query = "SELECT p FROM ProductoCreditoEntity p"), 
+	@NamedQuery(name = ProductoCreditoEntity.findByTipoPersona, query = "SELECT p FROM ProductoCreditoEntity p WHERE p.tipoPersona = :tipoPersona")})
 public class ProductoCreditoEntity extends ProductoEntity {
 
 	/**
@@ -21,6 +27,7 @@ public class ProductoCreditoEntity extends ProductoEntity {
 
 	public final static String base = "org.sistcoop.producto.models.jpa.entities.ProductoCreditoEntity.";
 	public final static String findAll = base + "findAll";
+	public final static String findByTipoPersona = base + "findByTipoPersona";
 
 	private BigDecimal montoMinimo;
 	private BigDecimal montoMaximo;

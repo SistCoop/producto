@@ -12,7 +12,7 @@ import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.sistcoop.producto.models.enums.TipoPersona;
-import org.sistcoop.producto.models.jpa.JpaProductoProvider;
+import org.sistcoop.producto.models.jpa.JpaProductoCuentaPersonalProvider;
 import org.sistcoop.producto.models.jpa.ProductoAdapter;
 import org.sistcoop.producto.models.jpa.entities.ProductoEntity;
 import org.sistcoop.producto.provider.Provider;
@@ -44,7 +44,7 @@ public class ProductoProviderTest {
 		.addPackage(TipoPersona.class.getPackage())
 
 		/** persona-model-jpa **/
-		.addClass(JpaProductoProvider.class)
+		.addClass(JpaProductoCuentaPersonalProvider.class)
 		.addPackage(ProductoAdapter.class.getPackage())
 
 		.addPackage(ProductoEntity.class.getPackage())

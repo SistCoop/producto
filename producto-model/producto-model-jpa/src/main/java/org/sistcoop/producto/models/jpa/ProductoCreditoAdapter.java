@@ -1,7 +1,9 @@
 package org.sistcoop.producto.models.jpa;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 
@@ -10,6 +12,8 @@ import org.sistcoop.producto.models.ProductoMonedaModel;
 import org.sistcoop.producto.models.ProductoTasaModel;
 import org.sistcoop.producto.models.enums.TipoPersona;
 import org.sistcoop.producto.models.jpa.entities.ProductoCreditoEntity;
+import org.sistcoop.producto.models.jpa.entities.ProductoMonedaEntity;
+import org.sistcoop.producto.models.jpa.entities.ProductoTasaEntity;
 
 public class ProductoCreditoAdapter implements ProductoCreditoModel {
 
@@ -27,106 +31,98 @@ public class ProductoCreditoAdapter implements ProductoCreditoModel {
 		return productoCreditoEntity;
 	}
 
+	public static ProductoCreditoEntity toProductoCreditoEntity(ProductoCreditoModel model, EntityManager em) {
+		if (model instanceof ProductoCreditoAdapter) {
+			return ((ProductoCreditoAdapter) model).getProductoCreditoEntity();
+		}
+		return em.getReference(ProductoCreditoEntity.class, model.getId());
+	}
+
 	@Override
 	public Integer getId() {
-		// TODO Auto-generated method stub
-		return null;
+		return productoCreditoEntity.getId();
 	}
 
 	@Override
 	public String getCodigo() {
-		// TODO Auto-generated method stub
-		return null;
+		return productoCreditoEntity.getCodigo();
 	}
 
 	@Override
 	public String getDenominacion() {
-		// TODO Auto-generated method stub
-		return null;
+		return productoCreditoEntity.getDenominacion();
 	}
 
 	@Override
 	public void setDenominacion(String denominacion) {
-		// TODO Auto-generated method stub
-
+		productoCreditoEntity.setDenominacion(denominacion);
 	}
 
 	@Override
 	public TipoPersona getTipoPersona() {
-		// TODO Auto-generated method stub
-		return null;
+		return productoCreditoEntity.getTipoPersona();
 	}
 
 	@Override
 	public void setTipoPersona(TipoPersona tipoPersona) {
-		// TODO Auto-generated method stub
-
+		productoCreditoEntity.setTipoPersona(tipoPersona);
 	}
 
 	@Override
 	public boolean getEstado() {
-		// TODO Auto-generated method stub
-		return false;
+		return productoCreditoEntity.isEstado();
 	}
 
 	@Override
 	public void desactivar() {
-		// TODO Auto-generated method stub
-
+		productoCreditoEntity.setEstado(false);
 	}
 
 	@Override
 	public List<ProductoMonedaModel> getMonedas() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setMonedas(List<ProductoMonedaModel> monedaModels) {
-		// TODO Auto-generated method stub
-
+		Set<ProductoMonedaEntity> monedas = productoCreditoEntity.getMonedas();
+		List<ProductoMonedaModel> result = new ArrayList<ProductoMonedaModel>();
+		for (ProductoMonedaEntity productoMonedaEntity : monedas) {
+			ProductoMonedaModel productoMonedaModel = new ProductoMonedaAdapter(em, productoMonedaEntity);
+			result.add(productoMonedaModel);
+		}
+		return result;
 	}
 
 	@Override
 	public List<ProductoTasaModel> getTasas() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setTasas(List<ProductoTasaModel> productoTasaModels) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void commit() {
-		// TODO Auto-generated method stub
-
+		Set<ProductoTasaEntity> tasas = productoCreditoEntity.getTasas();
+		List<ProductoTasaModel> result = new ArrayList<ProductoTasaModel>();
+		for (ProductoTasaEntity productoTasaEntity : tasas) {
+			ProductoTasaModel productoTasaModel = new ProductoTasaAdapter(em, productoTasaEntity);
+			result.add(productoTasaModel);
+		}
+		return result;
 	}
 
 	@Override
 	public BigDecimal getMontoMinimo() {
-		// TODO Auto-generated method stub
-		return null;
+		return productoCreditoEntity.getMontoMinimo();
 	}
 
 	@Override
 	public void setMontoMinimo(BigDecimal montoMinimo) {
-		// TODO Auto-generated method stub
-
+		productoCreditoEntity.setMontoMinimo(montoMinimo);
 	}
 
 	@Override
 	public BigDecimal getMontoMaximo() {
-		// TODO Auto-generated method stub
-		return null;
+		return productoCreditoEntity.getMontoMaximo();
 	}
 
 	@Override
 	public void setMontoMaximo(BigDecimal montoMaximo) {
-		// TODO Auto-generated method stub
+		productoCreditoEntity.setMontoMaximo(montoMaximo);
+	}
 
+	@Override
+	public void commit() {
+		em.merge(productoCreditoEntity);
 	}
 
 }

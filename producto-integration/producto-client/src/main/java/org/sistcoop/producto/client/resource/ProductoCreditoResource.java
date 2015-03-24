@@ -39,7 +39,7 @@ public interface ProductoCreditoResource {
 
 	@PUT
 	@Path("/{id}")
-	public void update(@PathParam("id") String id, 
+	public void update(@PathParam("id") int id, 
 			@NotNull 
 			@Valid ProductoCreditoRepresentation tipoDocumentoRepresentation);
 
@@ -48,14 +48,14 @@ public interface ProductoCreditoResource {
 	public void delete(
 			@PathParam("id") 
 			@NotNull 
-			@Size(min = 1, max = 20) String id);
+			@Size(min = 1, max = 20) int id);
 	
 	@POST
 	@Path("/{id}/desactivar")
 	public void desactivar(
 			@PathParam("id") 
 			@NotNull 
-			@Size(min = 1, max = 20) String id);
+			@Size(min = 1, max = 20) int id);
 	
 	@GET
 	public List<ProductoCreditoRepresentation> findAll(
