@@ -22,8 +22,6 @@ public interface ProductoModel extends Model {
 
 	void desactivar();
 
-	List<ProductoMonedaModel> getMonedas();
-
 	List<ProductoTasaModel> getTasas();
 
 }

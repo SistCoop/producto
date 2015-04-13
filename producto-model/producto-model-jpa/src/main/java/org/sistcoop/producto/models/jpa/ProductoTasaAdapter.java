@@ -5,7 +5,6 @@ import java.math.BigDecimal;
 import javax.persistence.EntityManager;
 
 import org.sistcoop.producto.models.ProductoModel;
-import org.sistcoop.producto.models.ProductoMonedaModel;
 import org.sistcoop.producto.models.ProductoTasaModel;
 import org.sistcoop.producto.models.jpa.entities.ProductoEntity;
 import org.sistcoop.producto.models.jpa.entities.ProductoTasaEntity;
@@ -26,7 +25,7 @@ public class ProductoTasaAdapter implements ProductoTasaModel {
 		return productoTasaEntity;
 	}
 
-	public static ProductoTasaEntity toProductoMonedaEntity(ProductoMonedaModel model, EntityManager em) {
+	public static ProductoTasaEntity toProductoTasaEntity(ProductoTasaModel model, EntityManager em) {
 		if (model instanceof ProductoTasaAdapter) {
 			return ((ProductoTasaAdapter) model).getProductoTasaEntity();
 		}

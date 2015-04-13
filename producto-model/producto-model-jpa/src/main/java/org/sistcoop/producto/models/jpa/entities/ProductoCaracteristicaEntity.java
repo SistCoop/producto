@@ -1,30 +1,32 @@
 package org.sistcoop.producto.models.jpa.entities;
 
-import java.math.BigDecimal;
+import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
-@Table(name = "PRODUCTO_TASA", indexes = { @Index(columnList = "id") })
-public class ProductoTasaEntity {
+@Table(name = "PRODUCTO_CARACTERISTICA")
+public class ProductoCaracteristicaEntity implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private Integer id;
-	private BigDecimal valor;
-	private String tasa;
+	private String descripcion;
+	private String descripcionDetallada;
 	private ProductoEntity producto;
 
 	@Id
@@ -38,25 +40,24 @@ public class ProductoTasaEntity {
 	}
 
 	@NotNull
-	@Min(value = 0)
-	@Max(value = 1)
-	public BigDecimal getValor() {
-		return valor;
+	@NotBlank
+	@Size(min = 1, max = 200)
+	public String getDescripcion() {
+		return descripcion;
 	}
 
-	public void setValor(BigDecimal valor) {
-		this.valor = valor;
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
 	}
 
 	@NotNull
-	@Size(min = 1, max = 100)
-	@NotBlank
-	public String getTasa() {
-		return tasa;
+	@Size(min = 0, max = 600)
+	public String getDescripcionDetallada() {
+		return descripcionDetallada;
 	}
 
-	public void setTasa(String tasa) {
-		this.tasa = tasa;
+	public void setDescripcionDetallada(String descripcionDetallada) {
+		this.descripcionDetallada = descripcionDetallada;
 	}
 
 	@NotNull
@@ -84,9 +85,9 @@ public class ProductoTasaEntity {
 			return true;
 		if (obj == null)
 			return false;
-		if (!(obj instanceof ProductoTasaEntity))
+		if (!(obj instanceof ProductoCaracteristicaEntity))
 			return false;
-		ProductoTasaEntity other = (ProductoTasaEntity) obj;
+		ProductoCaracteristicaEntity other = (ProductoCaracteristicaEntity) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

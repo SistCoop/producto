@@ -1,15 +1,13 @@
 package org.sistcoop.producto.models.jpa.entities;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ForeignKey;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Index;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -17,15 +15,22 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.sistcoop.producto.models.enums.Frecuencia;
+import org.sistcoop.producto.models.enums.TipoValor;
 
 @Entity
-@Table(name = "PRODUCTO_TASA", indexes = { @Index(columnList = "id") })
-public class ProductoTasaEntity {
+@Table(name = "PRODUCTO_COMISION")
+public class ProductoComisionEntity implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Integer id;
+	private String denominacion;
 	private BigDecimal valor;
-	private String tasa;
-	private ProductoEntity producto;
+	private TipoValor tipoValor;
+	private Frecuencia frecuencia;
 
 	@Id
 	@GeneratedValue(generator = "SgGenericGenerator")
@@ -38,8 +43,19 @@ public class ProductoTasaEntity {
 	}
 
 	@NotNull
+	@NotBlank
+	@Size(min = 1, max = 100)
+	public String getDenominacion() {
+		return denominacion;
+	}
+
+	public void setDenominacion(String denominacion) {
+		this.denominacion = denominacion;
+	}
+
+	@NotNull
 	@Min(value = 0)
-	@Max(value = 1)
+	@Max(value = 1000)
 	public BigDecimal getValor() {
 		return valor;
 	}
@@ -49,25 +65,23 @@ public class ProductoTasaEntity {
 	}
 
 	@NotNull
-	@Size(min = 1, max = 100)
-	@NotBlank
-	public String getTasa() {
-		return tasa;
+	@Enumerated(EnumType.STRING)
+	public TipoValor getTipoValor() {
+		return tipoValor;
 	}
 
-	public void setTasa(String tasa) {
-		this.tasa = tasa;
+	public void setTipoValor(TipoValor tipoValor) {
+		this.tipoValor = tipoValor;
 	}
 
 	@NotNull
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(foreignKey = @ForeignKey)
-	public ProductoEntity getProducto() {
-		return producto;
+	@Enumerated(EnumType.STRING)
+	public Frecuencia getFrecuencia() {
+		return frecuencia;
 	}
 
-	public void setProducto(ProductoEntity producto) {
-		this.producto = producto;
+	public void setFrecuencia(Frecuencia frecuencia) {
+		this.frecuencia = frecuencia;
 	}
 
 	@Override
@@ -84,9 +98,9 @@ public class ProductoTasaEntity {
 			return true;
 		if (obj == null)
 			return false;
-		if (!(obj instanceof ProductoTasaEntity))
+		if (!(obj instanceof ProductoComisionEntity))
 			return false;
-		ProductoTasaEntity other = (ProductoTasaEntity) obj;
+		ProductoComisionEntity other = (ProductoComisionEntity) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -94,5 +108,4 @@ public class ProductoTasaEntity {
 			return false;
 		return true;
 	}
-
 }

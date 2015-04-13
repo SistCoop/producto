@@ -5,11 +5,9 @@ import java.util.List;
 
 import org.sistcoop.producto.models.ProductoCreditoModel;
 import org.sistcoop.producto.models.ProductoCuentaPersonalModel;
-import org.sistcoop.producto.models.ProductoMonedaModel;
 import org.sistcoop.producto.models.ProductoTasaModel;
 import org.sistcoop.producto.representations.idm.ProductoCreditoRepresentation;
 import org.sistcoop.producto.representations.idm.ProductoCuentaPersonalRepresentation;
-import org.sistcoop.producto.representations.idm.ProductoMonedaRepresentation;
 import org.sistcoop.producto.representations.idm.ProductoTasaRepresentation;
 
 public class ModelToRepresentation {
@@ -21,15 +19,6 @@ public class ModelToRepresentation {
 		ProductoCuentaPersonalRepresentation rep = new ProductoCuentaPersonalRepresentation();
 		rep.setDenominacion(model.getDenominacion());
 		rep.setTipoPersona(model.getTipoPersona().toString());
-
-		List<ProductoMonedaModel> productoMonedaModels = model.getMonedas();
-		List<ProductoMonedaRepresentation> productoMonedaRepresentations = new ArrayList<ProductoMonedaRepresentation>();
-		for (ProductoMonedaModel productoMonedaModel : productoMonedaModels) {
-			ProductoMonedaRepresentation productoMonedaRepresentation = new ProductoMonedaRepresentation();
-			productoMonedaRepresentation.setMoneda(productoMonedaModel.getMoneda());
-			productoMonedaRepresentations.add(productoMonedaRepresentation);
-		}
-		rep.setMonedas(productoMonedaRepresentations);
 
 		List<ProductoTasaModel> productoTasaModels = model.getTasas();
 		List<ProductoTasaRepresentation> productoTasaRepresentations = new ArrayList<ProductoTasaRepresentation>();
@@ -54,15 +43,6 @@ public class ModelToRepresentation {
 		rep.setTipoPersona(model.getTipoPersona().toString());
 		rep.setMontoMinimo(model.getMontoMinimo());
 		rep.setMontoMaximo(model.getMontoMaximo());
-
-		List<ProductoMonedaModel> productoMonedaModels = model.getMonedas();
-		List<ProductoMonedaRepresentation> productoMonedaRepresentations = new ArrayList<ProductoMonedaRepresentation>();
-		for (ProductoMonedaModel productoMonedaModel : productoMonedaModels) {
-			ProductoMonedaRepresentation productoMonedaRepresentation = new ProductoMonedaRepresentation();
-			productoMonedaRepresentation.setMoneda(productoMonedaModel.getMoneda());
-			productoMonedaRepresentations.add(productoMonedaRepresentation);
-		}
-		rep.setMonedas(productoMonedaRepresentations);
 
 		List<ProductoTasaModel> productoTasaModels = model.getTasas();
 		List<ProductoTasaRepresentation> productoTasaRepresentations = new ArrayList<ProductoTasaRepresentation>();

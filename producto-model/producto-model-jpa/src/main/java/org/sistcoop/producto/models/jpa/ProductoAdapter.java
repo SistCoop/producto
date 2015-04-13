@@ -7,11 +7,9 @@ import java.util.Set;
 import javax.persistence.EntityManager;
 
 import org.sistcoop.producto.models.ProductoModel;
-import org.sistcoop.producto.models.ProductoMonedaModel;
 import org.sistcoop.producto.models.ProductoTasaModel;
 import org.sistcoop.producto.models.enums.TipoPersona;
 import org.sistcoop.producto.models.jpa.entities.ProductoEntity;
-import org.sistcoop.producto.models.jpa.entities.ProductoMonedaEntity;
 import org.sistcoop.producto.models.jpa.entities.ProductoTasaEntity;
 
 public class ProductoAdapter implements ProductoModel {
@@ -80,17 +78,6 @@ public class ProductoAdapter implements ProductoModel {
 	@Override
 	public void desactivar() {
 		productoEntity.setEstado(false);
-	}
-
-	@Override
-	public List<ProductoMonedaModel> getMonedas() {
-		Set<ProductoMonedaEntity> monedas = productoEntity.getMonedas();
-		List<ProductoMonedaModel> result = new ArrayList<ProductoMonedaModel>();
-		for (ProductoMonedaEntity productoMonedaEntity : monedas) {
-			ProductoMonedaModel productoMonedaModel = new ProductoMonedaAdapter(em, productoMonedaEntity);
-			result.add(productoMonedaModel);
-		}
-		return result;
 	}
 
 	@Override

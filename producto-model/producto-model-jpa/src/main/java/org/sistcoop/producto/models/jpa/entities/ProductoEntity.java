@@ -5,7 +5,6 @@ import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -38,9 +37,9 @@ public abstract class ProductoEntity implements Serializable {
 	protected String codigo;
 	protected String denominacion;
 	protected TipoPersona tipoPersona;
+	private String moneda;
 	protected boolean estado;
 
-	protected Set<ProductoMonedaEntity> monedas = new HashSet<ProductoMonedaEntity>();
 	private Set<ProductoTasaEntity> tasas = new HashSet<ProductoTasaEntity>();
 
 	private Timestamp optlk;
@@ -87,13 +86,15 @@ public abstract class ProductoEntity implements Serializable {
 		this.tipoPersona = tipoPersona;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	public Set<ProductoMonedaEntity> getMonedas() {
-		return monedas;
+	@NotNull
+	@Size(min = 3, max = 3)
+	@NotBlank
+	public String getMoneda() {
+		return moneda;
 	}
 
-	public void setMonedas(Set<ProductoMonedaEntity> monedas) {
-		this.monedas = monedas;
+	public void setMoneda(String moneda) {
+		this.moneda = moneda;
 	}
 
 	@NotNull
@@ -123,4 +124,30 @@ public abstract class ProductoEntity implements Serializable {
 	public void setOptlk(Timestamp optlk) {
 		this.optlk = optlk;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((codigo == null) ? 0 : codigo.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof ProductoEntity))
+			return false;
+		ProductoEntity other = (ProductoEntity) obj;
+		if (codigo == null) {
+			if (other.codigo != null)
+				return false;
+		} else if (!codigo.equals(other.codigo))
+			return false;
+		return true;
+	}
+
 }
