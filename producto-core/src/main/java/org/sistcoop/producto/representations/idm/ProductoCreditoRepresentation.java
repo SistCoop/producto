@@ -24,7 +24,7 @@ public class ProductoCreditoRepresentation implements Serializable {
 	private String tipoPersona;
 	private boolean estado;
 
-	protected List<ProductoMonedaRepresentation> monedas;
+	private String moneda;
 	private List<ProductoTasaRepresentation> tasas;
 
 	private BigDecimal montoMinimo;
@@ -76,12 +76,12 @@ public class ProductoCreditoRepresentation implements Serializable {
 	}
 
 	@XmlAttribute
-	public List<ProductoMonedaRepresentation> getMonedas() {
-		return monedas;
+	public String getMoneda() {
+		return moneda;
 	}
 
-	public void setMonedas(List<ProductoMonedaRepresentation> monedas) {
-		this.monedas = monedas;
+	public void setMoneda(String moneda) {
+		this.moneda = moneda;
 	}
 
 	@XmlAttribute
@@ -110,5 +110,7 @@ public class ProductoCreditoRepresentation implements Serializable {
 	public void setMontoMaximo(BigDecimal montoMaximo) {
 		this.montoMaximo = montoMaximo;
 	}
+
+	
 
 }
