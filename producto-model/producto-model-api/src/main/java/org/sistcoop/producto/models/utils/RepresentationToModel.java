@@ -13,13 +13,15 @@ import org.sistcoop.producto.models.ProductoCuentaPersonalModel;
 import org.sistcoop.producto.models.ProductoCuentaPersonalProvider;
 import org.sistcoop.producto.models.enums.TipoPersona;
 import org.sistcoop.producto.representations.idm.ProductoCreditoRepresentation;
+import org.sistcoop.producto.representations.idm.ProductoCuentaPersonalRepresentation;
 import org.sistcoop.producto.representations.idm.ProductoMonedaRepresentation;
 
 @Stateless
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
 public class RepresentationToModel {
 
-	public ProductoCuentaPersonalModel createProductoCuentaPersonal(ProductoCreditoRepresentation rep, ProductoCuentaPersonalProvider provider) {
+	public ProductoCuentaPersonalModel createProductoCuentaPersonal(ProductoCuentaPersonalRepresentation rep, ProductoCuentaPersonalProvider provider) {
+		
 		
 		List<String> monedas = new ArrayList<String>();
 		for (ProductoMonedaRepresentation productoMonedaRepresentation : rep.getMonedas()) {
@@ -36,18 +38,14 @@ public class RepresentationToModel {
 
 	public ProductoCreditoModel createProductoCredito(ProductoCreditoRepresentation rep, ProductoCreditoProvider provider) {
 
-		List<String> monedas = new ArrayList<String>();
-		for (ProductoMonedaRepresentation productoMonedaRepresentation : rep.getMonedas()) {
-			monedas.add(productoMonedaRepresentation.getMoneda());
-		}
-
 		ProductoCreditoModel model = provider.addProductoCredito(
+				rep.getCodigo(),
 				rep.getDenominacion(), 
-				TipoPersona.valueOf(rep.getTipoPersona()), 				
+				TipoPersona.valueOf(rep.getTipoPersona()),
+				rep.getMoneda(),
 				rep.getMontoMinimo(),
 				rep.getMontoMaximo());
 
-		//falta crear las monedas
 		return model;
 	}
 

@@ -12,8 +12,10 @@ import org.sistcoop.producto.provider.Provider;
 public interface ProductoCreditoProvider extends Provider {	
 
 	ProductoCreditoModel addProductoCredito(
+			String codigo,
 			String denominacion, 
-			TipoPersona tipoPersona, 			
+			TipoPersona tipoPersona,
+			String moneda,
 			BigDecimal montoMinimo,
 			BigDecimal montoMaximo);
 	

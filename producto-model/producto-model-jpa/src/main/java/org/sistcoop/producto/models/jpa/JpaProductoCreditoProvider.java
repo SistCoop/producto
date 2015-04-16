@@ -34,15 +34,14 @@ public class JpaProductoCreditoProvider implements ProductoCreditoProvider {
 	}
 
 	@Override
-	public ProductoCreditoModel addProductoCredito(String denominacion, TipoPersona tipoPersona, BigDecimal montoMinimo, BigDecimal montoMaximo) {
+	public ProductoCreditoModel addProductoCredito(String codigo, String denominacion, TipoPersona tipoPersona, String moneda, BigDecimal montoMinimo, BigDecimal montoMaximo) {
 		ProductoCreditoEntity entity = new ProductoCreditoEntity();
+		entity.setCodigo(codigo);
 		entity.setDenominacion(denominacion);
 		entity.setTipoPersona(tipoPersona);
+		entity.setMoneda(moneda);
 		entity.setMontoMinimo(montoMinimo);
 		entity.setMontoMaximo(montoMaximo);
-
-		String codigo = UUID.randomUUID().toString();
-		entity.setCodigo(codigo);
 
 		entity.setEstado(true);
 

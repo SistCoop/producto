@@ -111,6 +111,4 @@ public class ProductoCreditoRepresentation implements Serializable {
 		this.montoMaximo = montoMaximo;
 	}
 
-	
-
 }

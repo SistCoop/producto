@@ -1,6 +1,14 @@
 package org.sistcoop.producto.models;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertThat;
 import java.io.File;
+import java.math.BigDecimal;
+
+import javax.inject.Inject;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -21,12 +29,12 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Arquillian.class)
 @UsingDataSet("empty.xml")
-public class ProductoProviderTest {
+public class ProductoCreditoProviderTest {
 
-	Logger log = LoggerFactory.getLogger(ProductoProviderTest.class);
+	Logger log = LoggerFactory.getLogger(ProductoCreditoProviderTest.class);
 
-	//@Inject
-	//private TipoDocumentoProvider tipoDocumentoProvider;
+	@Inject
+	private ProductoCreditoProvider productoCreditoProvider;
 
 	@Deployment
 	public static WebArchive createDeployment() {
@@ -59,8 +67,11 @@ public class ProductoProviderTest {
 	}
 
 	@Test
-	public void addTipoDocumento() {
+	public void addProductoCredito() {
+		ProductoCreditoModel a = productoCreditoProvider.addProductoCredito("CRE001", "Rapidiario", TipoPersona.NATURAL, "S/.", new BigDecimal("1"), new BigDecimal("1000"));
 		
+		assertThat("model no debe ser null", a, is(notNullValue()));
+		assertThat("id no debe ser null", a.getId(), is(notNullValue()));
 	}
 	
 }
