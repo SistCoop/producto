@@ -16,8 +16,10 @@ import org.hibernate.annotations.NamedQuery;
 @Table(name = "PRODUCTO_CREDITO")
 @PrimaryKeyJoinColumn
 @NamedQueries({ 
-	@NamedQuery(name = ProductoCreditoEntity.findAll, query = "SELECT p FROM ProductoCreditoEntity p"), 
-	@NamedQuery(name = ProductoCreditoEntity.findByTipoPersona, query = "SELECT p FROM ProductoCreditoEntity p WHERE p.tipoPersona = :tipoPersona")})
+	@NamedQuery(name = ProductoCreditoEntity.findAll, query = "SELECT p FROM ProductoCreditoEntity p"),
+	@NamedQuery(name = ProductoCreditoEntity.findByTipoPersona, query = "SELECT p FROM ProductoCreditoEntity p WHERE p.tipoPersona = :tipoPersona"),
+	@NamedQuery(name = ProductoCreditoEntity.findByCodigo, query = "SELECT p FROM ProductoCreditoEntity p WHERE p.codigo = :codigo"),
+	@NamedQuery(name = ProductoCreditoEntity.findByDenominacion, query = "SELECT p FROM ProductoCreditoEntity p WHERE p.denominacion = :denominacion")})
 public class ProductoCreditoEntity extends ProductoEntity {
 
 	/**
@@ -28,6 +30,8 @@ public class ProductoCreditoEntity extends ProductoEntity {
 	public final static String base = "org.sistcoop.producto.models.jpa.entities.ProductoCreditoEntity.";
 	public final static String findAll = base + "findAll";
 	public final static String findByTipoPersona = base + "findByTipoPersona";
+	public final static String findByCodigo = base + "findByCodigo";
+	public final static String findByDenominacion = base + "findByDenominacion";
 
 	private BigDecimal montoMinimo;
 	private BigDecimal montoMaximo;
@@ -53,5 +57,5 @@ public class ProductoCreditoEntity extends ProductoEntity {
 	public void setMontoMaximo(BigDecimal montoMaximo) {
 		this.montoMaximo = montoMaximo;
 	}
-
+	
 }

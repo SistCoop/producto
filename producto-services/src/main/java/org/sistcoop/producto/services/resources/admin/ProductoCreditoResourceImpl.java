@@ -36,6 +36,20 @@ public class ProductoCreditoResourceImpl implements ProductoCreditoResource {
 		ProductoCreditoRepresentation rep = ModelToRepresentation.toRepresentation(model);
 		return rep;
 	}
+	
+	@Override
+	public ProductoCreditoRepresentation findByCodigo(String codigo) {
+		ProductoCreditoModel model = productoCreditoProvider.getProductoByCodigo(codigo);
+		ProductoCreditoRepresentation rep = ModelToRepresentation.toRepresentation(model);
+		return rep;
+	}
+	
+	@Override
+	public ProductoCreditoRepresentation findByDenominacion(String denominacion) {
+		ProductoCreditoModel model = productoCreditoProvider.getProductoByDenominacion(denominacion);
+		ProductoCreditoRepresentation rep = ModelToRepresentation.toRepresentation(model);
+		return rep;
+	}
 
 	@Override
 	public Response create(ProductoCreditoRepresentation productoCreditoRepresentation) {

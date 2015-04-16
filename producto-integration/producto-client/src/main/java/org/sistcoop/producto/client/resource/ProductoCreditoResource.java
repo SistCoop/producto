@@ -18,6 +18,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.hibernate.validator.constraints.NotBlank;
 import org.sistcoop.producto.representations.idm.ProductoCreditoRepresentation;
 
 
@@ -31,6 +32,22 @@ public interface ProductoCreditoResource {
 			@PathParam("id") 
 			@NotNull 
 			@Min(1) Integer id);
+	
+	@GET
+	@Path("/buscar/{codigo}")
+	public ProductoCreditoRepresentation findByCodigo(
+			@PathParam("codigo") 
+			@NotNull 
+			@NotBlank
+			@Size(min = 1, max = 20) String codigo);
+	
+	@GET
+	@Path("/buscar/{denominacion}")
+	public ProductoCreditoRepresentation findByDenominacion(
+			@PathParam("denominacion") 
+			@NotNull 
+			@NotBlank
+			@Size(min = 1, max = 100) String denominacion);
 
 	@POST
 	public Response create(

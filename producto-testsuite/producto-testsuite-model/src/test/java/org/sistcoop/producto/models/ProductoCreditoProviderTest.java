@@ -3,8 +3,8 @@ package org.sistcoop.producto.models;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
+
 import java.io.File;
 import java.math.BigDecimal;
 
@@ -74,4 +74,33 @@ public class ProductoCreditoProviderTest {
 		assertThat("id no debe ser null", a.getId(), is(notNullValue()));
 	}
 	
+	@Test
+	public void geProductoCreditoById()  {		
+		ProductoCreditoModel model1 = productoCreditoProvider.addProductoCredito("CRE001", "Rapidiario", TipoPersona.NATURAL, "S/.", new BigDecimal("1"), new BigDecimal("1000"));
+				
+		Integer id = model1.getId();
+		ProductoCreditoModel model2 = productoCreditoProvider.getProductoById(id);
+
+		assertThat(model1, is(equalTo(model2)));
+	}
+	
+	@Test
+	public void getProductoCreditoByCodigo()  {		
+		ProductoCreditoModel model1 = productoCreditoProvider.addProductoCredito("CRE001", "Rapidiario", TipoPersona.NATURAL, "S/.", new BigDecimal("1"), new BigDecimal("1000"));
+				
+		String codigo = model1.getCodigo();
+		ProductoCreditoModel model2 = productoCreditoProvider.getProductoByCodigo(codigo);
+
+		assertThat(model1, is(equalTo(model2)));
+	}
+	
+	@Test
+	public void getProductoCreditoByDenominacion()  {		
+		ProductoCreditoModel model1 = productoCreditoProvider.addProductoCredito("CRE001", "Rapidiario", TipoPersona.NATURAL, "S/.", new BigDecimal("1"), new BigDecimal("1000"));
+				
+		String denominacion = model1.getDenominacion();
+		ProductoCreditoModel model2 = productoCreditoProvider.getProductoByDenominacion(denominacion);
+
+		assertThat(model1, is(equalTo(model2)));
+	}
 }

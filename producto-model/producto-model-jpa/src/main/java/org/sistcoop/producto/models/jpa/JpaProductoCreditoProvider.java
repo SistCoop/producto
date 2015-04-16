@@ -3,7 +3,6 @@ package org.sistcoop.producto.models.jpa;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import javax.ejb.Local;
 import javax.ejb.Stateless;
@@ -32,6 +31,32 @@ public class JpaProductoCreditoProvider implements ProductoCreditoProvider {
 	public void close() {
 		// TODO Auto-generated method stub
 	}
+	
+	@Override
+	public ProductoCreditoModel getProductoById(Integer id) {
+		ProductoCreditoEntity productoCreditoEntity = this.em.find(ProductoCreditoEntity.class, id);
+		return productoCreditoEntity != null ? new ProductoCreditoAdapter(em, productoCreditoEntity) : null;
+	}
+	
+	@Override
+	public ProductoCreditoModel getProductoByCodigo(String codigo) {
+		TypedQuery<ProductoCreditoEntity> query = em.createNamedQuery(ProductoCreditoEntity.findByCodigo, ProductoCreditoEntity.class);
+		query.setParameter("codigo", codigo);
+		List<ProductoCreditoEntity> results = query.getResultList();
+		if(results.size() == 0)
+			return null;
+		return new ProductoCreditoAdapter(em, results.get(0));
+	}
+	
+	@Override
+	public ProductoCreditoModel getProductoByDenominacion(String denominacion) {
+		TypedQuery<ProductoCreditoEntity> query = em.createNamedQuery(ProductoCreditoEntity.findByDenominacion, ProductoCreditoEntity.class);
+		query.setParameter("denominacion", denominacion);
+		List<ProductoCreditoEntity> results = query.getResultList();
+		if(results.size() == 0)
+			return null;
+		return new ProductoCreditoAdapter(em, results.get(0));
+	}
 
 	@Override
 	public ProductoCreditoModel addProductoCredito(String codigo, String denominacion, TipoPersona tipoPersona, String moneda, BigDecimal montoMinimo, BigDecimal montoMaximo) {
@@ -55,12 +80,6 @@ public class JpaProductoCreditoProvider implements ProductoCreditoProvider {
 		entity.setEstado(false);
 		em.merge(entity);
 		return true;
-	}
-
-	@Override
-	public ProductoCreditoModel getProductoById(Integer id) {
-		ProductoCreditoEntity productoCreditoEntity = this.em.find(ProductoCreditoEntity.class, id);
-		return productoCreditoEntity != null ? new ProductoCreditoAdapter(em, productoCreditoEntity) : null;
 	}
 
 	@Override

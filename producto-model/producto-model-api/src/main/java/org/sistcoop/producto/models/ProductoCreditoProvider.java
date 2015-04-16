@@ -11,6 +11,12 @@ import org.sistcoop.producto.provider.Provider;
 @Local
 public interface ProductoCreditoProvider extends Provider {	
 
+	ProductoCreditoModel getProductoById(Integer id);
+	
+	ProductoCreditoModel getProductoByCodigo(String codigo);
+	
+	ProductoCreditoModel getProductoByDenominacion(String denominacion);
+	
 	ProductoCreditoModel addProductoCredito(
 			String codigo,
 			String denominacion, 
@@ -20,8 +26,6 @@ public interface ProductoCreditoProvider extends Provider {
 			BigDecimal montoMaximo);
 	
 	boolean desactivarProducto(ProductoCreditoModel productoModel);
-
-	ProductoCreditoModel getProductoById(Integer id);
 
 	List<ProductoCreditoModel> getProductos();
 		
