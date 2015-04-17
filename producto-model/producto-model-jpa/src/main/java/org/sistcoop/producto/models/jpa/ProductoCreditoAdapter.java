@@ -46,6 +46,11 @@ public class ProductoCreditoAdapter implements ProductoCreditoModel {
 	public String getCodigo() {
 		return productoCreditoEntity.getCodigo();
 	}
+	
+	@Override
+	public void setCodigo(String codigo) {
+		productoCreditoEntity.setCodigo(codigo);
+	}
 
 	@Override
 	public String getDenominacion() {
@@ -65,6 +70,11 @@ public class ProductoCreditoAdapter implements ProductoCreditoModel {
 	@Override
 	public void setTipoPersona(TipoPersona tipoPersona) {
 		productoCreditoEntity.setTipoPersona(tipoPersona);
+	}
+	
+	@Override
+	public void setMoneda(String moneda) {
+		productoCreditoEntity.setMoneda(moneda);
 	}
 
 	@Override

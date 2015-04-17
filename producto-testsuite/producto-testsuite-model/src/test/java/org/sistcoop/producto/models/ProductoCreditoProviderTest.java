@@ -79,7 +79,7 @@ public class ProductoCreditoProviderTest {
 		ProductoCreditoModel model1 = productoCreditoProvider.addProductoCredito("CRE001", "Rapidiario", TipoPersona.NATURAL, "S/.", new BigDecimal("1"), new BigDecimal("1000"));
 				
 		Integer id = model1.getId();
-		ProductoCreditoModel model2 = productoCreditoProvider.getProductoById(id);
+		ProductoCreditoModel model2 = productoCreditoProvider.getProductoCreditoById(id);
 
 		assertThat(model1, is(equalTo(model2)));
 	}
@@ -89,7 +89,7 @@ public class ProductoCreditoProviderTest {
 		ProductoCreditoModel model1 = productoCreditoProvider.addProductoCredito("CRE001", "Rapidiario", TipoPersona.NATURAL, "S/.", new BigDecimal("1"), new BigDecimal("1000"));
 				
 		String codigo = model1.getCodigo();
-		ProductoCreditoModel model2 = productoCreditoProvider.getProductoByCodigo(codigo);
+		ProductoCreditoModel model2 = productoCreditoProvider.getProductoCreditoByCodigo(codigo);
 
 		assertThat(model1, is(equalTo(model2)));
 	}

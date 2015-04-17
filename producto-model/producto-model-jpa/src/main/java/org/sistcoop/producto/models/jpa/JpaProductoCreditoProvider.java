@@ -33,13 +33,13 @@ public class JpaProductoCreditoProvider implements ProductoCreditoProvider {
 	}
 	
 	@Override
-	public ProductoCreditoModel getProductoById(Integer id) {
+	public ProductoCreditoModel getProductoCreditoById(Integer id) {
 		ProductoCreditoEntity productoCreditoEntity = this.em.find(ProductoCreditoEntity.class, id);
 		return productoCreditoEntity != null ? new ProductoCreditoAdapter(em, productoCreditoEntity) : null;
 	}
 	
 	@Override
-	public ProductoCreditoModel getProductoByCodigo(String codigo) {
+	public ProductoCreditoModel getProductoCreditoByCodigo(String codigo) {
 		TypedQuery<ProductoCreditoEntity> query = em.createNamedQuery(ProductoCreditoEntity.findByCodigo, ProductoCreditoEntity.class);
 		query.setParameter("codigo", codigo);
 		List<ProductoCreditoEntity> results = query.getResultList();

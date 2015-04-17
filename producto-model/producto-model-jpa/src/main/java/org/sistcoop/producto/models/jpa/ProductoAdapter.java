@@ -49,6 +49,11 @@ public class ProductoAdapter implements ProductoModel {
 	public String getCodigo() {
 		return productoEntity.getCodigo();
 	}
+	
+	@Override
+	public void setCodigo(String codigo) {
+		productoEntity.setCodigo(codigo);
+	}
 
 	@Override
 	public String getDenominacion() {
@@ -68,6 +73,11 @@ public class ProductoAdapter implements ProductoModel {
 	@Override
 	public void setTipoPersona(TipoPersona tipoPersona) {
 		productoEntity.setTipoPersona(tipoPersona);
+	}
+	
+	@Override
+	public void setMoneda(String moneda) {
+		productoEntity.setMoneda(moneda);
 	}
 
 	@Override

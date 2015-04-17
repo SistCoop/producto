@@ -32,14 +32,14 @@ public class ProductoCreditoResourceImpl implements ProductoCreditoResource {
 
 	@Override
 	public ProductoCreditoRepresentation findById(Integer id) {
-		ProductoCreditoModel model = productoCreditoProvider.getProductoById(id);
+		ProductoCreditoModel model = productoCreditoProvider.getProductoCreditoById(id);
 		ProductoCreditoRepresentation rep = ModelToRepresentation.toRepresentation(model);
 		return rep;
 	}
 	
 	@Override
 	public ProductoCreditoRepresentation findByCodigo(String codigo) {
-		ProductoCreditoModel model = productoCreditoProvider.getProductoByCodigo(codigo);
+		ProductoCreditoModel model = productoCreditoProvider.getProductoCreditoByCodigo(codigo);
 		ProductoCreditoRepresentation rep = ModelToRepresentation.toRepresentation(model);
 		return rep;
 	}
@@ -58,12 +58,15 @@ public class ProductoCreditoResourceImpl implements ProductoCreditoResource {
 	}
 
 	@Override
-	public void update(int id, ProductoCreditoRepresentation tipoDocumentoRepresentation) {
-		ProductoCreditoModel model = productoCreditoProvider.getProductoById(id);
-		model.setDenominacion(tipoDocumentoRepresentation.getDenominacion());
-		model.setTipoPersona(TipoPersona.valueOf(tipoDocumentoRepresentation.getTipoPersona()));
-		model.setMontoMinimo(tipoDocumentoRepresentation.getMontoMinimo());
-		model.setMontoMinimo(tipoDocumentoRepresentation.getMontoMinimo());
+	public void update(int id, ProductoCreditoRepresentation productoCreditoRepresentacion) {
+		ProductoCreditoModel model = productoCreditoProvider.getProductoCreditoById(id);
+		
+		model.setCodigo(productoCreditoRepresentacion.getCodigo());
+		model.setDenominacion(productoCreditoRepresentacion.getDenominacion());
+		model.setTipoPersona(TipoPersona.valueOf(productoCreditoRepresentacion.getTipoPersona()));
+		model.setMoneda(productoCreditoRepresentacion.getMoneda());
+		model.setMontoMinimo(productoCreditoRepresentacion.getMontoMinimo());
+		model.setMontoMinimo(productoCreditoRepresentacion.getMontoMinimo());
 		model.commit();
 	}
 
@@ -74,7 +77,7 @@ public class ProductoCreditoResourceImpl implements ProductoCreditoResource {
 
 	@Override
 	public void desactivar(int id) {
-		ProductoCreditoModel model = productoCreditoProvider.getProductoById(id);
+		ProductoCreditoModel model = productoCreditoProvider.getProductoCreditoById(id);
 		boolean result = productoCreditoProvider.desactivarProducto(model);
 		if (!result)
 			throw new InternalServerErrorException();

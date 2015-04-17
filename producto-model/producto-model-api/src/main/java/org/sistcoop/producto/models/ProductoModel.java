@@ -9,6 +9,8 @@ public interface ProductoModel extends Model {
 	Integer getId();
 
 	String getCodigo();
+	
+	void setCodigo(String codigo);
 
 	String getDenominacion();
 
@@ -17,6 +19,8 @@ public interface ProductoModel extends Model {
 	TipoPersona getTipoPersona();
 
 	void setTipoPersona(TipoPersona tipoPersona);
+	
+	void setMoneda(String moneda);
 
 	boolean getEstado();
 

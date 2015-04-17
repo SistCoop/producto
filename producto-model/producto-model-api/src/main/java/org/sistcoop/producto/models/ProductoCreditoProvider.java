@@ -11,9 +11,9 @@ import org.sistcoop.producto.provider.Provider;
 @Local
 public interface ProductoCreditoProvider extends Provider {	
 
-	ProductoCreditoModel getProductoById(Integer id);
+	ProductoCreditoModel getProductoCreditoById(Integer id);
 	
-	ProductoCreditoModel getProductoByCodigo(String codigo);
+	ProductoCreditoModel getProductoCreditoByCodigo(String codigo);
 	
 	ProductoCreditoModel getProductoByDenominacion(String denominacion);
 	

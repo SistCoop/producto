@@ -56,9 +56,13 @@ public interface ProductoCreditoResource {
 
 	@PUT
 	@Path("/{id}")
-	public void update(@PathParam("id") int id, 
+	public void update(
+			@PathParam("id")
 			@NotNull 
-			@Valid ProductoCreditoRepresentation tipoDocumentoRepresentation);
+			@Min(value = 1) int id,
+			
+			@NotNull 
+			@Valid ProductoCreditoRepresentation productoCreditoRepresentacion);
 
 	@DELETE
 	@Path("/{id}")

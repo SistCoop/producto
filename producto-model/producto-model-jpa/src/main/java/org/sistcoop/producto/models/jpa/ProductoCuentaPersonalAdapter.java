@@ -44,6 +44,11 @@ public class ProductoCuentaPersonalAdapter implements ProductoCuentaPersonalMode
 	public String getCodigo() {
 		return productoCuentaPersonalEntity.getCodigo();
 	}
+	
+	@Override
+	public void setCodigo(String codigo) {
+		productoCuentaPersonalEntity.setCodigo(codigo);
+	}
 
 	@Override
 	public String getDenominacion() {
@@ -63,6 +68,11 @@ public class ProductoCuentaPersonalAdapter implements ProductoCuentaPersonalMode
 	@Override
 	public void setTipoPersona(TipoPersona tipoPersona) {
 		productoCuentaPersonalEntity.setTipoPersona(tipoPersona);
+	}
+	
+	@Override
+	public void setMoneda(String moneda) {
+		productoCuentaPersonalEntity.setMoneda(moneda);
 	}
 
 	@Override
