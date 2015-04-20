@@ -25,7 +25,7 @@ public interface ProductoCreditoProvider extends Provider {
 			BigDecimal montoMinimo,
 			BigDecimal montoMaximo);
 	
-	boolean desactivarProducto(ProductoCreditoModel productoModel);
+	boolean desactivarProductoCredito(ProductoCreditoModel productoModel);
 
 	List<ProductoCreditoModel> getProductos();
 		

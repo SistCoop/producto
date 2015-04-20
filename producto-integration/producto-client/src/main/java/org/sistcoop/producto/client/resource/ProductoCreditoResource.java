@@ -65,7 +65,7 @@ public interface ProductoCreditoResource {
 			@Valid ProductoCreditoRepresentation productoCreditoRepresentacion);
 
 	@DELETE
-	@Path("/{id}")
+	@Path("/{id}/delete")
 	public void delete(
 			@PathParam("id") 
 			@NotNull 

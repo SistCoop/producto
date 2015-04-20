@@ -69,18 +69,18 @@ public class ProductoCreditoResourceImpl implements ProductoCreditoResource {
 		model.setMontoMinimo(productoCreditoRepresentacion.getMontoMinimo());
 		model.commit();
 	}
+	
+	@Override
+	public void desactivar(int id) {
+		ProductoCreditoModel model = productoCreditoProvider.getProductoCreditoById(id);
+		boolean result = productoCreditoProvider.desactivarProductoCredito(model);
+		if (!result)
+			throw new InternalServerErrorException();
+	}
 
 	@Override
 	public void delete(int id) {
 		throw new InternalServerErrorException();
-	}
-
-	@Override
-	public void desactivar(int id) {
-		ProductoCreditoModel model = productoCreditoProvider.getProductoCreditoById(id);
-		boolean result = productoCreditoProvider.desactivarProducto(model);
-		if (!result)
-			throw new InternalServerErrorException();
 	}
 
 	@Override

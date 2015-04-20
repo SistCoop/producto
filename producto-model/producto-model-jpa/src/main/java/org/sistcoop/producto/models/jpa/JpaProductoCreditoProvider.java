@@ -75,7 +75,7 @@ public class JpaProductoCreditoProvider implements ProductoCreditoProvider {
 	}
 
 	@Override
-	public boolean desactivarProducto(ProductoCreditoModel productoModel) {
+	public boolean desactivarProductoCredito(ProductoCreditoModel productoModel) {
 		ProductoCreditoEntity entity = ProductoCreditoAdapter.toProductoCreditoEntity(productoModel, em);
 		entity.setEstado(false);
 		em.merge(entity);
