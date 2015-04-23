@@ -12,8 +12,8 @@ public enum Frecuencia {
 	MENSUAL,
 
 	/**
-	 * Una vez cada día
+	 * Una vez cada dï¿½a
 	 */
-	DIARIO;
+	DIARIO
 
 }
