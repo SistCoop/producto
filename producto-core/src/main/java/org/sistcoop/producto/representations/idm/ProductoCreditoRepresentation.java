@@ -4,10 +4,15 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 @XmlRootElement(name = "productoCredito")
 @XmlAccessorType(XmlAccessType.PROPERTY)
@@ -40,6 +45,8 @@ public class ProductoCreditoRepresentation implements Serializable {
 	}
 
 	@XmlAttribute
+	@NotNull
+	@NotBlank
 	public String getCodigo() {
 		return codigo;
 	}
@@ -49,6 +56,8 @@ public class ProductoCreditoRepresentation implements Serializable {
 	}
 
 	@XmlAttribute
+	@NotNull
+	@NotBlank
 	public String getDenominacion() {
 		return denominacion;
 	}
@@ -58,6 +67,8 @@ public class ProductoCreditoRepresentation implements Serializable {
 	}
 
 	@XmlAttribute
+	@NotNull
+	@NotBlank
 	public String getTipoPersona() {
 		return tipoPersona;
 	}
@@ -76,6 +87,9 @@ public class ProductoCreditoRepresentation implements Serializable {
 	}
 
 	@XmlAttribute
+	@NotNull
+	@NotBlank
+	@Size(min = 3, max = 3)
 	public String getMoneda() {
 		return moneda;
 	}
@@ -94,6 +108,8 @@ public class ProductoCreditoRepresentation implements Serializable {
 	}
 
 	@XmlAttribute
+	@NotNull
+	@Min(value = 1)
 	public BigDecimal getMontoMinimo() {
 		return montoMinimo;
 	}
@@ -103,6 +119,7 @@ public class ProductoCreditoRepresentation implements Serializable {
 	}
 
 	@XmlAttribute
+	@NotNull
 	public BigDecimal getMontoMaximo() {
 		return montoMaximo;
 	}
