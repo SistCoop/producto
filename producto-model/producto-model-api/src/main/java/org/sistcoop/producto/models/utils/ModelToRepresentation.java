@@ -3,9 +3,11 @@ package org.sistcoop.producto.models.utils;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.sistcoop.producto.models.ProductoCaracteristicaModel;
 import org.sistcoop.producto.models.ProductoCreditoModel;
 import org.sistcoop.producto.models.ProductoCuentaPersonalModel;
 import org.sistcoop.producto.models.ProductoTasaModel;
+import org.sistcoop.producto.representations.idm.ProductoCaracteristicaRepresentation;
 import org.sistcoop.producto.representations.idm.ProductoCreditoRepresentation;
 import org.sistcoop.producto.representations.idm.ProductoCuentaPersonalRepresentation;
 import org.sistcoop.producto.representations.idm.ProductoTasaRepresentation;
@@ -63,6 +65,20 @@ public class ModelToRepresentation {
 		}
 		rep.setTasas(productoTasaRepresentations);
 
+		return rep;
+	}
+
+	public static ProductoCaracteristicaRepresentation toRepresentation(
+			ProductoCaracteristicaModel model) {
+
+		if (model == null)
+			return null;
+
+		ProductoCaracteristicaRepresentation rep = new ProductoCaracteristicaRepresentation();
+		rep.setId(model.getId());
+		rep.setDescripcion(model.getDescripcion());
+		rep.setDescripcionDetallada(model.getDescripcionDetallada());
+		
 		return rep;
 	}
 

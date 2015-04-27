@@ -19,6 +19,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.sistcoop.producto.representations.idm.ProductoCaracteristicaRepresentation;
 import org.sistcoop.producto.representations.idm.ProductoCreditoRepresentation;
 
 
@@ -97,4 +98,23 @@ public interface ProductoCreditoResource {
 			List<String> monedas,
 			
 			@QueryParam("estado") Boolean estado);
+	
+	
+	/**
+	 * Producto caracteristicas**/
+	
+	@POST
+	@Path("/{id}/caracteristicas")
+	public Response addProductoCaracteristica(
+			@PathParam("id") 
+			@NotNull Integer id,
+			
+			@NotNull
+			@Valid ProductoCaracteristicaRepresentation productoCaracteristicaRepresentation);
+	
+	@GET
+	@Path("/{id}/caracteristicas")
+	public List<ProductoCaracteristicaRepresentation> getProductoCaracteristicas(
+			@PathParam("id") 
+			@NotNull Integer id);
 }

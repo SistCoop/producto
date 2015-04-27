@@ -28,6 +28,8 @@ public interface ProductoModel extends Model {
 
 	void desactivar();
 
+	List<ProductoCaracteristicaModel> getCaracteristicas();
+	
 	List<ProductoTasaModel> getTasas();
 
 }

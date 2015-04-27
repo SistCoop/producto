@@ -6,9 +6,11 @@ import java.util.Set;
 
 import javax.persistence.EntityManager;
 
+import org.sistcoop.producto.models.ProductoCaracteristicaModel;
 import org.sistcoop.producto.models.ProductoModel;
 import org.sistcoop.producto.models.ProductoTasaModel;
 import org.sistcoop.producto.models.enums.TipoPersona;
+import org.sistcoop.producto.models.jpa.entities.ProductoCaracteristicaEntity;
 import org.sistcoop.producto.models.jpa.entities.ProductoEntity;
 import org.sistcoop.producto.models.jpa.entities.ProductoTasaEntity;
 
@@ -96,6 +98,16 @@ public class ProductoAdapter implements ProductoModel {
 	}
 
 	@Override
+	public List<ProductoCaracteristicaModel> getCaracteristicas() {
+		Set<ProductoCaracteristicaEntity> productoCaracteristicaEntities = productoEntity.getCaracteristicas();
+		List<ProductoCaracteristicaModel> result = new ArrayList<ProductoCaracteristicaModel>();
+		for (ProductoCaracteristicaEntity productoCaracteristicaEntity : productoCaracteristicaEntities) {
+			result.add(new ProductoCaracteristicaAdapter(em, productoCaracteristicaEntity));
+		}
+		return result;
+	}
+	
+	@Override
 	public List<ProductoTasaModel> getTasas() {
 		Set<ProductoTasaEntity> tasas = productoEntity.getTasas();
 		List<ProductoTasaModel> result = new ArrayList<ProductoTasaModel>();
@@ -104,6 +116,6 @@ public class ProductoAdapter implements ProductoModel {
 			result.add(productoTasaModel);
 		}
 		return result;
-	}
+	}	
 
 }

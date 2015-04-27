@@ -7,10 +7,12 @@ import java.util.Set;
 
 import javax.persistence.EntityManager;
 
+import org.sistcoop.producto.models.ProductoCaracteristicaModel;
 import org.sistcoop.producto.models.ProductoCreditoModel;
 import org.sistcoop.producto.models.ProductoModel;
 import org.sistcoop.producto.models.ProductoTasaModel;
 import org.sistcoop.producto.models.enums.TipoPersona;
+import org.sistcoop.producto.models.jpa.entities.ProductoCaracteristicaEntity;
 import org.sistcoop.producto.models.jpa.entities.ProductoCreditoEntity;
 import org.sistcoop.producto.models.jpa.entities.ProductoTasaEntity;
 
@@ -126,6 +128,16 @@ public class ProductoCreditoAdapter implements ProductoCreditoModel {
 	@Override
 	public void commit() {
 		em.merge(productoCreditoEntity);
+	}
+	
+	@Override
+	public List<ProductoCaracteristicaModel> getCaracteristicas() {
+		Set<ProductoCaracteristicaEntity> productoCaracteristicaEntities = productoCreditoEntity.getCaracteristicas();
+		List<ProductoCaracteristicaModel> result = new ArrayList<ProductoCaracteristicaModel>();
+		for (ProductoCaracteristicaEntity productoCaracteristicaEntity : productoCaracteristicaEntities) {
+			result.add(new ProductoCaracteristicaAdapter(em, productoCaracteristicaEntity));
+		}
+		return result;
 	}
 	
 	@Override

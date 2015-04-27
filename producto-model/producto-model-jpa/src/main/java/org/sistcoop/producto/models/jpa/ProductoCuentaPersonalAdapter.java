@@ -6,9 +6,11 @@ import java.util.Set;
 
 import javax.persistence.EntityManager;
 
+import org.sistcoop.producto.models.ProductoCaracteristicaModel;
 import org.sistcoop.producto.models.ProductoCuentaPersonalModel;
 import org.sistcoop.producto.models.ProductoTasaModel;
 import org.sistcoop.producto.models.enums.TipoPersona;
+import org.sistcoop.producto.models.jpa.entities.ProductoCaracteristicaEntity;
 import org.sistcoop.producto.models.jpa.entities.ProductoCuentaPersonalEntity;
 import org.sistcoop.producto.models.jpa.entities.ProductoTasaEntity;
 
@@ -90,6 +92,16 @@ public class ProductoCuentaPersonalAdapter implements ProductoCuentaPersonalMode
 		productoCuentaPersonalEntity.setEstado(false);
 	}
 
+	@Override
+	public List<ProductoCaracteristicaModel> getCaracteristicas() {
+		Set<ProductoCaracteristicaEntity> productoCaracteristicaEntities = productoCuentaPersonalEntity.getCaracteristicas();
+		List<ProductoCaracteristicaModel> result = new ArrayList<ProductoCaracteristicaModel>();
+		for (ProductoCaracteristicaEntity productoCaracteristicaEntity : productoCaracteristicaEntities) {
+			result.add(new ProductoCaracteristicaAdapter(em, productoCaracteristicaEntity));
+		}
+		return result;
+	}
+	
 	@Override
 	public List<ProductoTasaModel> getTasas() {
 		Set<ProductoTasaEntity> tasas = productoCuentaPersonalEntity.getTasas();

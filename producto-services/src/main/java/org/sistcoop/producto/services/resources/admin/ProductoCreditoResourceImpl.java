@@ -11,19 +11,30 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.sistcoop.producto.client.resource.ProductoCreditoResource;
+import org.sistcoop.producto.models.ProductoCaracteristicaModel;
+import org.sistcoop.producto.models.ProductoCaracteristicaProvider;
 import org.sistcoop.producto.models.ProductoCreditoModel;
 import org.sistcoop.producto.models.ProductoCreditoProvider;
+import org.sistcoop.producto.models.ProductoModel;
+import org.sistcoop.producto.models.ProductoProvider;
 import org.sistcoop.producto.models.enums.TipoPersona;
 import org.sistcoop.producto.models.utils.ModelToRepresentation;
 import org.sistcoop.producto.models.utils.RepresentationToModel;
+import org.sistcoop.producto.representations.idm.ProductoCaracteristicaRepresentation;
 import org.sistcoop.producto.representations.idm.ProductoCreditoRepresentation;
 
 @Stateless
 public class ProductoCreditoResourceImpl implements ProductoCreditoResource {
 
 	@Inject
+	private ProductoProvider productoProvider;
+	
+	@Inject
 	private ProductoCreditoProvider productoCreditoProvider;
 
+	@Inject
+	private ProductoCaracteristicaProvider productoCaracteristicaProvider;
+	
 	@Inject
 	private RepresentationToModel representationToModel;
 
@@ -121,6 +132,32 @@ public class ProductoCreditoResourceImpl implements ProductoCreditoResource {
 		}
 		return results;
 		
+	}
+
+	
+	/**
+	 * Producto caracteristicas*/
+	
+	@Override
+	public Response addProductoCaracteristica(Integer id,
+			ProductoCaracteristicaRepresentation productoCaracteristicaRepresentation) {
+		
+		ProductoModel productoModel = productoProvider.getProductoById(id);
+		
+		ProductoCaracteristicaModel model = representationToModel.createProductoCaracteristica(productoCaracteristicaRepresentation, productoModel, productoCaracteristicaProvider);
+		return Response.created(uriInfo.getAbsolutePathBuilder().path(model.getId().toString()).build()).header("Access-Control-Expose-Headers", "Location").entity(model.getId()).build();
+		
+	}
+
+	@Override
+	public List<ProductoCaracteristicaRepresentation> getProductoCaracteristicas(Integer id) {
+		ProductoCreditoModel model = productoCreditoProvider.getProductoCreditoById(id);
+		List<ProductoCaracteristicaModel> list = model.getCaracteristicas();
+		List<ProductoCaracteristicaRepresentation> result = new ArrayList<ProductoCaracteristicaRepresentation>();
+		for (ProductoCaracteristicaModel productoCaracteristicaModel : list) {
+			result.add(ModelToRepresentation.toRepresentation(productoCaracteristicaModel));
+		}
+		return result;
 	}
 
 }
