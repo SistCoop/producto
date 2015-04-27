@@ -76,6 +76,11 @@ public class ProductoAdapter implements ProductoModel {
 	}
 	
 	@Override
+	public String getMoneda() {
+		return productoEntity.getMoneda();
+	}
+	
+	@Override
 	public void setMoneda(String moneda) {
 		productoEntity.setMoneda(moneda);
 	}

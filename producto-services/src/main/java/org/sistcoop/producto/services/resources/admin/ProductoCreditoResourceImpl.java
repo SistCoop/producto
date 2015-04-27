@@ -81,16 +81,46 @@ public class ProductoCreditoResourceImpl implements ProductoCreditoResource {
 	@Override
 	public void delete(int id) {
 		throw new InternalServerErrorException();
-	}
+	}	
 
 	@Override
-	public List<ProductoCreditoRepresentation> findAll(String tipoPersona, Boolean estado) {
-		List<ProductoCreditoModel> list = productoCreditoProvider.getProductos(TipoPersona.valueOf(tipoPersona), estado);
-		List<ProductoCreditoRepresentation> result = new ArrayList<ProductoCreditoRepresentation>();
-		for (ProductoCreditoModel productoCreditoModel : list) {
-			result.add(ModelToRepresentation.toRepresentation(productoCreditoModel));
+	public List<ProductoCreditoRepresentation> findAll(String filterText,
+			Integer firstResult, Integer maxResults, String tipoPersona,
+			List<String> monedas, Boolean estado) {
+
+		List<ProductoCreditoRepresentation> results = new ArrayList<ProductoCreditoRepresentation>();
+		List<ProductoCreditoModel> productoCreditoModels = null;		
+		
+		if(filterText == null)
+			filterText = "";
+		if(firstResult == null)
+			firstResult = -1;
+		if(maxResults == null)
+			maxResults = -1;
+		if(tipoPersona == null && monedas.size() == 0) {
+			productoCreditoModels = productoCreditoProvider.getProductos(filterText, firstResult, maxResults);	
+		}			
+		if(tipoPersona == null && monedas.size() != 0) {
+			productoCreditoModels = new ArrayList<ProductoCreditoModel>();
+			for (String moneda : monedas) {
+				productoCreditoModels.addAll(productoCreditoProvider.getProductos(filterText, firstResult, maxResults, moneda));
+			}			
+		}	
+		if(tipoPersona != null && monedas.size() == 0) {			
+			productoCreditoModels = productoCreditoProvider.getProductos(filterText, firstResult, maxResults, TipoPersona.valueOf(tipoPersona));	
 		}
-		return result;
+		if(tipoPersona != null && monedas.size() != 0) {
+			productoCreditoModels = new ArrayList<ProductoCreditoModel>();
+			for (String moneda : monedas) {
+				productoCreditoModels.addAll(productoCreditoProvider.getProductos(filterText, firstResult, maxResults, TipoPersona.valueOf(tipoPersona), moneda));
+			}	
+		}
+		
+		for (ProductoCreditoModel productoCreditoModel : productoCreditoModels) {
+			results.add(ModelToRepresentation.toRepresentation(productoCreditoModel));
+		}
+		return results;
+		
 	}
 
 }

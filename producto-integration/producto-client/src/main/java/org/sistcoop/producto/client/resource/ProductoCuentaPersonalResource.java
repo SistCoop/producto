@@ -3,6 +3,7 @@ package org.sistcoop.producto.client.resource;
 import java.util.List;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.ws.rs.Consumes;
@@ -57,9 +58,22 @@ public interface ProductoCuentaPersonalResource {
 			@Size(min = 1, max = 20) String id);
 	
 	@GET
-	public List<ProductoCuentaPersonalRepresentation> findAll(
+	public List<ProductoCuentaPersonalRepresentation> findAll(			
+			@QueryParam("filterText")
+			@Size(min = 0, max = 100) String filterText, 
+			
+			@QueryParam("firstResult") 
+			@Min(value = 0) Integer firstResult, 
+			
+			@QueryParam("maxResults") 
+			@Min(value = 1) Integer maxResults,
+			
 			@QueryParam("tipoPersona") 
 			@Size(min = 1, max = 20) String tipoPersona,
 			
+			@QueryParam("monedas") 
+			List<String> monedas,
+			
 			@QueryParam("estado") Boolean estado);
+	
 }

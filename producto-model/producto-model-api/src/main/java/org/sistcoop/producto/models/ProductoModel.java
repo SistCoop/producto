@@ -20,6 +20,8 @@ public interface ProductoModel extends Model {
 
 	void setTipoPersona(TipoPersona tipoPersona);
 	
+	String getMoneda();
+	
 	void setMoneda(String moneda);
 
 	boolean getEstado();

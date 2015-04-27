@@ -71,6 +71,11 @@ public class ProductoCuentaPersonalAdapter implements ProductoCuentaPersonalMode
 	}
 	
 	@Override
+	public String getMoneda() {
+		return productoCuentaPersonalEntity.getMoneda();
+	}
+	
+	@Override
 	public void setMoneda(String moneda) {
 		productoCuentaPersonalEntity.setMoneda(moneda);
 	}

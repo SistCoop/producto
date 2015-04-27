@@ -26,6 +26,7 @@ import org.sistcoop.producto.representations.idm.ProductoCreditoRepresentation;
 @Consumes(MediaType.APPLICATION_JSON)
 @Path("/creditos")
 public interface ProductoCreditoResource {
+	
 	@GET
 	@Path("/{id}")
 	public ProductoCreditoRepresentation findById(
@@ -80,8 +81,20 @@ public interface ProductoCreditoResource {
 	
 	@GET
 	public List<ProductoCreditoRepresentation> findAll(
+			@QueryParam("filterText")
+			@Size(min = 0, max = 100) String filterText, 
+			
+			@QueryParam("firstResult") 
+			@Min(value = 0) Integer firstResult, 
+			
+			@QueryParam("maxResults") 
+			@Min(value = 1) Integer maxResults,
+			
 			@QueryParam("tipoPersona") 
 			@Size(min = 1, max = 20) String tipoPersona,
+			
+			@QueryParam("monedas") 
+			List<String> monedas,
 			
 			@QueryParam("estado") Boolean estado);
 }

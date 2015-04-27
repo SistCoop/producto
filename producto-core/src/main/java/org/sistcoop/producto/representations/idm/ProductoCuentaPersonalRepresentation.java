@@ -6,6 +6,7 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "productoCuentaPersonal")
@@ -23,7 +24,7 @@ public class ProductoCuentaPersonalRepresentation implements Serializable {
 	private String tipoPersona;
 	private boolean estado;
 
-	protected List<ProductoMonedaRepresentation> monedas;
+	protected String moneda;
 	private List<ProductoTasaRepresentation> tasas;
 
 	@XmlAttribute
@@ -72,15 +73,15 @@ public class ProductoCuentaPersonalRepresentation implements Serializable {
 	}
 
 	@XmlAttribute
-	public List<ProductoMonedaRepresentation> getMonedas() {
-		return monedas;
+	public String getMoneda() {
+		return moneda;
 	}
 
-	public void setMonedas(List<ProductoMonedaRepresentation> monedas) {
-		this.monedas = monedas;
+	public void setMoneda(String moneda) {
+		this.moneda = moneda;
 	}
 
-	@XmlAttribute
+	@XmlElement
 	public List<ProductoTasaRepresentation> getTasas() {
 		return tasas;
 	}

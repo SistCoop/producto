@@ -16,9 +16,13 @@ public class ModelToRepresentation {
 		if (model == null)
 			return null;
 
-		ProductoCuentaPersonalRepresentation rep = new ProductoCuentaPersonalRepresentation();
+		ProductoCuentaPersonalRepresentation rep = new ProductoCuentaPersonalRepresentation();		
+		rep.setId(model.getId());
+		rep.setCodigo(model.getCodigo());
 		rep.setDenominacion(model.getDenominacion());
 		rep.setTipoPersona(model.getTipoPersona().toString());
+		rep.setMoneda(model.getMoneda());
+		rep.setEstado(model.getEstado());
 
 		List<ProductoTasaModel> productoTasaModels = model.getTasas();
 		List<ProductoTasaRepresentation> productoTasaRepresentations = new ArrayList<ProductoTasaRepresentation>();
@@ -39,11 +43,15 @@ public class ModelToRepresentation {
 			return null;
 
 		ProductoCreditoRepresentation rep = new ProductoCreditoRepresentation();
+		rep.setId(model.getId());
+		rep.setCodigo(model.getCodigo());
 		rep.setDenominacion(model.getDenominacion());
 		rep.setTipoPersona(model.getTipoPersona().toString());
 		rep.setMontoMinimo(model.getMontoMinimo());
 		rep.setMontoMaximo(model.getMontoMaximo());
-
+		rep.setMoneda(model.getMoneda());
+		rep.setEstado(model.getEstado());
+		
 		List<ProductoTasaModel> productoTasaModels = model.getTasas();
 		List<ProductoTasaRepresentation> productoTasaRepresentations = new ArrayList<ProductoTasaRepresentation>();
 		for (ProductoTasaModel productoTasaModel : productoTasaModels) {

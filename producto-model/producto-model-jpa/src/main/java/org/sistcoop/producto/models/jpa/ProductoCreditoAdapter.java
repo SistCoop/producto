@@ -71,6 +71,11 @@ public class ProductoCreditoAdapter implements ProductoCreditoModel {
 	public void setTipoPersona(TipoPersona tipoPersona) {
 		productoCreditoEntity.setTipoPersona(tipoPersona);
 	}
+		
+	@Override
+	public String getMoneda() {
+		return productoCreditoEntity.getMoneda();
+	}
 	
 	@Override
 	public void setMoneda(String moneda) {

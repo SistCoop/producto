@@ -115,5 +115,121 @@ public class JpaProductoCreditoProvider implements ProductoCreditoProvider {
 		}
 		return productos;
 	}
+	
+	@Override
+	public List<ProductoCreditoModel> getProductos(String filterText, int firstResult, int maxResults) {
+
+		if (filterText == null)
+			filterText = "";
+
+		TypedQuery<ProductoCreditoEntity> query = em.createNamedQuery(ProductoCreditoEntity.findByFilterText, ProductoCreditoEntity.class);
+		query.setParameter("filterText", "%" + filterText.toUpperCase() + "%");		
+		
+		if (firstResult != -1) {
+			query.setFirstResult(firstResult);
+		}
+		if (maxResults != -1) {
+			query.setMaxResults(maxResults);
+		}
+		
+		List<ProductoCreditoEntity> results = query.getResultList();
+		List<ProductoCreditoModel> productoCreditoModels = new ArrayList<ProductoCreditoModel>();
+		for (ProductoCreditoEntity entity : results) {
+			if(entity.isEstado()) {
+				productoCreditoModels.add(new ProductoCreditoAdapter(em, entity));	
+			}	
+		}	
+		
+		return productoCreditoModels;
+	}
+
+	@Override
+	public List<ProductoCreditoModel> getProductos(String filterText, int firstResult, int maxResults, TipoPersona tipoPersona) {
+
+		if (filterText == null)
+			filterText = "";
+		
+		TypedQuery<ProductoCreditoEntity> query = em.createNamedQuery(ProductoCreditoEntity.findByFilterTextTipoPersona, ProductoCreditoEntity.class);
+		query.setParameter("filterText", "%" + filterText.toUpperCase() + "%");	
+		query.setParameter("tipoPersona", tipoPersona);	
+		
+		if (firstResult != -1) {
+			query.setFirstResult(firstResult);
+		}
+		if (maxResults != -1) {
+			query.setMaxResults(maxResults);
+		}
+		
+		List<ProductoCreditoEntity> results = query.getResultList();
+		List<ProductoCreditoModel> productoCreditoModels = new ArrayList<ProductoCreditoModel>();
+		for (ProductoCreditoEntity entity : results) {
+			if(entity.isEstado()) {
+				productoCreditoModels.add(new ProductoCreditoAdapter(em, entity));	
+			}	
+		}	
+		
+		return productoCreditoModels;
+		
+	}
+
+	@Override
+	public List<ProductoCreditoModel> getProductos(String filterText, int firstResult, int maxResults, String moneda) {
+
+		if (filterText == null)
+			filterText = "";
+
+		TypedQuery<ProductoCreditoEntity> query = em.createNamedQuery(ProductoCreditoEntity.findByFilterTextMoneda, ProductoCreditoEntity.class);
+		query.setParameter("filterText", "%" + filterText.toUpperCase() + "%");	
+		query.setParameter("moneda", moneda);	
+		
+		if (firstResult != -1) {
+			query.setFirstResult(firstResult);
+		}
+		if (maxResults != -1) {
+			query.setMaxResults(maxResults);
+		}
+		
+		List<ProductoCreditoEntity> results = query.getResultList();
+		List<ProductoCreditoModel> productoCreditoModels = new ArrayList<ProductoCreditoModel>();
+		for (ProductoCreditoEntity entity : results) {
+			if(entity.isEstado()) {
+				productoCreditoModels.add(new ProductoCreditoAdapter(em, entity));	
+			}	
+		}	
+		
+		return productoCreditoModels;
+		
+	}
+	
+	@Override
+	public List<ProductoCreditoModel> getProductos(String filterText, int firstResult, int maxResults, TipoPersona tipoPersona, String moneda) {
+
+		if (filterText == null)
+			filterText = "";
+
+		TypedQuery<ProductoCreditoEntity> query = em.createNamedQuery(ProductoCreditoEntity.findByFilterTextTipoPersonaMoneda, ProductoCreditoEntity.class);
+		query.setParameter("filterText", "%" + filterText.toUpperCase() + "%");
+		query.setParameter("tipoPersona", tipoPersona);
+		query.setParameter("moneda", moneda);
+		
+		if (firstResult != -1) {
+			query.setFirstResult(firstResult);
+		}
+		if (maxResults != -1) {
+			query.setMaxResults(maxResults);
+		}
+		
+		List<ProductoCreditoEntity> results = query.getResultList();
+		List<ProductoCreditoModel> productoCreditoModels = new ArrayList<ProductoCreditoModel>();
+		for (ProductoCreditoEntity entity : results) {
+			if(entity.isEstado()) {
+				productoCreditoModels.add(new ProductoCreditoAdapter(em, entity));	
+			}	
+		}	
+		
+		return productoCreditoModels;
+	}
+
+	
 
 }

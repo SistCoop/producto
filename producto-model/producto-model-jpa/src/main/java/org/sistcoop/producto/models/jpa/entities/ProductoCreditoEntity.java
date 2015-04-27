@@ -19,7 +19,11 @@ import org.hibernate.annotations.NamedQuery;
 	@NamedQuery(name = ProductoCreditoEntity.findAll, query = "SELECT p FROM ProductoCreditoEntity p"),
 	@NamedQuery(name = ProductoCreditoEntity.findByTipoPersona, query = "SELECT p FROM ProductoCreditoEntity p WHERE p.tipoPersona = :tipoPersona"),
 	@NamedQuery(name = ProductoCreditoEntity.findByCodigo, query = "SELECT p FROM ProductoCreditoEntity p WHERE p.codigo = :codigo"),
-	@NamedQuery(name = ProductoCreditoEntity.findByDenominacion, query = "SELECT p FROM ProductoCreditoEntity p WHERE p.denominacion = :denominacion")})
+	@NamedQuery(name = ProductoCreditoEntity.findByDenominacion, query = "SELECT p FROM ProductoCreditoEntity p WHERE p.denominacion = :denominacion"),
+	@NamedQuery(name = ProductoCreditoEntity.findByFilterText, query = "SELECT p FROM ProductoCreditoEntity p WHERE p.denominacion LIKE :filterText OR p.codigo LIKE :filterText"),
+	@NamedQuery(name = ProductoCreditoEntity.findByFilterTextTipoPersona, query = "SELECT p FROM ProductoCreditoEntity p WHERE p.tipoPersona = :tipoPersona AND ( p.denominacion LIKE :filterText OR p.codigo LIKE :filterText )"),
+	@NamedQuery(name = ProductoCreditoEntity.findByFilterTextMoneda, query = "SELECT p FROM ProductoCreditoEntity p WHERE p.moneda = :moneda AND ( p.denominacion LIKE :filterText OR p.codigo LIKE :filterText )"),
+	@NamedQuery(name = ProductoCreditoEntity.findByFilterTextTipoPersonaMoneda, query = "SELECT p FROM ProductoCreditoEntity p WHERE p.tipoPersona = :tipoPersona AND p.moneda = :moneda AND ( p.denominacion LIKE :filterText OR p.codigo LIKE :filterText )") })
 public class ProductoCreditoEntity extends ProductoEntity {
 
 	/**
@@ -32,6 +36,10 @@ public class ProductoCreditoEntity extends ProductoEntity {
 	public final static String findByTipoPersona = base + "findByTipoPersona";
 	public final static String findByCodigo = base + "findByCodigo";
 	public final static String findByDenominacion = base + "findByDenominacion";
+	public final static String findByFilterText = base + "findByFilterText";
+	public final static String findByFilterTextTipoPersona = base + "findByFilterTextTipoPersona";
+	public final static String findByFilterTextMoneda = base + "findByFilterTextMoneda";
+	public final static String findByFilterTextTipoPersonaMoneda = base + "findByFilterTextTipoPersonaMoneda";
 
 	private BigDecimal montoMinimo;
 	private BigDecimal montoMaximo;

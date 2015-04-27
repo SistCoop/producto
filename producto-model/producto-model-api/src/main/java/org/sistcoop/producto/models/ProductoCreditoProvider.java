@@ -33,5 +33,13 @@ public interface ProductoCreditoProvider extends Provider {
 
 	List<ProductoCreditoModel> getProductos(boolean estado);
 
-	List<ProductoCreditoModel> getProductos(TipoPersona tipoPersona, boolean estado);	
+	List<ProductoCreditoModel> getProductos(TipoPersona tipoPersona, boolean estado);
+	
+	List<ProductoCreditoModel> getProductos(String filterText, int firstResult, int maxResults);
+	
+	List<ProductoCreditoModel> getProductos(String filterText, int firstResult, int maxResults, TipoPersona tipoPersona);
+	
+	List<ProductoCreditoModel> getProductos(String filterText, int firstResult, int maxResults, String moneda);
+	
+	List<ProductoCreditoModel> getProductos(String filterText, int firstResult, int maxResults, TipoPersona tipoPersona, String moneda);
 }

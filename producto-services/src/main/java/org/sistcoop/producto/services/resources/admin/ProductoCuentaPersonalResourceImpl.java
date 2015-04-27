@@ -42,7 +42,9 @@ public class ProductoCuentaPersonalResourceImpl implements ProductoCuentaPersona
 	}
 
 	@Override
-	public List<ProductoCuentaPersonalRepresentation> findAll(String tipoPersona, Boolean estado) {
+	public List<ProductoCuentaPersonalRepresentation> findAll(
+			String filterText, Integer firstResult, Integer maxResults,
+			String tipoPersona, List<String> monedas, Boolean estado) {
 		// TODO Auto-generated method stub
 		return null;
 	}
