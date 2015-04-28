@@ -82,4 +82,19 @@ public class ModelToRepresentation {
 		return rep;
 	}
 
+	public static ProductoTasaRepresentation toRepresentation(
+			ProductoTasaModel model) {
+
+		if (model == null)
+			return null;
+
+		ProductoTasaRepresentation rep = new ProductoTasaRepresentation();
+		rep.setId(model.getId());
+		rep.setTasa(model.getTasa());
+		rep.setValor(model.getValor());
+		
+		return rep;
+		
+	}
+
 }

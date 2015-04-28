@@ -17,11 +17,14 @@ import org.sistcoop.producto.models.ProductoCreditoModel;
 import org.sistcoop.producto.models.ProductoCreditoProvider;
 import org.sistcoop.producto.models.ProductoModel;
 import org.sistcoop.producto.models.ProductoProvider;
+import org.sistcoop.producto.models.ProductoTasaModel;
+import org.sistcoop.producto.models.ProductoTasaProvider;
 import org.sistcoop.producto.models.enums.TipoPersona;
 import org.sistcoop.producto.models.utils.ModelToRepresentation;
 import org.sistcoop.producto.models.utils.RepresentationToModel;
 import org.sistcoop.producto.representations.idm.ProductoCaracteristicaRepresentation;
 import org.sistcoop.producto.representations.idm.ProductoCreditoRepresentation;
+import org.sistcoop.producto.representations.idm.ProductoTasaRepresentation;
 
 @Stateless
 public class ProductoCreditoResourceImpl implements ProductoCreditoResource {
@@ -34,6 +37,9 @@ public class ProductoCreditoResourceImpl implements ProductoCreditoResource {
 
 	@Inject
 	private ProductoCaracteristicaProvider productoCaracteristicaProvider;
+	
+	@Inject
+	private ProductoTasaProvider productoTasaProvider;
 	
 	@Inject
 	private RepresentationToModel representationToModel;
@@ -156,6 +162,28 @@ public class ProductoCreditoResourceImpl implements ProductoCreditoResource {
 		List<ProductoCaracteristicaRepresentation> result = new ArrayList<ProductoCaracteristicaRepresentation>();
 		for (ProductoCaracteristicaModel productoCaracteristicaModel : list) {
 			result.add(ModelToRepresentation.toRepresentation(productoCaracteristicaModel));
+		}
+		return result;
+	}
+
+	@Override
+	public Response addProductoTasa(Integer id,
+			ProductoTasaRepresentation productoTasaRepresentation) {
+
+		ProductoModel productoModel = productoProvider.getProductoById(id);
+		
+		ProductoTasaModel model = representationToModel.createProductoTasa(productoTasaRepresentation, productoModel, productoTasaProvider);
+		return Response.created(uriInfo.getAbsolutePathBuilder().path(model.getId().toString()).build()).header("Access-Control-Expose-Headers", "Location").entity(model.getId()).build();
+		
+	}
+
+	@Override
+	public List<ProductoTasaRepresentation> getProductoTasas(Integer id) {
+		ProductoCreditoModel model = productoCreditoProvider.getProductoCreditoById(id);
+		List<ProductoTasaModel> list = model.getTasas();
+		List<ProductoTasaRepresentation> result = new ArrayList<ProductoTasaRepresentation>();
+		for (ProductoTasaModel productoTasaModel : list) {
+			result.add(ModelToRepresentation.toRepresentation(productoTasaModel));
 		}
 		return result;
 	}

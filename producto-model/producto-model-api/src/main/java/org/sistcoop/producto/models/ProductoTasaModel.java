@@ -10,9 +10,7 @@ public interface ProductoTasaModel extends Model {
 
 	void setValor(BigDecimal valor);
 
-	String getTasa();
-
-	void setTasa(String tasa);
+	String getTasa();	
 
 	ProductoModel getProducto();
 

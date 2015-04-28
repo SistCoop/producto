@@ -63,9 +63,4 @@ public class ProductoTasaAdapter implements ProductoTasaModel {
 		return productoTasaEntity.getTasa();
 	}
 
-	@Override
-	public void setTasa(String tasa) {
-		productoTasaEntity.setTasa(tasa);
-	}
-
 }

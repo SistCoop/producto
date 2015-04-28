@@ -11,10 +11,13 @@ import org.sistcoop.producto.models.ProductoCreditoProvider;
 import org.sistcoop.producto.models.ProductoCuentaPersonalModel;
 import org.sistcoop.producto.models.ProductoCuentaPersonalProvider;
 import org.sistcoop.producto.models.ProductoModel;
+import org.sistcoop.producto.models.ProductoTasaModel;
+import org.sistcoop.producto.models.ProductoTasaProvider;
 import org.sistcoop.producto.models.enums.TipoPersona;
 import org.sistcoop.producto.representations.idm.ProductoCaracteristicaRepresentation;
 import org.sistcoop.producto.representations.idm.ProductoCreditoRepresentation;
 import org.sistcoop.producto.representations.idm.ProductoCuentaPersonalRepresentation;
+import org.sistcoop.producto.representations.idm.ProductoTasaRepresentation;
 
 @Stateless
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
@@ -49,6 +52,20 @@ public class RepresentationToModel {
 				productoCaracteristicaRepresentation.getDescripcionDetallada());
 		
 		return model;
+	}
+
+	public ProductoTasaModel createProductoTasa(
+			ProductoTasaRepresentation productoTasaRepresentation,
+			ProductoModel productoModel,
+			ProductoTasaProvider productoTasaProvider) {
+
+		ProductoTasaModel model = productoTasaProvider.addProductoTasa(
+				productoModel, 
+				productoTasaRepresentation.getTasa(), 
+				productoTasaRepresentation.getValor());
+		
+		return model;
+		
 	}
 
 }

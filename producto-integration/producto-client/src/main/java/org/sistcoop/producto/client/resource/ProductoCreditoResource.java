@@ -21,6 +21,7 @@ import javax.ws.rs.core.Response;
 import org.hibernate.validator.constraints.NotBlank;
 import org.sistcoop.producto.representations.idm.ProductoCaracteristicaRepresentation;
 import org.sistcoop.producto.representations.idm.ProductoCreditoRepresentation;
+import org.sistcoop.producto.representations.idm.ProductoTasaRepresentation;
 
 
 @Produces(MediaType.APPLICATION_JSON)
@@ -115,6 +116,24 @@ public interface ProductoCreditoResource {
 	@GET
 	@Path("/{id}/caracteristicas")
 	public List<ProductoCaracteristicaRepresentation> getProductoCaracteristicas(
+			@PathParam("id") 
+			@NotNull Integer id);
+	
+	/**
+	 * Producto tasas**/
+	
+	@POST
+	@Path("/{id}/tasas")
+	public Response addProductoTasa(
+			@PathParam("id") 
+			@NotNull Integer id,
+			
+			@NotNull
+			@Valid ProductoTasaRepresentation productoTasaRepresentation);
+	
+	@GET
+	@Path("/{id}/tasas")
+	public List<ProductoTasaRepresentation> getProductoTasas(
 			@PathParam("id") 
 			@NotNull Integer id);
 }
