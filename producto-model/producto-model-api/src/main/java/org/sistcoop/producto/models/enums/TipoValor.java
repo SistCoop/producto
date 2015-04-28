@@ -1,6 +1,7 @@
 package org.sistcoop.producto.models.enums;
 
 public enum TipoValor {
+
 	/**
 	 * Ejemplo: 1.50
 	 */

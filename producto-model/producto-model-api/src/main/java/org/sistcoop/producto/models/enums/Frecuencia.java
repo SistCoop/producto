@@ -1,6 +1,7 @@
 package org.sistcoop.producto.models.enums;
 
 public enum Frecuencia {
+
 	/**
 	 * Una vez cada anio
 	 */
