@@ -7,10 +7,12 @@ import java.util.Set;
 import javax.persistence.EntityManager;
 
 import org.sistcoop.producto.models.ProductoCaracteristicaModel;
+import org.sistcoop.producto.models.ProductoComisionModel;
 import org.sistcoop.producto.models.ProductoModel;
 import org.sistcoop.producto.models.ProductoTasaModel;
 import org.sistcoop.producto.models.enums.TipoPersona;
 import org.sistcoop.producto.models.jpa.entities.ProductoCaracteristicaEntity;
+import org.sistcoop.producto.models.jpa.entities.ProductoComisionEntity;
 import org.sistcoop.producto.models.jpa.entities.ProductoEntity;
 import org.sistcoop.producto.models.jpa.entities.ProductoTasaEntity;
 
@@ -114,6 +116,17 @@ public class ProductoAdapter implements ProductoModel {
 		for (ProductoTasaEntity productoTasaEntity : tasas) {
 			ProductoTasaModel productoTasaModel = new ProductoTasaAdapter(em, productoTasaEntity);
 			result.add(productoTasaModel);
+		}
+		return result;
+	}	
+	
+	@Override
+	public List<ProductoComisionModel> getComisiones() {
+		Set<ProductoComisionEntity> comisiones = productoEntity.getComisiones();
+		List<ProductoComisionModel> result = new ArrayList<ProductoComisionModel>();
+		for (ProductoComisionEntity productoComisionEntity : comisiones) {
+			ProductoComisionModel productoComisionModel = new ProductoComisionAdapter(em, productoComisionEntity);
+			result.add(productoComisionModel);
 		}
 		return result;
 	}	

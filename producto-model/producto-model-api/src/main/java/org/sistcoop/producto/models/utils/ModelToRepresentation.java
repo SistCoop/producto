@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.sistcoop.producto.models.ProductoCaracteristicaModel;
+import org.sistcoop.producto.models.ProductoComisionModel;
 import org.sistcoop.producto.models.ProductoCreditoModel;
 import org.sistcoop.producto.models.ProductoCuentaPersonalModel;
 import org.sistcoop.producto.models.ProductoTasaModel;
 import org.sistcoop.producto.representations.idm.ProductoCaracteristicaRepresentation;
+import org.sistcoop.producto.representations.idm.ProductoComisionRepresentation;
 import org.sistcoop.producto.representations.idm.ProductoCreditoRepresentation;
 import org.sistcoop.producto.representations.idm.ProductoCuentaPersonalRepresentation;
 import org.sistcoop.producto.representations.idm.ProductoTasaRepresentation;
@@ -97,4 +99,21 @@ public class ModelToRepresentation {
 		
 	}
 
+	public static ProductoComisionRepresentation toRepresentation(
+			ProductoComisionModel model) {
+
+		if (model == null)
+			return null;	
+
+		ProductoComisionRepresentation rep = new ProductoComisionRepresentation();
+		rep.setId(model.getId());
+		rep.setDenominacion(model.getDenominacion());
+		rep.setValor(model.getValor());
+		rep.setTipoValor(model.getTipoValor().toString());
+		rep.setFrecuencia(model.getFrecuencia().toString());		
+		
+		return rep;
+		
+	}
+	
 }

@@ -6,8 +6,12 @@ import java.math.BigDecimal;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -26,12 +30,15 @@ public class ProductoComisionEntity implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
 	private Integer id;
 	private String denominacion;
 	private BigDecimal valor;
 	private TipoValor tipoValor;
 	private Frecuencia frecuencia;
 
+	private ProductoEntity producto;
+	
 	@Id
 	@GeneratedValue(generator = "SgGenericGenerator")
 	public Integer getId() {
@@ -84,6 +91,17 @@ public class ProductoComisionEntity implements Serializable {
 		this.frecuencia = frecuencia;
 	}
 
+	@NotNull
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(foreignKey = @ForeignKey)
+	public ProductoEntity getProducto() {
+		return producto;
+	}
+
+	public void setProducto(ProductoEntity producto) {
+		this.producto = producto;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

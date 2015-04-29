@@ -31,5 +31,7 @@ public interface ProductoModel extends Model {
 	List<ProductoCaracteristicaModel> getCaracteristicas();
 	
 	List<ProductoTasaModel> getTasas();
+	
+	List<ProductoComisionModel> getComisiones();
 
 }

@@ -42,6 +42,7 @@ public abstract class ProductoEntity implements Serializable {
 
 	private Set<ProductoCaracteristicaEntity> caracteristicas = new HashSet<ProductoCaracteristicaEntity>();
 	private Set<ProductoTasaEntity> tasas = new HashSet<ProductoTasaEntity>();
+	private Set<ProductoComisionEntity> comisiones = new HashSet<ProductoComisionEntity>();
 
 	private Timestamp optlk;
 
@@ -126,6 +127,15 @@ public abstract class ProductoEntity implements Serializable {
 		this.tasas = tasas;
 	}
 
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "producto")
+	public Set<ProductoComisionEntity> getComisiones() {
+		return comisiones;
+	}
+
+	public void setComisiones(Set<ProductoComisionEntity> comisiones) {
+		this.comisiones = comisiones;
+	}
+	
 	@Version
 	public Timestamp getOptlk() {
 		return optlk;

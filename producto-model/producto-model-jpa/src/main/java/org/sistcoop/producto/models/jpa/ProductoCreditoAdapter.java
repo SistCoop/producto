@@ -8,11 +8,13 @@ import java.util.Set;
 import javax.persistence.EntityManager;
 
 import org.sistcoop.producto.models.ProductoCaracteristicaModel;
+import org.sistcoop.producto.models.ProductoComisionModel;
 import org.sistcoop.producto.models.ProductoCreditoModel;
 import org.sistcoop.producto.models.ProductoModel;
 import org.sistcoop.producto.models.ProductoTasaModel;
 import org.sistcoop.producto.models.enums.TipoPersona;
 import org.sistcoop.producto.models.jpa.entities.ProductoCaracteristicaEntity;
+import org.sistcoop.producto.models.jpa.entities.ProductoComisionEntity;
 import org.sistcoop.producto.models.jpa.entities.ProductoCreditoEntity;
 import org.sistcoop.producto.models.jpa.entities.ProductoTasaEntity;
 
@@ -139,6 +141,17 @@ public class ProductoCreditoAdapter implements ProductoCreditoModel {
 		}
 		return result;
 	}
+	
+	@Override
+	public List<ProductoComisionModel> getComisiones() {
+		Set<ProductoComisionEntity> comisiones = productoCreditoEntity.getComisiones();
+		List<ProductoComisionModel> result = new ArrayList<ProductoComisionModel>();
+		for (ProductoComisionEntity productoComisionEntity : comisiones) {
+			ProductoComisionModel productoComisionModel = new ProductoComisionAdapter(em, productoComisionEntity);
+			result.add(productoComisionModel);
+		}
+		return result;
+	}	
 	
 	@Override
 	public int hashCode() {

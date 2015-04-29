@@ -20,6 +20,7 @@ import javax.ws.rs.core.Response;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.sistcoop.producto.representations.idm.ProductoCaracteristicaRepresentation;
+import org.sistcoop.producto.representations.idm.ProductoComisionRepresentation;
 import org.sistcoop.producto.representations.idm.ProductoCreditoRepresentation;
 import org.sistcoop.producto.representations.idm.ProductoTasaRepresentation;
 
@@ -136,4 +137,23 @@ public interface ProductoCreditoResource {
 	public List<ProductoTasaRepresentation> getProductoTasas(
 			@PathParam("id") 
 			@NotNull Integer id);
+	
+	/**
+	 * Producto comisiones**/
+	
+	@POST
+	@Path("/{id}/comisiones")
+	public Response addProductoComision(
+			@PathParam("id") 
+			@NotNull Integer id,
+			
+			@NotNull
+			@Valid ProductoComisionRepresentation productoComisionRepresentation);
+	
+	@GET
+	@Path("/{id}/comisiones")
+	public List<ProductoComisionRepresentation> getProductoComisiones(
+			@PathParam("id") 
+			@NotNull Integer id);
+	
 }

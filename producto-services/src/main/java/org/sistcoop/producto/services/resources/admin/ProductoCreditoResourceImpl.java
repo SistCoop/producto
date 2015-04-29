@@ -13,6 +13,8 @@ import javax.ws.rs.core.UriInfo;
 import org.sistcoop.producto.client.resource.ProductoCreditoResource;
 import org.sistcoop.producto.models.ProductoCaracteristicaModel;
 import org.sistcoop.producto.models.ProductoCaracteristicaProvider;
+import org.sistcoop.producto.models.ProductoComisionModel;
+import org.sistcoop.producto.models.ProductoComisionProvider;
 import org.sistcoop.producto.models.ProductoCreditoModel;
 import org.sistcoop.producto.models.ProductoCreditoProvider;
 import org.sistcoop.producto.models.ProductoModel;
@@ -23,6 +25,7 @@ import org.sistcoop.producto.models.enums.TipoPersona;
 import org.sistcoop.producto.models.utils.ModelToRepresentation;
 import org.sistcoop.producto.models.utils.RepresentationToModel;
 import org.sistcoop.producto.representations.idm.ProductoCaracteristicaRepresentation;
+import org.sistcoop.producto.representations.idm.ProductoComisionRepresentation;
 import org.sistcoop.producto.representations.idm.ProductoCreditoRepresentation;
 import org.sistcoop.producto.representations.idm.ProductoTasaRepresentation;
 
@@ -40,6 +43,9 @@ public class ProductoCreditoResourceImpl implements ProductoCreditoResource {
 	
 	@Inject
 	private ProductoTasaProvider productoTasaProvider;
+	
+	@Inject
+	private ProductoComisionProvider productoComisionProvider;
 	
 	@Inject
 	private RepresentationToModel representationToModel;
@@ -186,6 +192,31 @@ public class ProductoCreditoResourceImpl implements ProductoCreditoResource {
 			result.add(ModelToRepresentation.toRepresentation(productoTasaModel));
 		}
 		return result;
+	}
+
+	@Override
+	public Response addProductoComision(Integer id,
+			ProductoComisionRepresentation productoComisionRepresentation) {
+
+		ProductoModel productoModel = productoProvider.getProductoById(id);
+		
+		ProductoComisionModel model = representationToModel.createProductoComision(productoComisionRepresentation, productoModel, productoComisionProvider);
+		return Response.created(uriInfo.getAbsolutePathBuilder().path(model.getId().toString()).build()).header("Access-Control-Expose-Headers", "Location").entity(model.getId()).build();
+		
+		
+	}
+
+	@Override
+	public List<ProductoComisionRepresentation> getProductoComisiones(Integer id) {
+
+		ProductoCreditoModel model = productoCreditoProvider.getProductoCreditoById(id);
+		List<ProductoComisionModel> list = model.getComisiones();
+		List<ProductoComisionRepresentation> result = new ArrayList<ProductoComisionRepresentation>();
+		for (ProductoComisionModel productoComisionModel : list) {			
+			result.add(ModelToRepresentation.toRepresentation(productoComisionModel));
+		}		
+		return result;
+		
 	}
 
 }
