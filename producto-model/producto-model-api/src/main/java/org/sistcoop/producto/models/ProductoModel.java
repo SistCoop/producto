@@ -6,7 +6,7 @@ import org.sistcoop.producto.models.enums.TipoPersona;
 
 public interface ProductoModel extends Model {
 
-	Integer getId();
+	String getId();
 
 	String getCodigo();
 	
@@ -28,7 +28,7 @@ public interface ProductoModel extends Model {
 
 	void desactivar();
 
-	List<ProductoCaracteristicaModel> getCaracteristicas();
+	List<CaracteristicaModel> getCaracteristicas();
 	
 	List<ProductoTasaModel> getTasas();
 	

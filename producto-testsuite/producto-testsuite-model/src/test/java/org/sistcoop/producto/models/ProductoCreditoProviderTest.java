@@ -78,7 +78,7 @@ public class ProductoCreditoProviderTest {
 	public void geProductoCreditoById()  {		
 		ProductoCreditoModel model1 = productoCreditoProvider.addProductoCredito("CRE001", "Rapidiario", TipoPersona.NATURAL, "S/.", new BigDecimal("1"), new BigDecimal("1000"));
 				
-		Integer id = model1.getId();
+		String id = model1.getId();
 		ProductoCreditoModel model2 = productoCreditoProvider.getProductoCreditoById(id);
 
 		assertThat(model1, is(equalTo(model2)));

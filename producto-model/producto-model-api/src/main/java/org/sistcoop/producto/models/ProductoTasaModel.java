@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 public interface ProductoTasaModel extends Model {
 
-	Integer getId();
+	String getId();
 
 	BigDecimal getValor();
 

@@ -33,7 +33,7 @@ public class JpaProductoCreditoProvider implements ProductoCreditoProvider {
 	}
 	
 	@Override
-	public ProductoCreditoModel getProductoCreditoById(Integer id) {
+	public ProductoCreditoModel getProductoCreditoById(String id) {
 		ProductoCreditoEntity productoCreditoEntity = this.em.find(ProductoCreditoEntity.class, id);
 		return productoCreditoEntity != null ? new ProductoCreditoAdapter(em, productoCreditoEntity) : null;
 	}

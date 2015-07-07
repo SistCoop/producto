@@ -24,75 +24,81 @@ import org.sistcoop.producto.models.jpa.entities.ProductoCuentaPersonalEntity;
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
 public class JpaProductoCuentaPersonalProvider implements ProductoCuentaPersonalProvider {
 
-	@PersistenceContext
-	protected EntityManager em;
+    @PersistenceContext
+    protected EntityManager em;
 
-	@Override
-	public void close() {
-		// TODO Auto-generated method stub
-	}
+    @Override
+    public void close() {
+        // TODO Auto-generated method stub
+    }
 
-	@Override
-	public ProductoCuentaPersonalModel addProductoCredito(String denominacion, TipoPersona tipoPersona, List<String> monedas) {
-		ProductoCuentaPersonalEntity entity = new ProductoCuentaPersonalEntity();
-		entity.setDenominacion(denominacion);
-		entity.setTipoPersona(tipoPersona);
+    @Override
+    public ProductoCuentaPersonalModel addProducto(String denominacion, TipoPersona tipoPersona,
+            List<String> monedas) {
+        ProductoCuentaPersonalEntity entity = new ProductoCuentaPersonalEntity();
+        entity.setDenominacion(denominacion);
+        entity.setTipoPersona(tipoPersona);
 
-		String codigo = UUID.randomUUID().toString();
-		entity.setCodigo(codigo);
+        String codigo = UUID.randomUUID().toString();
+        entity.setCodigo(codigo);
 
-		entity.setEstado(true);
+        entity.setEstado(true);
 
-		em.persist(entity);
-		return new ProductoCuentaPersonalAdapter(em, entity);
-	}
+        em.persist(entity);
+        return new ProductoCuentaPersonalAdapter(em, entity);
+    }
 
-	@Override
-	public boolean desactivarProducto(ProductoCuentaPersonalModel productoModel) {
-		ProductoCuentaPersonalEntity entity = ProductoCuentaPersonalAdapter.toProductoCuentaPersonalEntity(productoModel, em);
-		entity.setEstado(false);
-		em.merge(entity);
-		return true;
-	}
+    @Override
+    public boolean desactivarProducto(ProductoCuentaPersonalModel productoModel) {
+        ProductoCuentaPersonalEntity entity = ProductoCuentaPersonalAdapter.toProductoCuentaPersonalEntity(
+                productoModel, em);
+        entity.setEstado(false);
+        em.merge(entity);
+        return true;
+    }
 
-	@Override
-	public ProductoCuentaPersonalModel getProductoById(Integer id) {
-		ProductoCuentaPersonalEntity productoCuentaPersonalEntity = this.em.find(ProductoCuentaPersonalEntity.class, id);
-		return productoCuentaPersonalEntity != null ? new ProductoCuentaPersonalAdapter(em, productoCuentaPersonalEntity) : null;
-	}
+    @Override
+    public ProductoCuentaPersonalModel getProductoById(String id) {
+        ProductoCuentaPersonalEntity productoCuentaPersonalEntity = this.em.find(
+                ProductoCuentaPersonalEntity.class, id);
+        return productoCuentaPersonalEntity != null ? new ProductoCuentaPersonalAdapter(em,
+                productoCuentaPersonalEntity) : null;
+    }
 
-	@Override
-	public List<ProductoCuentaPersonalModel> getProductos() {
-		return getProductos(true);
-	}
+    @Override
+    public List<ProductoCuentaPersonalModel> getProductos() {
+        return getProductos(true);
+    }
 
-	@Override
-	public List<ProductoCuentaPersonalModel> getProductos(TipoPersona tipoPersona) {
-		return getProductos(tipoPersona, true);
-	}
+    @Override
+    public List<ProductoCuentaPersonalModel> getProductos(TipoPersona tipoPersona) {
+        return getProductos(tipoPersona, true);
+    }
 
-	@Override
-	public List<ProductoCuentaPersonalModel> getProductos(boolean estado) {
-		TypedQuery<ProductoCuentaPersonalEntity> query = em.createNamedQuery(ProductoCuentaPersonalEntity.findAll, ProductoCuentaPersonalEntity.class);
-		List<ProductoCuentaPersonalEntity> results = query.getResultList();
-		List<ProductoCuentaPersonalModel> productos = new ArrayList<ProductoCuentaPersonalModel>();
-		for (ProductoCuentaPersonalEntity entity : results) {
-			if (entity.isEstado() == estado)
-				productos.add(new ProductoCuentaPersonalAdapter(em, entity));
-		}
-		return productos;
-	}
+    @Override
+    public List<ProductoCuentaPersonalModel> getProductos(boolean estado) {
+        TypedQuery<ProductoCuentaPersonalEntity> query = em.createNamedQuery(
+                ProductoCuentaPersonalEntity.findAll, ProductoCuentaPersonalEntity.class);
+        List<ProductoCuentaPersonalEntity> results = query.getResultList();
+        List<ProductoCuentaPersonalModel> productos = new ArrayList<ProductoCuentaPersonalModel>();
+        for (ProductoCuentaPersonalEntity entity : results) {
+            if (entity.isEstado() == estado)
+                productos.add(new ProductoCuentaPersonalAdapter(em, entity));
+        }
+        return productos;
+    }
 
-	@Override
-	public List<ProductoCuentaPersonalModel> getProductos(TipoPersona tipoPersona, boolean estado) {
-		TypedQuery<ProductoCuentaPersonalEntity> query = em.createNamedQuery(ProductoCuentaPersonalEntity.findByTipoPersona, ProductoCuentaPersonalEntity.class);
-		List<ProductoCuentaPersonalEntity> results = query.getResultList();
-		List<ProductoCuentaPersonalModel> productos = new ArrayList<ProductoCuentaPersonalModel>();
-		for (ProductoCuentaPersonalEntity entity : results) {
-			if (entity.isEstado() == estado)
-				productos.add(new ProductoCuentaPersonalAdapter(em, entity));
-		}
-		return productos;
-	}
+    @Override
+    public List<ProductoCuentaPersonalModel> getProductos(TipoPersona tipoPersona, boolean estado) {
+        TypedQuery<ProductoCuentaPersonalEntity> query = em.createNamedQuery(
+                ProductoCuentaPersonalEntity.findByTipoPersona, ProductoCuentaPersonalEntity.class);
+        List<ProductoCuentaPersonalEntity> results = query.getResultList();
+        List<ProductoCuentaPersonalModel> productos = new ArrayList<ProductoCuentaPersonalModel>();
+        for (ProductoCuentaPersonalEntity entity : results) {
+            if (entity.isEstado() == estado)
+                productos.add(new ProductoCuentaPersonalAdapter(em, entity));
+        }
+        return productos;
+    }
 
 }

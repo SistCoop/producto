@@ -27,63 +27,59 @@ import org.sistcoop.producto.models.jpa.entities.ProductoEntity;
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
 public class JpaProductoComisionProvider implements ProductoComisionProvider {
 
-	@PersistenceContext
-	protected EntityManager em;
+    @PersistenceContext
+    protected EntityManager em;
 
-	@Override
-	public void close() {
-		// TODO Auto-generated method stub
-	}
+    @Override
+    public void close() {
+        // TODO Auto-generated method stub
+    }
 
-	@Override
-	public ProductoComisionModel getProductoComisionById(Integer id) {
-		ProductoComisionEntity entity = this.em.find(ProductoComisionEntity.class, id);
-		return entity != null ? new ProductoComisionAdapter(em, entity) : null;
-	}
+    @Override
+    public ProductoComisionModel getProductoComisionById(Integer id) {
+        ProductoComisionEntity entity = this.em.find(ProductoComisionEntity.class, id);
+        return entity != null ? new ProductoComisionAdapter(em, entity) : null;
+    }
 
-	@Override
-	public ProductoComisionModel addProductoComision(
-			ProductoModel productoModel, String denominacion, BigDecimal valor,
-			TipoValor tipoValor, Frecuencia frecuencia) {
+    @Override
+    public ProductoComisionModel addProductoComision(ProductoModel productoModel, String denominacion,
+            BigDecimal valor, TipoValor tipoValor, Frecuencia frecuencia) {
 
-		ProductoEntity productoEntity = ProductoAdapter.toProductoEntity(productoModel, em);
-		
-		ProductoComisionEntity productoComisionEntity = new ProductoComisionEntity();
-		productoComisionEntity.setProducto(productoEntity);
-		productoComisionEntity.setDenominacion(denominacion);
-		productoComisionEntity.setValor(valor);
-		productoComisionEntity.setTipoValor(tipoValor);
-		productoComisionEntity.setFrecuencia(frecuencia);		
-		
-		em.persist(productoComisionEntity);
-		return new ProductoComisionAdapter(em, productoComisionEntity);
-		
-	}
+        ProductoEntity productoEntity = ProductoAdapter.toProductoEntity(productoModel, em);
 
-	@Override
-	public boolean eliminarProductoComision(
-			ProductoComisionModel productoComisionModel) {
+        ProductoComisionEntity productoComisionEntity = new ProductoComisionEntity();
+        productoComisionEntity.setProducto(productoEntity);
+        productoComisionEntity.setDenominacion(denominacion);
+        productoComisionEntity.setValor(valor);
+        productoComisionEntity.setTipoValor(tipoValor);
+        productoComisionEntity.setFrecuencia(frecuencia);
 
-		Integer id = productoComisionModel.getId();
-		ProductoComisionEntity entity = this.em.find(ProductoComisionEntity.class, id);
-		if (entity == null) return false;
-		em.remove(entity);
-		return true; 
-	}
+        em.persist(productoComisionEntity);
+        return new ProductoComisionAdapter(em, productoComisionEntity);
 
-	@Override
-	public List<ProductoComisionModel> getProductoComisiones(
-			ProductoModel productoModel) {
+    }
 
-		Integer id = productoModel.getId();
-		ProductoEntity entity = this.em.find(ProductoEntity.class, id);
-		Set<ProductoComisionEntity> list = entity.getComisiones();
-		List<ProductoComisionModel> result = new ArrayList<ProductoComisionModel>();
-		for (ProductoComisionEntity productoComisionEntity : list) {
-			result.add(new ProductoComisionAdapter(em, productoComisionEntity));
-		}
-		return result;
-		
-	}
+    @Override
+    public boolean eliminarProductoComision(ProductoComisionModel productoComisionModel) {
+        String id = productoComisionModel.getId();
+        ProductoComisionEntity entity = this.em.find(ProductoComisionEntity.class, id);
+        if (entity == null)
+            return false;
+        em.remove(entity);
+        return true;
+    }
+
+    @Override
+    public List<ProductoComisionModel> getProductoComisiones(ProductoModel productoModel) {
+        String id = productoModel.getId();
+        ProductoEntity entity = this.em.find(ProductoEntity.class, id);
+        Set<ProductoComisionEntity> list = entity.getComisiones();
+        List<ProductoComisionModel> result = new ArrayList<ProductoComisionModel>();
+        for (ProductoComisionEntity productoComisionEntity : list) {
+            result.add(new ProductoComisionAdapter(em, productoComisionEntity));
+        }
+        return result;
+
+    }
 
 }

@@ -6,7 +6,7 @@ import java.util.Set;
 
 import javax.persistence.EntityManager;
 
-import org.sistcoop.producto.models.ProductoCaracteristicaModel;
+import org.sistcoop.producto.models.CaracteristicaModel;
 import org.sistcoop.producto.models.ProductoComisionModel;
 import org.sistcoop.producto.models.ProductoCuentaPersonalModel;
 import org.sistcoop.producto.models.ProductoTasaModel;
@@ -40,7 +40,7 @@ public class ProductoCuentaPersonalAdapter implements ProductoCuentaPersonalMode
 	}
 
 	@Override
-	public Integer getId() {
+	public String getId() {
 		return productoCuentaPersonalEntity.getId();
 	}
 
@@ -95,9 +95,9 @@ public class ProductoCuentaPersonalAdapter implements ProductoCuentaPersonalMode
 	}
 
 	@Override
-	public List<ProductoCaracteristicaModel> getCaracteristicas() {
+	public List<CaracteristicaModel> getCaracteristicas() {
 		Set<ProductoCaracteristicaEntity> productoCaracteristicaEntities = productoCuentaPersonalEntity.getCaracteristicas();
-		List<ProductoCaracteristicaModel> result = new ArrayList<ProductoCaracteristicaModel>();
+		List<CaracteristicaModel> result = new ArrayList<CaracteristicaModel>();
 		for (ProductoCaracteristicaEntity productoCaracteristicaEntity : productoCaracteristicaEntities) {
 			result.add(new ProductoCaracteristicaAdapter(em, productoCaracteristicaEntity));
 		}

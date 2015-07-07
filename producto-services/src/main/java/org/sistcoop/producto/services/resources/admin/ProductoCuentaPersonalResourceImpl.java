@@ -1,52 +1,90 @@
 package org.sistcoop.producto.services.resources.admin;
 
-import java.util.List;
-
 import javax.ejb.Stateless;
-import javax.ws.rs.core.Response;
+import javax.inject.Inject;
+import javax.ws.rs.BadRequestException;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.UriInfo;
 
+import org.sistcoop.producto.client.resource.CaracteristicasResource;
+import org.sistcoop.producto.client.resource.ComisionesResource;
 import org.sistcoop.producto.client.resource.ProductoCuentaPersonalResource;
+import org.sistcoop.producto.client.resource.TasasResource;
+import org.sistcoop.producto.models.ProductoCuentaPersonalModel;
+import org.sistcoop.producto.models.ProductoCuentaPersonalProvider;
+import org.sistcoop.producto.models.utils.ModelToRepresentation;
 import org.sistcoop.producto.representations.idm.ProductoCuentaPersonalRepresentation;
+import org.sistcoop.producto.services.managers.ProductoCuentaPersonalManager;
+import org.sistcoop.producto.services.resources.producers.Caracteristicas_CuentaPersonal;
+import org.sistcoop.producto.services.resources.producers.Comisiones_CuentaPersonal;
+import org.sistcoop.producto.services.resources.producers.Tasas_CuentaPersonal;
 
 @Stateless
 public class ProductoCuentaPersonalResourceImpl implements ProductoCuentaPersonalResource {
 
-	@Override
-	public ProductoCuentaPersonalRepresentation findById(String id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @PathParam("producto")
+    private String producto;
 
-	@Override
-	public Response create(ProductoCuentaPersonalRepresentation tipoDocumentoRepresentation) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Inject
+    private ProductoCuentaPersonalProvider productoCuentaPersonalProvider;
 
-	@Override
-	public void update(String id, ProductoCuentaPersonalRepresentation tipoDocumentoRepresentation) {
-		// TODO Auto-generated method stub
+    @Inject
+    private ProductoCuentaPersonalManager productoCuentaPersonalManager;
 
-	}
+    @Context
+    private UriInfo uriInfo;
 
-	@Override
-	public void delete(String id) {
-		// TODO Auto-generated method stub
+    @Inject
+    @Caracteristicas_CuentaPersonal
+    private CaracteristicasResource caracteristicasResource;
 
-	}
+    @Inject
+    @Tasas_CuentaPersonal
+    private TasasResource tasasResource;
 
-	@Override
-	public void desactivar(String id) {
-		// TODO Auto-generated method stub
+    @Inject
+    @Comisiones_CuentaPersonal
+    private ComisionesResource comisionesResource;
 
-	}
+    private ProductoCuentaPersonalModel getProductoCuentaPersonalModel() {
+        return productoCuentaPersonalProvider.getProductoById(producto);
+    }
 
-	@Override
-	public List<ProductoCuentaPersonalRepresentation> findAll(
-			String filterText, Integer firstResult, Integer maxResults,
-			String tipoPersona, List<String> monedas, Boolean estado) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public ProductoCuentaPersonalRepresentation producto() {
+        return ModelToRepresentation.toRepresentation(getProductoCuentaPersonalModel());
+    }
+
+    @Override
+    public void update(ProductoCuentaPersonalRepresentation productoCuentaPersonalRepresentation) {
+        productoCuentaPersonalManager.updateProducto(getProductoCuentaPersonalModel(),
+                productoCuentaPersonalRepresentation);
+    }
+
+    @Override
+    public void remove() {
+        throw new BadRequestException();
+    }
+
+    @Override
+    public void disable() {
+        productoCuentaPersonalProvider.desactivarProducto(getProductoCuentaPersonalModel());
+    }
+
+    @Override
+    public CaracteristicasResource caracteristicas() {
+        return caracteristicasResource;
+    }
+
+    @Override
+    public TasasResource tasas() {
+        return tasasResource;
+    }
+
+    @Override
+    public ComisionesResource comisiones() {
+        return comisionesResource;
+    }
 
 }

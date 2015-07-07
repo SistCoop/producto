@@ -38,7 +38,7 @@ public class ProductoTasaAdapter implements ProductoTasaModel {
 	}
 
 	@Override
-	public Integer getId() {
+	public String getId() {
 		return productoTasaEntity.getId();
 	}
 

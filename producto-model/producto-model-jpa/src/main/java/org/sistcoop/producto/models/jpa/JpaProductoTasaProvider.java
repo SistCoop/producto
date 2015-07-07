@@ -57,7 +57,7 @@ public class JpaProductoTasaProvider implements ProductoTasaProvider {
 
 	@Override
 	public boolean eliminarProductoTasa(ProductoTasaModel productoTasaModel) {
-		Integer id = productoTasaModel.getId();
+		String id = productoTasaModel.getId();
 		ProductoTasaEntity entity = this.em.find(ProductoTasaEntity.class, id);
 		if (entity == null) return false;
 		em.remove(entity);
@@ -66,7 +66,7 @@ public class JpaProductoTasaProvider implements ProductoTasaProvider {
 
 	@Override
 	public List<ProductoTasaModel> getProductoTasas(ProductoModel productoModel) {
-		Integer id = productoModel.getId();
+		String id = productoModel.getId();
 		ProductoEntity entity = this.em.find(ProductoEntity.class, id);
 		Set<ProductoTasaEntity> list = entity.getTasas();
 		List<ProductoTasaModel> result = new ArrayList<ProductoTasaModel>();

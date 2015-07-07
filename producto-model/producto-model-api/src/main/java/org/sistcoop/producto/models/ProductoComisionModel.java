@@ -7,7 +7,7 @@ import org.sistcoop.producto.models.enums.TipoValor;
 
 public interface ProductoComisionModel extends Model {
 
-	Integer getId();
+	String getId();
 
 	String getDenominacion();
 

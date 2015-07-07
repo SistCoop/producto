@@ -3,16 +3,16 @@ package org.sistcoop.producto.models.utils;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.sistcoop.producto.models.ProductoCaracteristicaModel;
+import org.sistcoop.producto.models.CaracteristicaModel;
 import org.sistcoop.producto.models.ProductoComisionModel;
 import org.sistcoop.producto.models.ProductoCreditoModel;
 import org.sistcoop.producto.models.ProductoCuentaPersonalModel;
 import org.sistcoop.producto.models.ProductoTasaModel;
-import org.sistcoop.producto.representations.idm.ProductoCaracteristicaRepresentation;
-import org.sistcoop.producto.representations.idm.ProductoComisionRepresentation;
+import org.sistcoop.producto.representations.idm.CaracteristicaRepresentation;
+import org.sistcoop.producto.representations.idm.ComisionRepresentation;
 import org.sistcoop.producto.representations.idm.ProductoCreditoRepresentation;
 import org.sistcoop.producto.representations.idm.ProductoCuentaPersonalRepresentation;
-import org.sistcoop.producto.representations.idm.ProductoTasaRepresentation;
+import org.sistcoop.producto.representations.idm.TasaRepresentation;
 
 public class ModelToRepresentation {
 
@@ -29,9 +29,9 @@ public class ModelToRepresentation {
 		rep.setEstado(model.getEstado());
 
 		List<ProductoTasaModel> productoTasaModels = model.getTasas();
-		List<ProductoTasaRepresentation> productoTasaRepresentations = new ArrayList<ProductoTasaRepresentation>();
+		List<TasaRepresentation> productoTasaRepresentations = new ArrayList<TasaRepresentation>();
 		for (ProductoTasaModel productoTasaModel : productoTasaModels) {
-			ProductoTasaRepresentation productoTasaRepresentation = new ProductoTasaRepresentation();
+			TasaRepresentation productoTasaRepresentation = new TasaRepresentation();
 			productoTasaRepresentation.setId(productoTasaModel.getId());
 			productoTasaRepresentation.setTasa(productoTasaModel.getTasa());
 			productoTasaRepresentation.setValor(productoTasaModel.getValor());
@@ -57,9 +57,9 @@ public class ModelToRepresentation {
 		rep.setEstado(model.getEstado());
 		
 		List<ProductoTasaModel> productoTasaModels = model.getTasas();
-		List<ProductoTasaRepresentation> productoTasaRepresentations = new ArrayList<ProductoTasaRepresentation>();
+		List<TasaRepresentation> productoTasaRepresentations = new ArrayList<TasaRepresentation>();
 		for (ProductoTasaModel productoTasaModel : productoTasaModels) {
-			ProductoTasaRepresentation productoTasaRepresentation = new ProductoTasaRepresentation();
+			TasaRepresentation productoTasaRepresentation = new TasaRepresentation();
 			productoTasaRepresentation.setId(productoTasaModel.getId());
 			productoTasaRepresentation.setTasa(productoTasaModel.getTasa());
 			productoTasaRepresentation.setValor(productoTasaModel.getValor());
@@ -70,13 +70,13 @@ public class ModelToRepresentation {
 		return rep;
 	}
 
-	public static ProductoCaracteristicaRepresentation toRepresentation(
-			ProductoCaracteristicaModel model) {
+	public static CaracteristicaRepresentation toRepresentation(
+			CaracteristicaModel model) {
 
 		if (model == null)
 			return null;
 
-		ProductoCaracteristicaRepresentation rep = new ProductoCaracteristicaRepresentation();
+		CaracteristicaRepresentation rep = new CaracteristicaRepresentation();
 		rep.setId(model.getId());
 		rep.setDescripcion(model.getDescripcion());
 		rep.setDescripcionDetallada(model.getDescripcionDetallada());
@@ -84,13 +84,13 @@ public class ModelToRepresentation {
 		return rep;
 	}
 
-	public static ProductoTasaRepresentation toRepresentation(
+	public static TasaRepresentation toRepresentation(
 			ProductoTasaModel model) {
 
 		if (model == null)
 			return null;
 
-		ProductoTasaRepresentation rep = new ProductoTasaRepresentation();
+		TasaRepresentation rep = new TasaRepresentation();
 		rep.setId(model.getId());
 		rep.setTasa(model.getTasa());
 		rep.setValor(model.getValor());
@@ -99,13 +99,13 @@ public class ModelToRepresentation {
 		
 	}
 
-	public static ProductoComisionRepresentation toRepresentation(
+	public static ComisionRepresentation toRepresentation(
 			ProductoComisionModel model) {
 
 		if (model == null)
 			return null;	
 
-		ProductoComisionRepresentation rep = new ProductoComisionRepresentation();
+		ComisionRepresentation rep = new ComisionRepresentation();
 		rep.setId(model.getId());
 		rep.setDenominacion(model.getDenominacion());
 		rep.setValor(model.getValor());

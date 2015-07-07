@@ -1,0 +1,17 @@
+/productosCredito
+/productosCredito/{producto}
+/productosCredito/{producto}/caracteristicas
+/productosCredito/{producto}/caracteristicas/{caracteristica}
+/productosCredito/{producto}/tasas
+/productosCredito/{producto}/tasas/{tasa}
+/productosCredito/{producto}/comisiones
+/productosCredito/{producto}/comisiones/{comision}
+
+/productosCuentaPersonal
+/productosCuentaPersonal/{producto}
+/productosCuentaPersonal/{producto}/caracteristicas
+/productosCuentaPersonal/{producto}/caracteristicas/{caracteristica}
+/productosCuentaPersonal/{producto}/tasas
+/productosCuentaPersonal/{producto}/tasas/{tasa}
+/productosCuentaPersonal/{producto}/comisiones
+/productosCuentaPersonal/{producto}/comisiones/{comision}

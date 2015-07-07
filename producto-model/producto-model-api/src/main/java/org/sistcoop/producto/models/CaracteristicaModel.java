@@ -1,8 +1,8 @@
 package org.sistcoop.producto.models;
 
-public interface ProductoCaracteristicaModel extends Model {
+public interface CaracteristicaModel extends Model {
 
-	Integer getId();
+	String getId();
 
 	String getDescripcion();
 

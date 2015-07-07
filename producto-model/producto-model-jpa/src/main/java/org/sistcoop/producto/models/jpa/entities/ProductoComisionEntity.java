@@ -3,6 +3,7 @@ package org.sistcoop.producto.models.jpa.entities;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -18,6 +19,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.NotBlank;
 import org.sistcoop.producto.models.enums.Frecuencia;
 import org.sistcoop.producto.models.enums.TipoValor;
@@ -31,7 +33,7 @@ public class ProductoComisionEntity implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private Integer id;
+	private String id;
 	private String denominacion;
 	private BigDecimal valor;
 	private TipoValor tipoValor;
@@ -40,12 +42,14 @@ public class ProductoComisionEntity implements Serializable {
 	private ProductoEntity producto;
 	
 	@Id
-	@GeneratedValue(generator = "SgGenericGenerator")
-	public Integer getId() {
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    @Column(name = "ID")
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
