@@ -24,7 +24,7 @@ public class CaracteristicaResourceImpl implements CaracteristicaResource {
     private CaracteristicaManager caracteristicaManager;
 
     private CaracteristicaModel getCaracteristicaModel() {
-        return caracteristicaProvider.getProductoCaracteristicaById(caracteristica);
+        return caracteristicaProvider.findById(caracteristica);
     }
 
     @Override
@@ -33,13 +33,13 @@ public class CaracteristicaResourceImpl implements CaracteristicaResource {
     }
 
     @Override
-    public void update(CaracteristicaRepresentation caracteristicaRepresentation) {
-        caracteristicaManager.updateCaracteristica(getCaracteristicaModel(), caracteristicaRepresentation);
+    public void update(CaracteristicaRepresentation representation) {
+        caracteristicaManager.updateCaracteristica(getCaracteristicaModel(), representation);
     }
 
     @Override
     public void remove() {
-        caracteristicaProvider.removeProductoCaracteristica(getCaracteristicaModel());
+        caracteristicaProvider.remove(getCaracteristicaModel());
     }
 
 }

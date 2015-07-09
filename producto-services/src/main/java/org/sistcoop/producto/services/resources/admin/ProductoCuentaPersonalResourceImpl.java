@@ -48,7 +48,7 @@ public class ProductoCuentaPersonalResourceImpl implements ProductoCuentaPersona
     private ComisionesResource comisionesResource;
 
     private ProductoCuentaPersonalModel getProductoCuentaPersonalModel() {
-        return productoCuentaPersonalProvider.getProductoById(producto);
+        return productoCuentaPersonalProvider.findById(producto);
     }
 
     @Override
@@ -57,9 +57,8 @@ public class ProductoCuentaPersonalResourceImpl implements ProductoCuentaPersona
     }
 
     @Override
-    public void update(ProductoCuentaPersonalRepresentation productoCuentaPersonalRepresentation) {
-        productoCuentaPersonalManager.updateProducto(getProductoCuentaPersonalModel(),
-                productoCuentaPersonalRepresentation);
+    public void update(ProductoCuentaPersonalRepresentation representation) {
+        productoCuentaPersonalManager.updateProducto(getProductoCuentaPersonalModel(), representation);
     }
 
     @Override
@@ -69,7 +68,7 @@ public class ProductoCuentaPersonalResourceImpl implements ProductoCuentaPersona
 
     @Override
     public void disable() {
-        productoCuentaPersonalProvider.desactivarProducto(getProductoCuentaPersonalModel());
+        productoCuentaPersonalManager.disableProducto(getProductoCuentaPersonalModel());
     }
 
     @Override

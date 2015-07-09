@@ -15,55 +15,39 @@ import org.hibernate.annotations.NamedQuery;
 @Entity
 @Table(name = "PRODUCTO_CREDITO")
 @PrimaryKeyJoinColumn
-@NamedQueries({ 
-	@NamedQuery(name = ProductoCreditoEntity.findAll, query = "SELECT p FROM ProductoCreditoEntity p"),
-	@NamedQuery(name = ProductoCreditoEntity.findByTipoPersona, query = "SELECT p FROM ProductoCreditoEntity p WHERE p.tipoPersona = :tipoPersona"),
-	@NamedQuery(name = ProductoCreditoEntity.findByCodigo, query = "SELECT p FROM ProductoCreditoEntity p WHERE p.codigo = :codigo"),
-	@NamedQuery(name = ProductoCreditoEntity.findByDenominacion, query = "SELECT p FROM ProductoCreditoEntity p WHERE p.denominacion = :denominacion"),
-	@NamedQuery(name = ProductoCreditoEntity.findByFilterText, query = "SELECT p FROM ProductoCreditoEntity p WHERE p.denominacion LIKE :filterText OR p.codigo LIKE :filterText"),
-	@NamedQuery(name = ProductoCreditoEntity.findByFilterTextTipoPersona, query = "SELECT p FROM ProductoCreditoEntity p WHERE p.tipoPersona = :tipoPersona AND ( p.denominacion LIKE :filterText OR p.codigo LIKE :filterText )"),
-	@NamedQuery(name = ProductoCreditoEntity.findByFilterTextMoneda, query = "SELECT p FROM ProductoCreditoEntity p WHERE p.moneda = :moneda AND ( p.denominacion LIKE :filterText OR p.codigo LIKE :filterText )"),
-	@NamedQuery(name = ProductoCreditoEntity.findByFilterTextTipoPersonaMoneda, query = "SELECT p FROM ProductoCreditoEntity p WHERE p.tipoPersona = :tipoPersona AND p.moneda = :moneda AND ( p.denominacion LIKE :filterText OR p.codigo LIKE :filterText )") })
+@NamedQueries({
+        @NamedQuery(name = "ProductoCreditoEntity.findAll", query = "SELECT p FROM ProductoCreditoEntity p"),
+        @NamedQuery(name = "ProductoCreditoEntity.findByCodigo", query = "SELECT p FROM ProductoCreditoEntity p WHERE p.codigo = :codigo") })
 public class ProductoCreditoEntity extends ProductoEntity {
 
-	/**
+    /**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public final static String base = "org.sistcoop.producto.models.jpa.entities.ProductoCreditoEntity.";
-	public final static String findAll = base + "findAll";
-	public final static String findByTipoPersona = base + "findByTipoPersona";
-	public final static String findByCodigo = base + "findByCodigo";
-	public final static String findByDenominacion = base + "findByDenominacion";
-	public final static String findByFilterText = base + "findByFilterText";
-	public final static String findByFilterTextTipoPersona = base + "findByFilterTextTipoPersona";
-	public final static String findByFilterTextMoneda = base + "findByFilterTextMoneda";
-	public final static String findByFilterTextTipoPersonaMoneda = base + "findByFilterTextTipoPersonaMoneda";
+    private BigDecimal montoMinimo;
+    private BigDecimal montoMaximo;
 
-	private BigDecimal montoMinimo;
-	private BigDecimal montoMaximo;
+    @NotNull
+    @Min(value = 1)
+    @Max(value = 1000000)
+    public BigDecimal getMontoMinimo() {
+        return montoMinimo;
+    }
 
-	@NotNull
-	@Min(value = 1)
-	@Max(value = 1000000)
-	public BigDecimal getMontoMinimo() {
-		return montoMinimo;
-	}
+    public void setMontoMinimo(BigDecimal montoMinimo) {
+        this.montoMinimo = montoMinimo;
+    }
 
-	public void setMontoMinimo(BigDecimal montoMinimo) {
-		this.montoMinimo = montoMinimo;
-	}
+    @NotNull
+    @Min(value = 1)
+    @Max(value = 1000000)
+    public BigDecimal getMontoMaximo() {
+        return montoMaximo;
+    }
 
-	@NotNull
-	@Min(value = 1)
-	@Max(value = 1000000)
-	public BigDecimal getMontoMaximo() {
-		return montoMaximo;
-	}
+    public void setMontoMaximo(BigDecimal montoMaximo) {
+        this.montoMaximo = montoMaximo;
+    }
 
-	public void setMontoMaximo(BigDecimal montoMaximo) {
-		this.montoMaximo = montoMaximo;
-	}
-	
 }

@@ -19,7 +19,7 @@ public interface ProductoCreditoResource {
 
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    public void update(ProductoCreditoRepresentation productoCreditoRepresentation);
+    public void update(ProductoCreditoRepresentation representation);
 
     @DELETE
     public void remove();

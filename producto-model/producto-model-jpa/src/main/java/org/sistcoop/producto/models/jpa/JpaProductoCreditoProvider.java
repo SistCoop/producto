@@ -17,6 +17,8 @@ import org.sistcoop.producto.models.ProductoCreditoModel;
 import org.sistcoop.producto.models.ProductoCreditoProvider;
 import org.sistcoop.producto.models.enums.TipoPersona;
 import org.sistcoop.producto.models.jpa.entities.ProductoCreditoEntity;
+import org.sistcoop.producto.models.search.SearchCriteriaBean;
+import org.sistcoop.producto.models.search.SearchResultsModel;
 
 @Named
 @Stateless
@@ -24,212 +26,81 @@ import org.sistcoop.producto.models.jpa.entities.ProductoCreditoEntity;
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
 public class JpaProductoCreditoProvider implements ProductoCreditoProvider {
 
-	@PersistenceContext
-	protected EntityManager em;
+    @PersistenceContext
+    protected EntityManager em;
 
-	@Override
-	public void close() {
-		// TODO Auto-generated method stub
-	}
-	
-	@Override
-	public ProductoCreditoModel getProductoCreditoById(String id) {
-		ProductoCreditoEntity productoCreditoEntity = this.em.find(ProductoCreditoEntity.class, id);
-		return productoCreditoEntity != null ? new ProductoCreditoAdapter(em, productoCreditoEntity) : null;
-	}
-	
-	@Override
-	public ProductoCreditoModel getProductoCreditoByCodigo(String codigo) {
-		TypedQuery<ProductoCreditoEntity> query = em.createNamedQuery(ProductoCreditoEntity.findByCodigo, ProductoCreditoEntity.class);
-		query.setParameter("codigo", codigo);
-		List<ProductoCreditoEntity> results = query.getResultList();
-		if(results.size() == 0)
-			return null;
-		return new ProductoCreditoAdapter(em, results.get(0));
-	}
-	
-	@Override
-	public ProductoCreditoModel getProductoByDenominacion(String denominacion) {
-		TypedQuery<ProductoCreditoEntity> query = em.createNamedQuery(ProductoCreditoEntity.findByDenominacion, ProductoCreditoEntity.class);
-		query.setParameter("denominacion", denominacion);
-		List<ProductoCreditoEntity> results = query.getResultList();
-		if(results.size() == 0)
-			return null;
-		return new ProductoCreditoAdapter(em, results.get(0));
-	}
+    @Override
+    public void close() {
+        // TODO Auto-generated method stub
+    }
 
-	@Override
-	public ProductoCreditoModel addProductoCredito(String codigo, String denominacion, TipoPersona tipoPersona, String moneda, BigDecimal montoMinimo, BigDecimal montoMaximo) {
-		ProductoCreditoEntity entity = new ProductoCreditoEntity();
-		entity.setCodigo(codigo);
-		entity.setDenominacion(denominacion);
-		entity.setTipoPersona(tipoPersona);
-		entity.setMoneda(moneda);
-		entity.setMontoMinimo(montoMinimo);
-		entity.setMontoMaximo(montoMaximo);
+    @Override
+    public ProductoCreditoModel findById(String id) {
+        ProductoCreditoEntity productoCreditoEntity = this.em.find(ProductoCreditoEntity.class, id);
+        return productoCreditoEntity != null ? new ProductoCreditoAdapter(em, productoCreditoEntity) : null;
+    }
 
-		entity.setEstado(true);
+    @Override
+    public ProductoCreditoModel findByCodigo(String codigo) {
+        TypedQuery<ProductoCreditoEntity> query = em.createNamedQuery("ProductoCreditoEntity.findByCodigo",
+                ProductoCreditoEntity.class);
+        query.setParameter("codigo", codigo);
+        List<ProductoCreditoEntity> results = query.getResultList();
+        if (results.size() == 0) {
+            return null;
+        }
+        return new ProductoCreditoAdapter(em, results.get(0));
+    }
 
-		em.persist(entity);
-		return new ProductoCreditoAdapter(em, entity);
-	}
+    @Override
+    public ProductoCreditoModel create(TipoPersona tipoPersona, String moneda, String denominacion,
+            BigDecimal montoMinimo, BigDecimal montoMaximo) {
 
-	@Override
-	public boolean desactivarProductoCredito(ProductoCreditoModel productoModel) {
-		ProductoCreditoEntity entity = ProductoCreditoAdapter.toProductoCreditoEntity(productoModel, em);
-		entity.setEstado(false);
-		em.merge(entity);
-		return true;
-	}
+        ProductoCreditoEntity entity = new ProductoCreditoEntity();
+        entity.setCodigo(null);
+        entity.setDenominacion(denominacion);
+        entity.setTipoPersona(tipoPersona);
+        entity.setMoneda(moneda);
+        entity.setMontoMinimo(montoMinimo);
+        entity.setMontoMaximo(montoMaximo);
+        entity.setEstado(true);
 
-	@Override
-	public List<ProductoCreditoModel> getProductos() {
-		return getProductos(true);
-	}
+        em.persist(entity);
+        return new ProductoCreditoAdapter(em, entity);
+    }
 
-	@Override
-	public List<ProductoCreditoModel> getProductos(TipoPersona tipoPersona) {
-		return getProductos(tipoPersona, true);
-	}
+    @Override
+    public boolean remove(ProductoCreditoModel productoModel) {
+        String id = productoModel.getId();
+        ProductoCreditoEntity entity = this.em.find(ProductoCreditoEntity.class, id);
+        if (entity == null) {
+            return false;
+        }
+        em.remove(entity);
+        return true;
+    }
 
-	@Override
-	public List<ProductoCreditoModel> getProductos(boolean estado) {
-		TypedQuery<ProductoCreditoEntity> query = em.createNamedQuery(ProductoCreditoEntity.findAll, ProductoCreditoEntity.class);
-		List<ProductoCreditoEntity> results = query.getResultList();
-		List<ProductoCreditoModel> productos = new ArrayList<ProductoCreditoModel>();
-		for (ProductoCreditoEntity entity : results) {
-			if (entity.isEstado() == estado)
-				productos.add(new ProductoCreditoAdapter(em, entity));
-		}
-		return productos;
-	}
+    @Override
+    public SearchResultsModel<ProductoCreditoModel> search() {
+        TypedQuery<ProductoCreditoEntity> query = em.createNamedQuery("ProductoCreditoEntity.findAll",
+                ProductoCreditoEntity.class);
 
-	@Override
-	public List<ProductoCreditoModel> getProductos(TipoPersona tipoPersona, boolean estado) {
-		TypedQuery<ProductoCreditoEntity> query = em.createNamedQuery(ProductoCreditoEntity.findByTipoPersona, ProductoCreditoEntity.class);
-		List<ProductoCreditoEntity> results = query.getResultList();
-		List<ProductoCreditoModel> productos = new ArrayList<ProductoCreditoModel>();
-		for (ProductoCreditoEntity entity : results) {
-			if (entity.isEstado() == estado)
-				productos.add(new ProductoCreditoAdapter(em, entity));
-		}
-		return productos;
-	}
-	
-	@Override
-	public List<ProductoCreditoModel> getProductos(String filterText, int firstResult, int maxResults) {
+        List<ProductoCreditoEntity> entities = query.getResultList();
+        List<ProductoCreditoModel> models = new ArrayList<ProductoCreditoModel>();
+        for (ProductoCreditoEntity productoCreditoEntity : entities) {
+            models.add(new ProductoCreditoAdapter(em, productoCreditoEntity));
+        }
 
-		if (filterText == null)
-			filterText = "";
+        SearchResultsModel<ProductoCreditoModel> result = new SearchResultsModel<>();
+        result.setBeans(models);
+        result.setTotalSize(models.size());
+        return result;
+    }
 
-		TypedQuery<ProductoCreditoEntity> query = em.createNamedQuery(ProductoCreditoEntity.findByFilterText, ProductoCreditoEntity.class);
-		query.setParameter("filterText", "%" + filterText.toUpperCase() + "%");		
-		
-		if (firstResult != -1) {
-			query.setFirstResult(firstResult);
-		}
-		if (maxResults != -1) {
-			query.setMaxResults(maxResults);
-		}
-		
-		List<ProductoCreditoEntity> results = query.getResultList();
-		List<ProductoCreditoModel> productoCreditoModels = new ArrayList<ProductoCreditoModel>();
-		for (ProductoCreditoEntity entity : results) {
-			if(entity.isEstado()) {
-				productoCreditoModels.add(new ProductoCreditoAdapter(em, entity));	
-			}	
-		}	
-		
-		return productoCreditoModels;
-	}
-
-	@Override
-	public List<ProductoCreditoModel> getProductos(String filterText, int firstResult, int maxResults, TipoPersona tipoPersona) {
-
-		if (filterText == null)
-			filterText = "";
-		
-		TypedQuery<ProductoCreditoEntity> query = em.createNamedQuery(ProductoCreditoEntity.findByFilterTextTipoPersona, ProductoCreditoEntity.class);
-		query.setParameter("filterText", "%" + filterText.toUpperCase() + "%");	
-		query.setParameter("tipoPersona", tipoPersona);	
-		
-		if (firstResult != -1) {
-			query.setFirstResult(firstResult);
-		}
-		if (maxResults != -1) {
-			query.setMaxResults(maxResults);
-		}
-		
-		List<ProductoCreditoEntity> results = query.getResultList();
-		List<ProductoCreditoModel> productoCreditoModels = new ArrayList<ProductoCreditoModel>();
-		for (ProductoCreditoEntity entity : results) {
-			if(entity.isEstado()) {
-				productoCreditoModels.add(new ProductoCreditoAdapter(em, entity));	
-			}	
-		}	
-		
-		return productoCreditoModels;
-		
-	}
-
-	@Override
-	public List<ProductoCreditoModel> getProductos(String filterText, int firstResult, int maxResults, String moneda) {
-
-		if (filterText == null)
-			filterText = "";
-
-		TypedQuery<ProductoCreditoEntity> query = em.createNamedQuery(ProductoCreditoEntity.findByFilterTextMoneda, ProductoCreditoEntity.class);
-		query.setParameter("filterText", "%" + filterText.toUpperCase() + "%");	
-		query.setParameter("moneda", moneda);	
-		
-		if (firstResult != -1) {
-			query.setFirstResult(firstResult);
-		}
-		if (maxResults != -1) {
-			query.setMaxResults(maxResults);
-		}
-		
-		List<ProductoCreditoEntity> results = query.getResultList();
-		List<ProductoCreditoModel> productoCreditoModels = new ArrayList<ProductoCreditoModel>();
-		for (ProductoCreditoEntity entity : results) {
-			if(entity.isEstado()) {
-				productoCreditoModels.add(new ProductoCreditoAdapter(em, entity));	
-			}	
-		}	
-		
-		return productoCreditoModels;
-		
-	}
-	
-	@Override
-	public List<ProductoCreditoModel> getProductos(String filterText, int firstResult, int maxResults, TipoPersona tipoPersona, String moneda) {
-
-		if (filterText == null)
-			filterText = "";
-
-		TypedQuery<ProductoCreditoEntity> query = em.createNamedQuery(ProductoCreditoEntity.findByFilterTextTipoPersonaMoneda, ProductoCreditoEntity.class);
-		query.setParameter("filterText", "%" + filterText.toUpperCase() + "%");
-		query.setParameter("tipoPersona", tipoPersona);
-		query.setParameter("moneda", moneda);
-		
-		if (firstResult != -1) {
-			query.setFirstResult(firstResult);
-		}
-		if (maxResults != -1) {
-			query.setMaxResults(maxResults);
-		}
-		
-		List<ProductoCreditoEntity> results = query.getResultList();
-		List<ProductoCreditoModel> productoCreditoModels = new ArrayList<ProductoCreditoModel>();
-		for (ProductoCreditoEntity entity : results) {
-			if(entity.isEstado()) {
-				productoCreditoModels.add(new ProductoCreditoAdapter(em, entity));	
-			}	
-		}	
-		
-		return productoCreditoModels;
-	}
-
-	
+    @Override
+    public SearchResultsModel<ProductoCreditoModel> search(SearchCriteriaBean searchCriteriaBean) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
 }

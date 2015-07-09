@@ -48,7 +48,7 @@ public class ProductoCreditoResourceImpl implements ProductoCreditoResource {
     private ComisionesResource comisionesResource;
 
     private ProductoCreditoModel getProductoCreditoModel() {
-        return productoCreditoProvider.getProductoCreditoById(producto);
+        return productoCreditoProvider.findById(producto);
     }
 
     @Override
@@ -57,8 +57,8 @@ public class ProductoCreditoResourceImpl implements ProductoCreditoResource {
     }
 
     @Override
-    public void update(ProductoCreditoRepresentation productoCreditoRepresentation) {
-        productoCreditoManager.updateProducto(getProductoCreditoModel(), productoCreditoRepresentation);
+    public void update(ProductoCreditoRepresentation representation) {
+        productoCreditoManager.updateProducto(getProductoCreditoModel(), representation);
     }
 
     @Override
@@ -68,7 +68,7 @@ public class ProductoCreditoResourceImpl implements ProductoCreditoResource {
 
     @Override
     public void disable() {
-        productoCreditoProvider.desactivarProductoCredito(getProductoCreditoModel());
+        productoCreditoManager.disableProducto(getProductoCreditoModel());
     }
 
     @Override

@@ -17,7 +17,7 @@ public interface CaracteristicaResource {
 
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    public void update(CaracteristicaRepresentation caracteristicaRepresentation);
+    public void update(CaracteristicaRepresentation representation);
 
     @DELETE
     public void remove();

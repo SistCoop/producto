@@ -17,7 +17,7 @@ public interface ComisionResource {
 
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    public void update(ComisionRepresentation comisionRepresentation);
+    public void update(ComisionRepresentation representation);
 
     @DELETE
     public void remove();

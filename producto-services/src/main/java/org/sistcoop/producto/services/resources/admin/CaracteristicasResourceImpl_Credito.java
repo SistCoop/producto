@@ -17,9 +17,12 @@ import org.sistcoop.producto.models.CaracteristicaModel;
 import org.sistcoop.producto.models.CaracteristicaProvider;
 import org.sistcoop.producto.models.ProductoCreditoModel;
 import org.sistcoop.producto.models.ProductoCreditoProvider;
+import org.sistcoop.producto.models.ProductoModel;
+import org.sistcoop.producto.models.search.SearchResultsModel;
 import org.sistcoop.producto.models.utils.ModelToRepresentation;
 import org.sistcoop.producto.models.utils.RepresentationToModel;
 import org.sistcoop.producto.representations.idm.CaracteristicaRepresentation;
+import org.sistcoop.producto.representations.idm.search.SearchResultsRepresentation;
 import org.sistcoop.producto.services.resources.producers.Caracteristicas_Credito;
 
 @Stateless
@@ -46,7 +49,7 @@ public class CaracteristicasResourceImpl_Credito implements CaracteristicasResou
     private CaracteristicaResource caracteristicaResource;
 
     private ProductoCreditoModel getProductoCreditoModel() {
-        return productoCreditoProvider.getProductoCreditoById(producto);
+        return productoCreditoProvider.findById(producto);
     }
 
     @Override
@@ -55,23 +58,28 @@ public class CaracteristicasResourceImpl_Credito implements CaracteristicasResou
     }
 
     @Override
-    public Response create(CaracteristicaRepresentation caracteristicaRepresentation) {
-        CaracteristicaModel caracteristicaModel = representationToModel.createCaracteristica(
-                getProductoCreditoModel(), caracteristicaRepresentation, caracteristicaProvider);
+    public Response create(CaracteristicaRepresentation representation) {
+        CaracteristicaModel model = representationToModel.createCaracteristica(representation,
+                getProductoCreditoModel(), caracteristicaProvider);
 
-        return Response.created(uriInfo.getAbsolutePathBuilder().path(caracteristicaModel.getId()).build())
+        return Response.created(uriInfo.getAbsolutePathBuilder().path(model.getId()).build())
                 .header("Access-Control-Expose-Headers", "Location")
-                .entity(Jsend.getSuccessJSend(caracteristicaModel.getId())).build();
+                .entity(Jsend.getSuccessJSend(model.getId())).build();
     }
 
     @Override
-    public List<CaracteristicaRepresentation> search() {
-        List<CaracteristicaModel> list = caracteristicaProvider.getCaracteristicas(getProductoCreditoModel());
-        List<CaracteristicaRepresentation> result = new ArrayList<>();
-        for (CaracteristicaModel caracteristicaModel : list) {
-            result.add(ModelToRepresentation.toRepresentation(caracteristicaModel));
+    public SearchResultsRepresentation<CaracteristicaRepresentation> search() {
+        ProductoModel productoModel = getProductoCreditoModel();
+        SearchResultsModel<CaracteristicaModel> results = caracteristicaProvider.search(productoModel);
+
+        SearchResultsRepresentation<CaracteristicaRepresentation> rep = new SearchResultsRepresentation<>();
+        List<CaracteristicaRepresentation> representations = new ArrayList<>();
+        for (CaracteristicaModel model : results.getBeans()) {
+            representations.add(ModelToRepresentation.toRepresentation(model));
         }
-        return result;
+        rep.setTotalSize(results.getTotalSize());
+        rep.setItems(representations);
+        return rep;
     }
 
 }

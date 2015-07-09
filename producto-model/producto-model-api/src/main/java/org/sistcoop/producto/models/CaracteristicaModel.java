@@ -2,16 +2,16 @@ package org.sistcoop.producto.models;
 
 public interface CaracteristicaModel extends Model {
 
-	String getId();
+    String getId();
 
-	String getDescripcion();
+    String getDescripcion();
 
-	void setDescripcion(String descripcion);
+    void setDescripcion(String descripcion);
 
-	String getDescripcionDetallada();
+    String getDescripcionDetallada();
 
-	void setDescripcionDetallada(String descripcionDetallada);
+    void setDescripcionDetallada(String descripcionDetallada);
 
-	ProductoModel getProducto();
+    ProductoModel getProducto();
 
 }

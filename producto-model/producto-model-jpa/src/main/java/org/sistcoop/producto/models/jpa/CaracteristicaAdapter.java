@@ -4,32 +4,31 @@ import javax.persistence.EntityManager;
 
 import org.sistcoop.producto.models.CaracteristicaModel;
 import org.sistcoop.producto.models.ProductoModel;
-import org.sistcoop.producto.models.jpa.entities.ProductoCaracteristicaEntity;
+import org.sistcoop.producto.models.jpa.entities.CaracteristicaEntity;
 import org.sistcoop.producto.models.jpa.entities.ProductoEntity;
 
-public class ProductoCaracteristicaAdapter implements CaracteristicaModel {
+public class CaracteristicaAdapter implements CaracteristicaModel {
 
     private static final long serialVersionUID = 1L;
 
-    protected ProductoCaracteristicaEntity productoCaracteristicaEntity;
+    protected CaracteristicaEntity productoCaracteristicaEntity;
     protected EntityManager em;
 
-    public ProductoCaracteristicaAdapter(EntityManager em,
-            ProductoCaracteristicaEntity productoCaracteristicaEntity) {
+    public CaracteristicaAdapter(EntityManager em, CaracteristicaEntity productoCaracteristicaEntity) {
         this.em = em;
         this.productoCaracteristicaEntity = productoCaracteristicaEntity;
     }
 
-    public ProductoCaracteristicaEntity getProductoCaracteristicaEntity() {
+    public CaracteristicaEntity getProductoCaracteristicaEntity() {
         return productoCaracteristicaEntity;
     }
 
-    public static ProductoCaracteristicaEntity toProductoCaracteristicaEntity(
-            CaracteristicaModel model, EntityManager em) {
-        if (model instanceof ProductoCaracteristicaAdapter) {
-            return ((ProductoCaracteristicaAdapter) model).getProductoCaracteristicaEntity();
+    public static CaracteristicaEntity toProductoCaracteristicaEntity(CaracteristicaModel model,
+            EntityManager em) {
+        if (model instanceof CaracteristicaAdapter) {
+            return ((CaracteristicaAdapter) model).getProductoCaracteristicaEntity();
         }
-        return em.getReference(ProductoCaracteristicaEntity.class, model.getId());
+        return em.getReference(CaracteristicaEntity.class, model.getId());
     }
 
     @Override

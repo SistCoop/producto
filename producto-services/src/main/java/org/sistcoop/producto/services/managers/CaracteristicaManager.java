@@ -12,7 +12,9 @@ import org.sistcoop.producto.representations.idm.CaracteristicaRepresentation;
 public class CaracteristicaManager {
 
     public void updateCaracteristica(CaracteristicaModel model, CaracteristicaRepresentation rep) {
-
+        model.setDescripcion(rep.getDescripcion());
+        model.setDescripcionDetallada(rep.getDescripcionDetallada());
+        model.commit();
     }
 
 }

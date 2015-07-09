@@ -2,7 +2,7 @@ package org.sistcoop.producto.models;
 
 import java.math.BigDecimal;
 
-public interface ProductoTasaModel extends Model {
+public interface TasaModel extends Model {
 
 	String getId();
 

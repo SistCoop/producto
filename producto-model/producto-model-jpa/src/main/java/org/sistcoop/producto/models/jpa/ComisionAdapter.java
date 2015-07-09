@@ -4,34 +4,33 @@ import java.math.BigDecimal;
 
 import javax.persistence.EntityManager;
 
-import org.sistcoop.producto.models.ProductoComisionModel;
+import org.sistcoop.producto.models.ComisionModel;
 import org.sistcoop.producto.models.ProductoModel;
 import org.sistcoop.producto.models.enums.Frecuencia;
 import org.sistcoop.producto.models.enums.TipoValor;
-import org.sistcoop.producto.models.jpa.entities.ProductoComisionEntity;
+import org.sistcoop.producto.models.jpa.entities.ComisionEntity;
 
-public class ProductoComisionAdapter implements ProductoComisionModel {
+public class ComisionAdapter implements ComisionModel {
 
     private static final long serialVersionUID = 1L;
 
-    protected ProductoComisionEntity productoComisionEntity;
+    protected ComisionEntity productoComisionEntity;
     protected EntityManager em;
 
-    public ProductoComisionAdapter(EntityManager em, ProductoComisionEntity productoComisionEntity) {
+    public ComisionAdapter(EntityManager em, ComisionEntity productoComisionEntity) {
         this.em = em;
         this.productoComisionEntity = productoComisionEntity;
     }
 
-    public ProductoComisionEntity getProductoComisionEntity() {
+    public ComisionEntity getProductoComisionEntity() {
         return productoComisionEntity;
     }
 
-    public static ProductoComisionEntity toProductoComisionEntity(ProductoComisionModel model,
-            EntityManager em) {
-        if (model instanceof ProductoComisionAdapter) {
-            return ((ProductoComisionAdapter) model).getProductoComisionEntity();
+    public static ComisionEntity toProductoComisionEntity(ComisionModel model, EntityManager em) {
+        if (model instanceof ComisionAdapter) {
+            return ((ComisionAdapter) model).getProductoComisionEntity();
         }
-        return em.getReference(ProductoComisionEntity.class, model.getId());
+        return em.getReference(ComisionEntity.class, model.getId());
     }
 
     @Override
@@ -103,9 +102,9 @@ public class ProductoComisionAdapter implements ProductoComisionModel {
             return true;
         if (obj == null)
             return false;
-        if (!(obj instanceof ProductoComisionModel))
+        if (!(obj instanceof ComisionModel))
             return false;
-        ProductoComisionModel other = (ProductoComisionModel) obj;
+        ComisionModel other = (ComisionModel) obj;
         if (getId() == null) {
             if (other.getId() != null)
                 return false;

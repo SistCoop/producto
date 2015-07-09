@@ -6,32 +6,28 @@ import org.sistcoop.producto.models.enums.TipoPersona;
 
 public interface ProductoModel extends Model {
 
-	String getId();
+    String getId();
 
-	String getCodigo();
-	
-	void setCodigo(String codigo);
+    String getCodigo();
 
-	String getDenominacion();
+    String getDenominacion();
 
-	void setDenominacion(String denominacion);
+    void setDenominacion(String denominacion);
 
-	TipoPersona getTipoPersona();
+    TipoPersona getTipoPersona();
 
-	void setTipoPersona(TipoPersona tipoPersona);
-	
-	String getMoneda();
-	
-	void setMoneda(String moneda);
+    void setTipoPersona(TipoPersona tipoPersona);
 
-	boolean getEstado();
+    String getMoneda();
 
-	void desactivar();
+    boolean getEstado();
 
-	List<CaracteristicaModel> getCaracteristicas();
-	
-	List<ProductoTasaModel> getTasas();
-	
-	List<ProductoComisionModel> getComisiones();
+    void desactivar();
+
+    List<CaracteristicaModel> getCaracteristicas();
+
+    List<TasaModel> getTasas();
+
+    List<ComisionModel> getComisiones();
 
 }

@@ -1,27 +1,19 @@
 package org.sistcoop.producto.models;
 
-import java.util.List;
-
 import javax.ejb.Local;
 
+import org.sistcoop.producto.models.search.SearchResultsModel;
 import org.sistcoop.producto.provider.Provider;
 
 @Local
-public interface CaracteristicaProvider extends Provider {	
+public interface CaracteristicaProvider extends Provider {
 
-	CaracteristicaModel getProductoCaracteristicaById(String id);		
-	
-	CaracteristicaModel addProductoCaracteristica(
-			ProductoModel productoModel,
-			String descripcion,
-			String descripcionDetallada);
-	
-	boolean removeProductoCaracteristica(CaracteristicaModel caracteristicaModel);
+    CaracteristicaModel findById(String id);
 
-	List<CaracteristicaModel> getProductoCaracteristicas(ProductoModel productoModel);
+    CaracteristicaModel create(ProductoModel productoModel, String descripcion, String descripcionDetallada);
 
-    List<CaracteristicaModel> getCaracteristicas(ProductoCreditoModel productoCreditoModel);
+    boolean remove(CaracteristicaModel caracteristicaModel);
 
-    List<CaracteristicaModel> getCaracteristicas(ProductoCuentaPersonalModel productoCuentaPersonalModel);	
+    SearchResultsModel<CaracteristicaModel> search(ProductoModel productoModel);
 
 }

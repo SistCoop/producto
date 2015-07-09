@@ -1,7 +1,5 @@
 package org.sistcoop.producto.client.resource;
 
-import java.util.List;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
@@ -14,6 +12,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.sistcoop.producto.representations.idm.ProductoCuentaPersonalRepresentation;
+import org.sistcoop.producto.representations.idm.search.SearchResultsRepresentation;
 
 @Path("/productosCuentaPersonal")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -23,15 +22,16 @@ public interface ProductosCuentaPersonalResource {
     public ProductoCuentaPersonalResource producto(@PathParam("producto") String producto);
 
     @POST
-    public Response create(ProductoCuentaPersonalRepresentation productoCuentaPersonalRepresentation);
+    public Response create(ProductoCuentaPersonalRepresentation representation);
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<ProductoCuentaPersonalRepresentation> search(@QueryParam("tipoPersona") String tipoPersona,
-            @QueryParam("tipoCuenta") String tipoCuenta, @QueryParam("moneda") String[] moneda,
+    public SearchResultsRepresentation<ProductoCuentaPersonalRepresentation> search(
+            @QueryParam("tipoCuenta") String tipoCuenta, @QueryParam("tipoPersona") String tipoPersona,
+            @QueryParam("moneda") String moneda,
             @QueryParam("estado") @DefaultValue(value = "true") boolean estado,
             @QueryParam("filterText") @DefaultValue(value = "") String filterText,
-            @QueryParam("firstResult") @DefaultValue(value = "-1") Integer firstResult,
-            @QueryParam("maxResults") @DefaultValue(value = "-1") Integer maxResults);
+            @QueryParam("firstResult") @DefaultValue(value = "-1") int firstResult,
+            @QueryParam("maxResults") @DefaultValue(value = "-1") int maxResults);
 
 }

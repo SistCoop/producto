@@ -79,7 +79,7 @@ public class ProductoCreditoProviderTest {
 		ProductoCreditoModel model1 = productoCreditoProvider.addProductoCredito("CRE001", "Rapidiario", TipoPersona.NATURAL, "S/.", new BigDecimal("1"), new BigDecimal("1000"));
 				
 		String id = model1.getId();
-		ProductoCreditoModel model2 = productoCreditoProvider.getProductoCreditoById(id);
+		ProductoCreditoModel model2 = productoCreditoProvider.findById(id);
 
 		assertThat(model1, is(equalTo(model2)));
 	}
@@ -89,7 +89,7 @@ public class ProductoCreditoProviderTest {
 		ProductoCreditoModel model1 = productoCreditoProvider.addProductoCredito("CRE001", "Rapidiario", TipoPersona.NATURAL, "S/.", new BigDecimal("1"), new BigDecimal("1000"));
 				
 		String codigo = model1.getCodigo();
-		ProductoCreditoModel model2 = productoCreditoProvider.getProductoCreditoByCodigo(codigo);
+		ProductoCreditoModel model2 = productoCreditoProvider.findByCodigo(codigo);
 
 		assertThat(model1, is(equalTo(model2)));
 	}
@@ -99,7 +99,7 @@ public class ProductoCreditoProviderTest {
 		ProductoCreditoModel model1 = productoCreditoProvider.addProductoCredito("CRE001", "Rapidiario", TipoPersona.NATURAL, "S/.", new BigDecimal("1"), new BigDecimal("1000"));
 				
 		String denominacion = model1.getDenominacion();
-		ProductoCreditoModel model2 = productoCreditoProvider.getProductoByDenominacion(denominacion);
+		ProductoCreditoModel model2 = productoCreditoProvider.findByDenominacion(denominacion);
 
 		assertThat(model1, is(equalTo(model2)));
 	}

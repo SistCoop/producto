@@ -17,7 +17,7 @@ public interface TasaResource {
 
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    public void update(TasaRepresentation tasaRepresentation);
+    public void update(TasaRepresentation representation);
 
     @DELETE
     public void remove();

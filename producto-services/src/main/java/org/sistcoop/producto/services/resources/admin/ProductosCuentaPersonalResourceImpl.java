@@ -12,11 +12,17 @@ import javax.ws.rs.core.UriInfo;
 import org.sistcoop.producto.Jsend;
 import org.sistcoop.producto.client.resource.ProductoCuentaPersonalResource;
 import org.sistcoop.producto.client.resource.ProductosCuentaPersonalResource;
+import org.sistcoop.producto.models.ProductoCreditoModel;
 import org.sistcoop.producto.models.ProductoCuentaPersonalModel;
 import org.sistcoop.producto.models.ProductoCuentaPersonalProvider;
+import org.sistcoop.producto.models.enums.TipoCuentaPersonal;
+import org.sistcoop.producto.models.enums.TipoPersona;
+import org.sistcoop.producto.models.search.SearchResultsModel;
 import org.sistcoop.producto.models.utils.ModelToRepresentation;
 import org.sistcoop.producto.models.utils.RepresentationToModel;
+import org.sistcoop.producto.representations.idm.ProductoCreditoRepresentation;
 import org.sistcoop.producto.representations.idm.ProductoCuentaPersonalRepresentation;
+import org.sistcoop.producto.representations.idm.search.SearchResultsRepresentation;
 
 @Stateless
 public class ProductosCuentaPersonalResourceImpl implements ProductosCuentaPersonalResource {
@@ -51,15 +57,60 @@ public class ProductosCuentaPersonalResourceImpl implements ProductosCuentaPerso
     }
 
     @Override
-    public List<ProductoCuentaPersonalRepresentation> search(String tipoPersona, String tipoCuenta,
-            String[] moneda, boolean estado, String filterText, Integer firstResult, Integer maxResults) {
+    public SearchResultsRepresentation<ProductoCuentaPersonalRepresentation> search(String tipoCuenta,
+            String tipoPersona, String moneda, boolean estado, String filterText, int firstResult,
+            int maxResults) {
 
-        List<ProductoCuentaPersonalModel> list = productoCuentaPersonalProvider.getProductos(estado);
-        List<ProductoCuentaPersonalRepresentation> result = new ArrayList<>();
-        for (ProductoCuentaPersonalModel productoCuentaPersonalModel : list) {
-            result.add(ModelToRepresentation.toRepresentation(productoCuentaPersonalModel));
+        SearchResultsModel<ProductoCuentaPersonalModel> results = null;
+
+        if (tipoCuenta != null && tipoPersona != null && moneda != null) {
+            results = productoCuentaPersonalProvider.getProductos(
+                    TipoCuentaPersonal.valueOf(tipoCuenta.toUpperCase()),
+                    TipoPersona.valueOf(tipoPersona.toUpperCase()), moneda, estado, filterText, firstResult,
+                    maxResults);
+        } else {
+            if (tipoCuenta == null && tipoPersona == null && moneda == null) {
+                results = productoCuentaPersonalProvider.getProductos(estado, filterText, firstResult,
+                        maxResults);
+            } else {
+                if (tipoCuenta != null && tipoPersona != null) {
+                    results = productoCuentaPersonalProvider.getProductos(
+                            TipoCuentaPersonal.valueOf(tipoCuenta.toUpperCase()),
+                            TipoPersona.valueOf(tipoPersona.toUpperCase()), estado, filterText, firstResult,
+                            maxResults);
+                } else if (tipoPersona != null && moneda != null) {
+                    results = productoCuentaPersonalProvider.getProductos(
+                            TipoPersona.valueOf(tipoPersona.toUpperCase()), moneda, estado, filterText,
+                            firstResult, maxResults);
+                } else if (tipoCuenta != null && moneda != null) {
+                    results = productoCuentaPersonalProvider.getProductos(
+                            TipoCuentaPersonal.valueOf(tipoCuenta.toUpperCase()), moneda, estado, filterText,
+                            firstResult, maxResults);
+                } else {
+                    if (tipoCuenta != null) {
+                        results = productoCuentaPersonalProvider.getProductos(
+                                TipoCuentaPersonal.valueOf(tipoCuenta.toUpperCase()), estado, filterText,
+                                firstResult, maxResults);
+                    } else if (tipoPersona != null) {
+                        results = productoCuentaPersonalProvider.getProductos(
+                                TipoPersona.valueOf(tipoPersona.toUpperCase()), estado, filterText,
+                                firstResult, maxResults);
+                    } else if (moneda != null) {
+                        results = productoCuentaPersonalProvider.getProductos(moneda, estado, filterText,
+                                firstResult, maxResults);
+                    }
+                }
+            }
         }
-        return result;
-    }
 
+        SearchResultsRepresentation<ProductoCuentaPersonalRepresentation> rep = new SearchResultsRepresentation<>();
+        List<ProductoCuentaPersonalRepresentation> representations = new ArrayList<>();
+        for (ProductoCuentaPersonalModel model : results.getBeans()) {
+            representations.add(ModelToRepresentation.toRepresentation(model));
+        }
+        rep.setTotalSize(results.getTotalSize());
+        rep.setItems(representations);
+        return rep;
+
+    }
 }

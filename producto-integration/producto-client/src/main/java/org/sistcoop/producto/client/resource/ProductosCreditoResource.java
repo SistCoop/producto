@@ -1,7 +1,5 @@
 package org.sistcoop.producto.client.resource;
 
-import java.util.List;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
@@ -14,6 +12,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.sistcoop.producto.representations.idm.ProductoCreditoRepresentation;
+import org.sistcoop.producto.representations.idm.search.SearchResultsRepresentation;
 
 @Path("/productosCredito")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -23,15 +22,15 @@ public interface ProductosCreditoResource {
     public ProductoCreditoResource producto(@PathParam("producto") String producto);
 
     @POST
-    public Response create(ProductoCreditoRepresentation productoCreditoRepresentation);
+    public Response create(ProductoCreditoRepresentation representation);
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<ProductoCreditoRepresentation> search(
+    public SearchResultsRepresentation<ProductoCreditoRepresentation> search(
+            @QueryParam("tipoPersona") String tipoPersona, @QueryParam("moneda") String moneda,
             @QueryParam("estado") @DefaultValue(value = "true") boolean estado,
-            @QueryParam("tipoPersona") String tipoPersona, @QueryParam("moneda") String[] moneda,
             @QueryParam("filterText") @DefaultValue(value = "") String filterText,
-            @QueryParam("firstResult") @DefaultValue(value = "-1") Integer firstResult,
-            @QueryParam("maxResults") @DefaultValue(value = "-1") Integer maxResults);
+            @QueryParam("page") @DefaultValue(value = "1") int page,
+            @QueryParam("pageSize") @DefaultValue(value = "10") int pageSize);
 
 }

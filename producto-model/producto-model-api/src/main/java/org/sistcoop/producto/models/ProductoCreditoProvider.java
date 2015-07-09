@@ -1,45 +1,28 @@
 package org.sistcoop.producto.models;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 import javax.ejb.Local;
 
 import org.sistcoop.producto.models.enums.TipoPersona;
+import org.sistcoop.producto.models.search.SearchCriteriaBean;
+import org.sistcoop.producto.models.search.SearchResultsModel;
 import org.sistcoop.producto.provider.Provider;
 
 @Local
-public interface ProductoCreditoProvider extends Provider {	
+public interface ProductoCreditoProvider extends Provider {
 
-	ProductoCreditoModel getProductoCreditoById(String id);
-	
-	ProductoCreditoModel getProductoCreditoByCodigo(String codigo);
-	
-	ProductoCreditoModel getProductoByDenominacion(String denominacion);
-	
-	ProductoCreditoModel addProductoCredito(
-			String codigo,
-			String denominacion, 
-			TipoPersona tipoPersona,
-			String moneda,
-			BigDecimal montoMinimo,
-			BigDecimal montoMaximo);
-	
-	boolean desactivarProductoCredito(ProductoCreditoModel productoModel);
+    ProductoCreditoModel findById(String id);
 
-	List<ProductoCreditoModel> getProductos();
-		
-	List<ProductoCreditoModel> getProductos(TipoPersona tipoPersona);
+    ProductoCreditoModel findByCodigo(String codigo);
 
-	List<ProductoCreditoModel> getProductos(boolean estado);
+    ProductoCreditoModel create(TipoPersona tipoPersona, String moneda, String denominacion,
+            BigDecimal montoMinimo, BigDecimal montoMaximo);
 
-	List<ProductoCreditoModel> getProductos(TipoPersona tipoPersona, boolean estado);
-	
-	List<ProductoCreditoModel> getProductos(String filterText, int firstResult, int maxResults);
-	
-	List<ProductoCreditoModel> getProductos(String filterText, int firstResult, int maxResults, TipoPersona tipoPersona);
-	
-	List<ProductoCreditoModel> getProductos(String filterText, int firstResult, int maxResults, String moneda);
-	
-	List<ProductoCreditoModel> getProductos(String filterText, int firstResult, int maxResults, TipoPersona tipoPersona, String moneda);
+    boolean remove(ProductoCreditoModel productoModel);
+
+    SearchResultsModel<ProductoCreditoModel> search();
+
+    SearchResultsModel<ProductoCreditoModel> search(SearchCriteriaBean searchCriteriaBean);
+
 }

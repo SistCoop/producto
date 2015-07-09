@@ -2,7 +2,6 @@ package org.sistcoop.producto.models.jpa;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import javax.ejb.Local;
 import javax.ejb.Stateless;
@@ -15,8 +14,11 @@ import javax.persistence.TypedQuery;
 
 import org.sistcoop.producto.models.ProductoCuentaPersonalModel;
 import org.sistcoop.producto.models.ProductoCuentaPersonalProvider;
+import org.sistcoop.producto.models.enums.TipoCuentaPersonal;
 import org.sistcoop.producto.models.enums.TipoPersona;
 import org.sistcoop.producto.models.jpa.entities.ProductoCuentaPersonalEntity;
+import org.sistcoop.producto.models.search.SearchCriteriaBean;
+import org.sistcoop.producto.models.search.SearchResultsModel;
 
 @Named
 @Stateless
@@ -33,15 +35,34 @@ public class JpaProductoCuentaPersonalProvider implements ProductoCuentaPersonal
     }
 
     @Override
-    public ProductoCuentaPersonalModel addProducto(String denominacion, TipoPersona tipoPersona,
-            List<String> monedas) {
+    public ProductoCuentaPersonalModel findById(String id) {
+        ProductoCuentaPersonalEntity entity = this.em.find(ProductoCuentaPersonalEntity.class, id);
+        return entity != null ? new ProductoCuentaPersonalAdapter(em, entity) : null;
+    }
+
+    @Override
+    public ProductoCuentaPersonalModel findByCodigo(String codigo) {
+        TypedQuery<ProductoCuentaPersonalEntity> query = em.createNamedQuery(
+                "ProductoCuentaPersonalEntity.findByCodigo", ProductoCuentaPersonalEntity.class);
+
+        query.setParameter("codigo", codigo);
+        List<ProductoCuentaPersonalEntity> results = query.getResultList();
+        if (results.size() == 0) {
+            return null;
+        }
+        return new ProductoCuentaPersonalAdapter(em, results.get(0));
+    }
+
+    @Override
+    public ProductoCuentaPersonalModel create(TipoCuentaPersonal tipoCuenta, TipoPersona tipoPersona,
+            String moneda, String denominacion) {
+
         ProductoCuentaPersonalEntity entity = new ProductoCuentaPersonalEntity();
-        entity.setDenominacion(denominacion);
+        entity.setTipoCuenta(tipoCuenta);
         entity.setTipoPersona(tipoPersona);
-
-        String codigo = UUID.randomUUID().toString();
-        entity.setCodigo(codigo);
-
+        entity.setMoneda(moneda);
+        entity.setDenominacion(denominacion);
+        entity.setCodigo(null);
         entity.setEstado(true);
 
         em.persist(entity);
@@ -49,56 +70,37 @@ public class JpaProductoCuentaPersonalProvider implements ProductoCuentaPersonal
     }
 
     @Override
-    public boolean desactivarProducto(ProductoCuentaPersonalModel productoModel) {
-        ProductoCuentaPersonalEntity entity = ProductoCuentaPersonalAdapter.toProductoCuentaPersonalEntity(
-                productoModel, em);
-        entity.setEstado(false);
-        em.merge(entity);
+    public boolean remove(ProductoCuentaPersonalModel productoModel) {
+        String id = productoModel.getId();
+        ProductoCuentaPersonalEntity entity = this.em.find(ProductoCuentaPersonalEntity.class, id);
+        if (entity == null) {
+            return false;
+        }
+        em.remove(entity);
         return true;
     }
 
     @Override
-    public ProductoCuentaPersonalModel getProductoById(String id) {
-        ProductoCuentaPersonalEntity productoCuentaPersonalEntity = this.em.find(
-                ProductoCuentaPersonalEntity.class, id);
-        return productoCuentaPersonalEntity != null ? new ProductoCuentaPersonalAdapter(em,
-                productoCuentaPersonalEntity) : null;
-    }
-
-    @Override
-    public List<ProductoCuentaPersonalModel> getProductos() {
-        return getProductos(true);
-    }
-
-    @Override
-    public List<ProductoCuentaPersonalModel> getProductos(TipoPersona tipoPersona) {
-        return getProductos(tipoPersona, true);
-    }
-
-    @Override
-    public List<ProductoCuentaPersonalModel> getProductos(boolean estado) {
+    public SearchResultsModel<ProductoCuentaPersonalModel> search() {
         TypedQuery<ProductoCuentaPersonalEntity> query = em.createNamedQuery(
-                ProductoCuentaPersonalEntity.findAll, ProductoCuentaPersonalEntity.class);
-        List<ProductoCuentaPersonalEntity> results = query.getResultList();
-        List<ProductoCuentaPersonalModel> productos = new ArrayList<ProductoCuentaPersonalModel>();
-        for (ProductoCuentaPersonalEntity entity : results) {
-            if (entity.isEstado() == estado)
-                productos.add(new ProductoCuentaPersonalAdapter(em, entity));
+                "ProductoCuentaPersonalEntity.findAll", ProductoCuentaPersonalEntity.class);
+
+        List<ProductoCuentaPersonalEntity> entities = query.getResultList();
+        List<ProductoCuentaPersonalModel> models = new ArrayList<ProductoCuentaPersonalModel>();
+        for (ProductoCuentaPersonalEntity productoCuentaPersonalEntity : entities) {
+            models.add(new ProductoCuentaPersonalAdapter(em, productoCuentaPersonalEntity));
         }
-        return productos;
+
+        SearchResultsModel<ProductoCuentaPersonalModel> result = new SearchResultsModel<>();
+        result.setBeans(models);
+        result.setTotalSize(models.size());
+        return result;
     }
 
     @Override
-    public List<ProductoCuentaPersonalModel> getProductos(TipoPersona tipoPersona, boolean estado) {
-        TypedQuery<ProductoCuentaPersonalEntity> query = em.createNamedQuery(
-                ProductoCuentaPersonalEntity.findByTipoPersona, ProductoCuentaPersonalEntity.class);
-        List<ProductoCuentaPersonalEntity> results = query.getResultList();
-        List<ProductoCuentaPersonalModel> productos = new ArrayList<ProductoCuentaPersonalModel>();
-        for (ProductoCuentaPersonalEntity entity : results) {
-            if (entity.isEstado() == estado)
-                productos.add(new ProductoCuentaPersonalAdapter(em, entity));
-        }
-        return productos;
+    public SearchResultsModel<ProductoCuentaPersonalModel> search(SearchCriteriaBean searchCriteriaBean) {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 }

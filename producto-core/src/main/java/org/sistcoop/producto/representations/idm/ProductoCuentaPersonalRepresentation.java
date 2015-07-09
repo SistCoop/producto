@@ -1,6 +1,7 @@
 package org.sistcoop.producto.representations.idm;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 
 public class ProductoCuentaPersonalRepresentation implements Serializable {
@@ -16,8 +17,15 @@ public class ProductoCuentaPersonalRepresentation implements Serializable {
     private String tipoPersona;
     private boolean estado;
 
+    private String tipoCuenta;
+
     protected String moneda;
+    private BigDecimal montoMinimo;
+    private BigDecimal montoMaximo;
+
     private List<TasaRepresentation> tasas;
+    private List<ComisionRepresentation> comisiones;
+    private List<CaracteristicaRepresentation> caracteristicas;
 
     public String getId() {
         return id;
@@ -59,6 +67,14 @@ public class ProductoCuentaPersonalRepresentation implements Serializable {
         this.estado = estado;
     }
 
+    public String getTipoCuenta() {
+        return tipoCuenta;
+    }
+
+    public void setTipoCuenta(String tipoCuenta) {
+        this.tipoCuenta = tipoCuenta;
+    }
+
     public String getMoneda() {
         return moneda;
     }
@@ -67,12 +83,44 @@ public class ProductoCuentaPersonalRepresentation implements Serializable {
         this.moneda = moneda;
     }
 
+    public BigDecimal getMontoMinimo() {
+        return montoMinimo;
+    }
+
+    public void setMontoMinimo(BigDecimal montoMinimo) {
+        this.montoMinimo = montoMinimo;
+    }
+
+    public BigDecimal getMontoMaximo() {
+        return montoMaximo;
+    }
+
+    public void setMontoMaximo(BigDecimal montoMaximo) {
+        this.montoMaximo = montoMaximo;
+    }
+
     public List<TasaRepresentation> getTasas() {
         return tasas;
     }
 
     public void setTasas(List<TasaRepresentation> tasas) {
         this.tasas = tasas;
+    }
+
+    public List<ComisionRepresentation> getComisiones() {
+        return comisiones;
+    }
+
+    public void setComisiones(List<ComisionRepresentation> comisiones) {
+        this.comisiones = comisiones;
+    }
+
+    public List<CaracteristicaRepresentation> getCaracteristicas() {
+        return caracteristicas;
+    }
+
+    public void setCaracteristicas(List<CaracteristicaRepresentation> caracteristicas) {
+        this.caracteristicas = caracteristicas;
     }
 
 }
