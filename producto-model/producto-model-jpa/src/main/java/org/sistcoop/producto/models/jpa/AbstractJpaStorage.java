@@ -1,6 +1,7 @@
 package org.sistcoop.producto.models.jpa;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -31,7 +32,7 @@ public abstract class AbstractJpaStorage {
     public AbstractJpaStorage() {
 
     }
-    
+
     protected abstract EntityManager getEntityManager();
 
     /**
@@ -130,6 +131,8 @@ public abstract class AbstractJpaStorage {
                         predicates.add(builder.equal(path, filter.getValue()));
                     } else if (pathc.isEnum()) {
                         predicates.add(builder.equal(path, Enum.valueOf((Class) pathc, filter.getValue())));
+                    } else if (pathc.isAssignableFrom(Date.class)) {
+                        predicates.add(builder.equal(from.<Date> get(filter.getName()), filter.getValue()));
                     }
                 } else if (filter.getOperator() == SearchCriteriaFilterOperator.bool_eq) {
                     predicates.add(builder.equal(from.<Boolean> get(filter.getName()),
