@@ -24,7 +24,7 @@ import java.util.List;
  *
  * @author eric.wittmann@redhat.com
  */
-public class SearchCriteriaBean implements Serializable {
+public class SearchCriteriaModel implements Serializable {
 
     private static final long serialVersionUID = 5103776179000907112L;
 
@@ -35,7 +35,7 @@ public class SearchCriteriaBean implements Serializable {
     /**
      * Constructor.
      */
-    public SearchCriteriaBean() {
+    public SearchCriteriaModel() {
     }
 
     /**
@@ -158,7 +158,7 @@ public class SearchCriteriaBean implements Serializable {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        SearchCriteriaBean other = (SearchCriteriaBean) obj;
+        SearchCriteriaModel other = (SearchCriteriaModel) obj;
         if (filters == null) {
             if (other.filters != null)
                 return false;

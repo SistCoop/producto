@@ -17,17 +17,21 @@ import org.sistcoop.producto.models.ProductoCreditoModel;
 import org.sistcoop.producto.models.ProductoCreditoProvider;
 import org.sistcoop.producto.models.enums.TipoPersona;
 import org.sistcoop.producto.models.jpa.entities.ProductoCreditoEntity;
-import org.sistcoop.producto.models.search.SearchCriteriaBean;
+import org.sistcoop.producto.models.search.SearchCriteriaModel;
 import org.sistcoop.producto.models.search.SearchResultsModel;
 
 @Named
 @Stateless
 @Local(ProductoCreditoProvider.class)
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
-public class JpaProductoCreditoProvider implements ProductoCreditoProvider {
+public class JpaProductoCreditoProvider extends AbstractJpaStorage implements ProductoCreditoProvider {
 
     @PersistenceContext
     protected EntityManager em;
+
+    protected EntityManager getEntityManager() {
+        return this.em;
+    }
 
     @Override
     public void close() {
@@ -92,15 +96,23 @@ public class JpaProductoCreditoProvider implements ProductoCreditoProvider {
         }
 
         SearchResultsModel<ProductoCreditoModel> result = new SearchResultsModel<>();
-        result.setBeans(models);
+        result.setModels(models);
         result.setTotalSize(models.size());
         return result;
     }
 
     @Override
-    public SearchResultsModel<ProductoCreditoModel> search(SearchCriteriaBean searchCriteriaBean) {
-        // TODO Auto-generated method stub
-        return null;
+    public SearchResultsModel<ProductoCreditoModel> search(SearchCriteriaModel criteria) {
+        SearchResultsModel<ProductoCreditoEntity> entityResult = find(criteria, ProductoCreditoEntity.class);
+
+        SearchResultsModel<ProductoCreditoModel> modelResult = new SearchResultsModel<>();
+        List<ProductoCreditoModel> list = new ArrayList<>();
+        for (ProductoCreditoEntity entity : entityResult.getModels()) {
+            list.add(new ProductoCreditoAdapter(em, entity));
+        }
+        modelResult.setTotalSize(entityResult.getTotalSize());
+        modelResult.setModels(list);
+        return modelResult;
     }
 
 }

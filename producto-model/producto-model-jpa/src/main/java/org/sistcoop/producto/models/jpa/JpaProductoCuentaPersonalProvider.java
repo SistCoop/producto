@@ -17,17 +17,22 @@ import org.sistcoop.producto.models.ProductoCuentaPersonalProvider;
 import org.sistcoop.producto.models.enums.TipoCuentaPersonal;
 import org.sistcoop.producto.models.enums.TipoPersona;
 import org.sistcoop.producto.models.jpa.entities.ProductoCuentaPersonalEntity;
-import org.sistcoop.producto.models.search.SearchCriteriaBean;
+import org.sistcoop.producto.models.search.SearchCriteriaModel;
 import org.sistcoop.producto.models.search.SearchResultsModel;
 
 @Named
 @Stateless
 @Local(ProductoCuentaPersonalProvider.class)
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
-public class JpaProductoCuentaPersonalProvider implements ProductoCuentaPersonalProvider {
+public class JpaProductoCuentaPersonalProvider extends AbstractJpaStorage implements
+        ProductoCuentaPersonalProvider {
 
     @PersistenceContext
     protected EntityManager em;
+
+    protected EntityManager getEntityManager() {
+        return this.em;
+    }
 
     @Override
     public void close() {
@@ -92,15 +97,24 @@ public class JpaProductoCuentaPersonalProvider implements ProductoCuentaPersonal
         }
 
         SearchResultsModel<ProductoCuentaPersonalModel> result = new SearchResultsModel<>();
-        result.setBeans(models);
+        result.setModels(models);
         result.setTotalSize(models.size());
         return result;
     }
 
     @Override
-    public SearchResultsModel<ProductoCuentaPersonalModel> search(SearchCriteriaBean searchCriteriaBean) {
-        // TODO Auto-generated method stub
-        return null;
+    public SearchResultsModel<ProductoCuentaPersonalModel> search(SearchCriteriaModel criteria) {
+        SearchResultsModel<ProductoCuentaPersonalEntity> entityResult = find(criteria,
+                ProductoCuentaPersonalEntity.class);
+
+        SearchResultsModel<ProductoCuentaPersonalModel> modelResult = new SearchResultsModel<>();
+        List<ProductoCuentaPersonalModel> list = new ArrayList<>();
+        for (ProductoCuentaPersonalEntity entity : entityResult.getModels()) {
+            list.add(new ProductoCuentaPersonalAdapter(em, entity));
+        }
+        modelResult.setTotalSize(entityResult.getTotalSize());
+        modelResult.setModels(list);
+        return modelResult;
     }
 
 }

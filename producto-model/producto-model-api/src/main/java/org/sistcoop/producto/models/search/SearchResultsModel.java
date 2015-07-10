@@ -30,7 +30,7 @@ public class SearchResultsModel<T> implements Serializable {
 
     private static final long serialVersionUID = -1672829715471947181L;
 
-    private List<T> beans = new ArrayList<>();
+    private List<T> models = new ArrayList<>();
     private int totalSize;
 
     /**
@@ -42,16 +42,16 @@ public class SearchResultsModel<T> implements Serializable {
     /**
      * @return the beans
      */
-    public List<T> getBeans() {
-        return beans;
+    public List<T> getModels() {
+        return models;
     }
 
     /**
      * @param beans
      *            the beans to set
      */
-    public void setBeans(List<T> beans) {
-        this.beans = beans;
+    public void setModels(List<T> beans) {
+        this.models = beans;
     }
 
     /**

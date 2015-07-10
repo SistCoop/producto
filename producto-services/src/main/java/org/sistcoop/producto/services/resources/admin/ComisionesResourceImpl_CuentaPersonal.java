@@ -73,7 +73,7 @@ public class ComisionesResourceImpl_CuentaPersonal implements ComisionesResource
 
         SearchResultsRepresentation<ComisionRepresentation> rep = new SearchResultsRepresentation<>();
         List<ComisionRepresentation> representations = new ArrayList<>();
-        for (ComisionModel model : results.getBeans()) {
+        for (ComisionModel model : results.getModels()) {
             representations.add(ModelToRepresentation.toRepresentation(model));
         }
         rep.setTotalSize(results.getTotalSize());

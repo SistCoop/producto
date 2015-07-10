@@ -16,10 +16,10 @@ import org.sistcoop.producto.models.ProductoCreditoModel;
 import org.sistcoop.producto.models.ProductoCreditoProvider;
 import org.sistcoop.producto.models.enums.TipoPersona;
 import org.sistcoop.producto.models.search.PagingModel;
-import org.sistcoop.producto.models.search.SearchCriteriaBean;
+import org.sistcoop.producto.models.search.SearchCriteriaModel;
 import org.sistcoop.producto.models.search.SearchCriteriaFilterOperator;
-import org.sistcoop.producto.models.search.SearchCriteriaFilter_ProductoCreditoProvider;
 import org.sistcoop.producto.models.search.SearchResultsModel;
+import org.sistcoop.producto.models.search.util.ProductoModelAtribute;
 import org.sistcoop.producto.models.utils.ModelToRepresentation;
 import org.sistcoop.producto.models.utils.RepresentationToModel;
 import org.sistcoop.producto.representations.idm.ProductoCreditoRepresentation;
@@ -40,9 +40,6 @@ public class ProductosCreditoResourceImpl implements ProductosCreditoResource {
     @Inject
     private ProductoCreditoResource productoCreditoResource;
 
-    @Inject
-    private SearchCriteriaFilter_ProductoCreditoProvider searchCriteriaFilterProvider;
-
     @Override
     public ProductoCreditoResource producto(String producto) {
         return productoCreditoResource;
@@ -60,34 +57,41 @@ public class ProductosCreditoResourceImpl implements ProductosCreditoResource {
 
     @Override
     public SearchResultsRepresentation<ProductoCreditoRepresentation> search(String tipoPersona,
-            String moneda, boolean estado, String filterText, int page, int size) {
+            String moneda, boolean estado, String filterText, int page, int pageSize) {
 
+        // set paging
         PagingModel paging = new PagingModel();
         paging.setPage(page);
-        paging.setPageSize(size);
+        paging.setPageSize(pageSize);
 
-        SearchCriteriaBean searchCriteriaBean = new SearchCriteriaBean();
+        SearchCriteriaModel searchCriteriaBean = new SearchCriteriaModel();
         searchCriteriaBean.setPaging(paging);
+        searchCriteriaBean.setOrder(ProductoModelAtribute.denominacion, false);
 
-        if (tipoPersona != null) {
-            searchCriteriaBean.addFilter(searchCriteriaFilterProvider.tipoPersona(),
-                    TipoPersona.valueOf(tipoPersona).toString(), SearchCriteriaFilterOperator.eq);
-        }
-        if (moneda != null) {
-            searchCriteriaBean.addFilter(searchCriteriaFilterProvider.moneda(), moneda,
+        // add filters
+        if (tipoPersona != null)
+            searchCriteriaBean.addFilter(ProductoModelAtribute.tipoPersona, TipoPersona.valueOf(tipoPersona)
+                    .toString(), SearchCriteriaFilterOperator.eq);
+        if (moneda != null)
+            searchCriteriaBean.addFilter(ProductoModelAtribute.moneda, moneda,
                     SearchCriteriaFilterOperator.eq);
-        }
-        searchCriteriaBean.addFilter(searchCriteriaFilterProvider.estado(), estado ? "true" : "false",
+        searchCriteriaBean.addFilter(ProductoModelAtribute.estado, estado ? "true" : "false",
                 SearchCriteriaFilterOperator.bool_eq);
+        searchCriteriaBean.addFilter(ProductoModelAtribute.codigo, filterText,
+                SearchCriteriaFilterOperator.like);
+        searchCriteriaBean.addFilter(ProductoModelAtribute.denominacion, filterText,
+                SearchCriteriaFilterOperator.like);
 
+        // search
         SearchResultsModel<ProductoCreditoModel> results = productoCreditoProvider.search(searchCriteriaBean);
         SearchResultsRepresentation<ProductoCreditoRepresentation> rep = new SearchResultsRepresentation<>();
         List<ProductoCreditoRepresentation> representations = new ArrayList<>();
-        for (ProductoCreditoModel model : results.getBeans()) {
+        for (ProductoCreditoModel model : results.getModels()) {
             representations.add(ModelToRepresentation.toRepresentation(model));
         }
         rep.setTotalSize(results.getTotalSize());
         rep.setItems(representations);
         return rep;
     }
+
 }

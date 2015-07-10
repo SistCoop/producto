@@ -76,7 +76,7 @@ public class JpaCaracteristicaProvider implements CaracteristicaProvider {
         }
 
         SearchResultsModel<CaracteristicaModel> result = new SearchResultsModel<>();
-        result.setBeans(models);
+        result.setModels(models);
         result.setTotalSize(models.size());
         return result;
     }

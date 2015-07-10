@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import javax.ejb.Local;
 
 import org.sistcoop.producto.models.enums.TipoPersona;
-import org.sistcoop.producto.models.search.SearchCriteriaBean;
+import org.sistcoop.producto.models.search.SearchCriteriaModel;
 import org.sistcoop.producto.models.search.SearchResultsModel;
 import org.sistcoop.producto.provider.Provider;
 
@@ -23,6 +23,6 @@ public interface ProductoCreditoProvider extends Provider {
 
     SearchResultsModel<ProductoCreditoModel> search();
 
-    SearchResultsModel<ProductoCreditoModel> search(SearchCriteriaBean searchCriteriaBean);
+    SearchResultsModel<ProductoCreditoModel> search(SearchCriteriaModel searchCriteriaBean);
 
 }

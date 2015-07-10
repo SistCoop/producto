@@ -31,7 +31,7 @@ public interface ProductosCuentaPersonalResource {
             @QueryParam("moneda") String moneda,
             @QueryParam("estado") @DefaultValue(value = "true") boolean estado,
             @QueryParam("filterText") @DefaultValue(value = "") String filterText,
-            @QueryParam("firstResult") @DefaultValue(value = "-1") int firstResult,
-            @QueryParam("maxResults") @DefaultValue(value = "-1") int maxResults);
+            @QueryParam("page") @DefaultValue(value = "-1") int page,
+            @QueryParam("pageSize") @DefaultValue(value = "-1") int pageSize);
 
 }

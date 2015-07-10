@@ -74,7 +74,7 @@ public class CaracteristicasResourceImpl_CuentaPersonal implements Caracteristic
 
         SearchResultsRepresentation<CaracteristicaRepresentation> rep = new SearchResultsRepresentation<>();
         List<CaracteristicaRepresentation> representations = new ArrayList<>();
-        for (CaracteristicaModel model : results.getBeans()) {
+        for (CaracteristicaModel model : results.getModels()) {
             representations.add(ModelToRepresentation.toRepresentation(model));
         }
         rep.setTotalSize(results.getTotalSize());

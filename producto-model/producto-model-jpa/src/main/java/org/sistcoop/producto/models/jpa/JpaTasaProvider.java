@@ -76,7 +76,7 @@ public class JpaTasaProvider implements TasaProvider {
         }
 
         SearchResultsModel<TasaModel> result = new SearchResultsModel<>();
-        result.setBeans(models);
+        result.setModels(models);
         result.setTotalSize(models.size());
         return result;
     }

@@ -75,7 +75,7 @@ public class TasasResourceImpl_CuentaPersonal implements TasasResource {
 
         SearchResultsRepresentation<TasaRepresentation> rep = new SearchResultsRepresentation<>();
         List<TasaRepresentation> representations = new ArrayList<>();
-        for (TasaModel model : results.getBeans()) {
+        for (TasaModel model : results.getModels()) {
             representations.add(ModelToRepresentation.toRepresentation(model));
         }
         rep.setTotalSize(results.getTotalSize());

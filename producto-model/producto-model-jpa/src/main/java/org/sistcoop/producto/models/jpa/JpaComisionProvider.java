@@ -81,7 +81,7 @@ public class JpaComisionProvider implements ComisionProvider {
         }
 
         SearchResultsModel<ComisionModel> result = new SearchResultsModel<>();
-        result.setBeans(models);
+        result.setModels(models);
         result.setTotalSize(models.size());
         return result;
     }
