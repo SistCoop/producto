@@ -45,7 +45,6 @@ public class CaracteristicasResourceImpl_CuentaPersonal implements Caracteristic
     private RepresentationToModel representationToModel;
 
     @Inject
-    @Caracteristicas_CuentaPersonal
     private CaracteristicaResource caracteristicaResource;
 
     @Override

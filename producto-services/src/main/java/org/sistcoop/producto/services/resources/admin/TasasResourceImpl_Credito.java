@@ -45,7 +45,6 @@ public class TasasResourceImpl_Credito implements TasasResource {
     private RepresentationToModel representationToModel;
 
     @Inject
-    @Tasas_Credito
     private TasaResource tasaResource;
 
     private ProductoCreditoModel getProductoCreditoModel() {

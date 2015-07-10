@@ -45,7 +45,6 @@ public class CaracteristicasResourceImpl_Credito implements CaracteristicasResou
     private RepresentationToModel representationToModel;
 
     @Inject
-    @Caracteristicas_Credito
     private CaracteristicaResource caracteristicaResource;
 
     private ProductoCreditoModel getProductoCreditoModel() {

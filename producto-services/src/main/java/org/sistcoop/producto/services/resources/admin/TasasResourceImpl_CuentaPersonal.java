@@ -23,7 +23,6 @@ import org.sistcoop.producto.models.utils.ModelToRepresentation;
 import org.sistcoop.producto.models.utils.RepresentationToModel;
 import org.sistcoop.producto.representations.idm.TasaRepresentation;
 import org.sistcoop.producto.representations.idm.search.SearchResultsRepresentation;
-import org.sistcoop.producto.services.resources.producers.Caracteristicas_Credito;
 import org.sistcoop.producto.services.resources.producers.Tasas_CuentaPersonal;
 
 @Stateless
@@ -46,7 +45,6 @@ public class TasasResourceImpl_CuentaPersonal implements TasasResource {
     private RepresentationToModel representationToModel;
 
     @Inject
-    @Caracteristicas_Credito
     private TasaResource tasaResource;
 
     private ProductoCuentaPersonalModel getProductoCuentaPersonalModel() {
